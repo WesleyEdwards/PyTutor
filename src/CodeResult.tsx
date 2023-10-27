@@ -12,22 +12,20 @@ export const CodeResult: FC = () => {
         width: "100%",
         p: 1,
         borderRadius: 10,
-        overflow: "auto",
       }}
     >
-      <Stack>
+      <Stack sx={{ maxHeight: "500px" }}>
         <Typography sx={{ mb: 1 }}>Output</Typography>
         <Divider />
-        <Stack>
+        <Stack sx={{ overflow: "auto" }}>
           {codeResult.map((line, i) => (
             <Typography
+              key={i}
               sx={{
                 fontFamily: "monospace",
                 whiteSpace: "pre",
-                overflowX: "auto",
                 maxWidth: "100%",
               }}
-              key={i}
             >
               {line}
             </Typography>
