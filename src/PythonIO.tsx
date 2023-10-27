@@ -1,26 +1,27 @@
-import { useEffect, useState } from "react";
-import { Editor } from "./Editor";
+import { TextEditor } from "./TextEditor";
 import { RunCode } from "./RunCode";
 import { CodeResult } from "./CodeResult";
-import { Stack, useColorScheme } from "@mui/joy";
+import { Stack } from "@mui/joy";
+import { PythonIOProvider } from "./PyIOContext";
+import { useState } from "react";
 
 // ["def sayHello():", '\tprint("Hello world!")'].join("\n")
 function PythonIO() {
-  const [code, setCode] = useState<string>(`print("Hello world!")`);
-  const [codeResult, setCodeResult] = useState<string>("");
-
+  const [initialLoad, setInitialLoad] = useState(false);
   return (
-    <Stack
-      direction="row"
-      gap="2rem"
-      sx={{
-        margin: "2rem",
-      }}
-    >
-      <Editor code={code} changeCode={setCode} />
-      <RunCode code={code} setCodeResult={setCodeResult} />
-      <CodeResult codeResult={codeResult} />
-    </Stack>
+    <PythonIOProvider>
+      <Stack
+        direction="row"
+        gap="1rem"
+        sx={{
+          margin: "2rem",
+        }}
+      >
+        <TextEditor isLoaded={() => setInitialLoad(true)} />
+        <RunCode initialLoad={initialLoad} />
+        <CodeResult />
+      </Stack>
+    </PythonIOProvider>
   );
 }
 

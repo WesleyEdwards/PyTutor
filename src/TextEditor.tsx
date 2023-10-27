@@ -1,12 +1,13 @@
 import { FC, useRef, useState, useEffect } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { useColorScheme } from "@mui/joy";
-// import styles from "./Editor.module.css";
+import { usePyIOContext } from "./PyIOContext";
 
-export const Editor: FC<{
-  code: string;
-  changeCode: (newCode: string) => void;
-}> = ({ code, changeCode }) => {
+export const TextEditor: FC<{ isLoaded: () => void }> = ({
+  isLoaded,
+}) => {
+  const { code, setCode, resetEditorTrigger } = usePyIOContext();
+
   const [editor, setEditor] =
     useState<monaco.editor.IStandaloneCodeEditor | null>(null);
 
@@ -15,7 +16,6 @@ export const Editor: FC<{
   const { mode } = useColorScheme();
 
   useEffect(() => {
-    console.log("asdf");
     if (monacoEl) {
       setEditor((editor) => {
         if (editor) return editor;
@@ -23,7 +23,7 @@ export const Editor: FC<{
         const edit = monaco.editor.create(monacoEl.current!, {
           dimension: {
             height: 500,
-            width: 500,
+            width: 800,
           },
           autoDetectHighContrast: true,
           value: code,
@@ -32,8 +32,9 @@ export const Editor: FC<{
         });
 
         edit.onDidChangeModelContent(() => {
-          changeCode(edit.getValue());
+          setCode(edit.getValue());
         });
+        isLoaded();
         return edit;
       });
     }
@@ -41,25 +42,13 @@ export const Editor: FC<{
     return () => editor?.dispose();
   }, [monacoEl.current]);
 
-  // useEffect(() => {
-  //   setEditor((prev) => {
-  //     if (!prev) return prev;
-  //     return monaco.editor.create(monacoEl.current!, {
-  //       dimension: {
-  //         height: 500,
-  //         width: 500,
-  //       },
-  //       autoDetectHighContrast: true,
-  //       value: code,
-  //       language: "python",
-  //       theme: mode === "light" ? "vs-light" : "vs-dark",
-  //     });
-  //   });
-  // }, [mode]);
+  useEffect(() => {
+    editor?.setValue(code);
+  }, [resetEditorTrigger]);
 
-  return (
-    <div>
-      <div ref={monacoEl}></div>
-    </div>
-  );
+  useEffect(() => {
+    monaco.editor.setTheme(mode === "light" ? "vs-light" : "vs-dark");
+  }, [mode]);
+
+  return <div ref={monacoEl}></div>;
 };

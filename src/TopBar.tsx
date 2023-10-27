@@ -1,4 +1,4 @@
-import { Button, Stack, useColorScheme } from "@mui/joy";
+import { Button, Stack, Typography, useColorScheme } from "@mui/joy";
 import { FC, useEffect } from "react";
 
 export const TopBar: FC = () => {
@@ -12,7 +12,13 @@ export const TopBar: FC = () => {
   }, []);
 
   return (
-    <Stack direction="row" width="100%" padding="1rem">
+    <Stack
+      direction="row"
+      width="100%"
+      padding={2}
+      justifyContent="space-between"
+    >
+      <Typography level="h1">PyTutor</Typography>
       <Button
         variant="soft"
         onClick={() => {

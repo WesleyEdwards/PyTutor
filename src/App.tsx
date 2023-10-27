@@ -8,7 +8,13 @@ function App() {
       <CssBaseline />
 
       <TopBar />
-      <Sheet variant="outlined" sx={{ mx: "2rem" }}>
+      <Sheet
+        variant="outlined"
+        sx={{
+          mx: 2,
+          borderRadius: 10,
+        }}
+      >
         <PythonIO />
       </Sheet>
     </CssVarsProvider>
