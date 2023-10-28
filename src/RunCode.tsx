@@ -6,7 +6,7 @@ import { usePyIOContext } from "./PyIOContext";
 import { testCode } from "./utils";
 
 export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
-  const { code, setCodeResult, setError, resetCode } = usePyIOContext();
+  const { code, gradeResult, setError } = usePyIOContext();
 
   const [pyResult, setPyResult] = useState<string[]>([]);
 
@@ -23,7 +23,7 @@ export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
     setOptions({
       output: (data) => {
         setError(undefined);
-        setPyResult((prev) => prev.concat(data));
+        setPyResult((prev) => prev.concat(data.replace("\n", "")));
       },
       error: (e) => {
         setError(e);
@@ -32,23 +32,11 @@ export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
   }, []);
 
   useEffect(() => {
-    setCodeResult(pyResult);
+    gradeResult(pyResult);
   }, [trigger]);
 
   return (
     <Stack sx={{ justifyContent: "flex-end", gap: "1rem" }}>
-      <Button
-        variant="solid"
-        disabled={!initialLoad}
-        onClick={() => {
-          resetCode(testCode);
-        }}
-        sx={{
-          maxWidth: "12rem",
-        }}
-      >
-        Populate
-      </Button>
       <IconButton
         variant="solid"
         onClick={runPythonCode}

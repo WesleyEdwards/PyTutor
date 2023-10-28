@@ -19,7 +19,7 @@ function App() {
         <Sheet
           variant="outlined"
           sx={{
-            mx: 2,
+            m: 2,
             borderRadius: 10,
           }}
         >

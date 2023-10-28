@@ -1,37 +1,58 @@
-import { FC, ReactNode, createContext, useContext, useState } from "react";
+import {
+  FC,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { PythonError } from "client-side-python-runner";
+import { Exercise } from "./exercises/Exercises";
+import { exercisesMod } from "./exercises/phanon-mod";
+
+type Setter<T> = (item: T) => void;
 
 type PythonIOContextType = {
   code: string;
-  setCode: (code: string) => void;
-  codeResult: string[];
-  setCodeResult: (res: string[]) => void;
+  codeResult: { res: string[]; pass?: boolean };
   error?: PythonError;
-  setError: (error: PythonError | undefined) => void;
-  resetCode: (code: string) => void;
   resetEditorTrigger: number;
+  currExercise: Exercise;
+  gradeResult: Setter<string[]>;
+  setCode: Setter<string>;
+  setError: Setter<PythonError | undefined>;
+  setCurrExercise: Setter<Exercise>;
 };
 
-const PyIOContext = createContext<PythonIOContextType>({
-  code: "",
-  codeResult: [],
-  error: undefined,
-  resetEditorTrigger: 0,
-  resetCode: {} as (code: string) => void,
-  setCode: {} as PythonIOContextType["setCode"],
-  setCodeResult: {} as PythonIOContextType["setCodeResult"],
-  setError: {} as PythonIOContextType["setError"],
-});
+const PyIOContext = createContext<PythonIOContextType>(
+  {} as PythonIOContextType
+);
 
 export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [currExercise, setCurrExercise] = useState<Exercise>(exercisesMod[0]);
   const [code, setCode] = useState<string>(`print("Hello world!")`);
-  const [codeResult, setCodeResult] = useState<string[]>([]);
+  const [codeResult, setCodeResult] = useState<{
+    res: string[];
+    pass?: boolean;
+  }>({
+    res: [],
+  });
   const [error, setError] = useState<PythonError>();
   const [resetEditorTrigger, setResetEditorTrigger] = useState(0);
 
-  const resetCode = (code: string) => {
-    setCode(code);
+  useEffect(() => {
+    setCode(currExercise.starterCode);
+    setCodeResult({ res: [], pass: undefined });
     setResetEditorTrigger((prev) => prev + 1);
+  }, [currExercise.id]);
+
+  const gradeResult = (res: string[]) => {
+    // console.log(res);
+    // console.log(currExercise.testResult(res));
+    setCodeResult({
+      res,
+      pass: currExercise.testResult(res) === null,
+    });
   };
 
   return (
@@ -40,11 +61,12 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
         code,
         setCode,
         codeResult,
-        setCodeResult,
+        gradeResult,
         error,
         setError,
-        resetCode,
         resetEditorTrigger,
+        setCurrExercise,
+        currExercise,
       }}
     >
       {children}

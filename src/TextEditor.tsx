@@ -22,8 +22,8 @@ export const TextEditor: FC<{ isLoaded: () => void }> = ({
 
         const edit = monaco.editor.create(monacoEl.current!, {
           dimension: {
-            height: 500,
-            width: 800,
+            height: 400,
+            width: 700,
           },
           autoDetectHighContrast: true,
           value: code,

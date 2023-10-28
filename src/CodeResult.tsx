@@ -1,4 +1,4 @@
-import { Card, Divider, Stack, Typography } from "@mui/joy";
+import { Alert, Card, Divider, Stack, Typography } from "@mui/joy";
 import { FC } from "react";
 import { usePyIOContext } from "./PyIOContext";
 
@@ -15,10 +15,10 @@ export const CodeResult: FC = () => {
       }}
     >
       <Stack sx={{ maxHeight: "500px" }}>
-        <Typography sx={{ mb: 1 }}>Output</Typography>
-        <Divider />
+        <Typography>Output</Typography>
+        <Divider sx={{ my: "1rem" }} />
         <Stack sx={{ overflow: "auto" }}>
-          {codeResult.map((line, i) => (
+          {codeResult.res.map((line, i) => (
             <Typography
               key={i}
               sx={{
@@ -30,6 +30,11 @@ export const CodeResult: FC = () => {
               {line}
             </Typography>
           ))}
+          {codeResult.pass === true && (
+            <Alert sx={{ mt: 2 }} color="success">
+              <Typography>Well Done!</Typography>
+            </Alert>
+          )}
         </Stack>
       </Stack>
     </Card>
