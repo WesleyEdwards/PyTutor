@@ -3,10 +3,17 @@ import { runCode, setEngine, setOptions } from "client-side-python-runner";
 import { FC, useEffect, useState } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { usePyIOContext } from "./PyIOContext";
-import { testCode } from "./utils";
+import { exercisesMod } from "./exercises/phanon-mod";
 
 export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
-  const { code, gradeResult, setError } = usePyIOContext();
+  const {
+    code,
+    gradeResult,
+    setError,
+    codeResult,
+    setCurrExercise,
+    currExercise,
+  } = usePyIOContext();
 
   const [pyResult, setPyResult] = useState<string[]>([]);
 
@@ -36,17 +43,35 @@ export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
   }, [trigger]);
 
   return (
-    <Stack sx={{ justifyContent: "flex-end", gap: "1rem" }}>
-      <IconButton
-        variant="solid"
-        onClick={runPythonCode}
-        disabled={!initialLoad}
-        sx={{
-          maxWidth: "12rem",
-        }}
-      >
-        <PlayArrowRoundedIcon />
-      </IconButton>
+    <Stack
+      direction="row"
+      sx={{ justifyContent: "flex-end", minWidth: "2rem", mb: "1rem" }}
+    >
+      {codeResult.pass ? (
+        <Button
+          onClick={() => {
+            setCurrExercise(
+              exercisesMod[
+                (exercisesMod.findIndex((x) => x.id === currExercise.id) ?? 0) +
+                  1
+              ]
+            );
+          }}
+        >
+          Next
+        </Button>
+      ) : (
+        <IconButton
+          variant="solid"
+          onClick={runPythonCode}
+          disabled={!initialLoad}
+          sx={{
+            maxWidth: "12rem",
+          }}
+        >
+          <PlayArrowRoundedIcon />
+        </IconButton>
+      )}
     </Stack>
   );
 };

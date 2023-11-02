@@ -24,8 +24,10 @@ function PythonIO() {
           gap="1rem"
           sx={{ margin: "2rem" }}
         >
-          <TextEditor isLoaded={() => setInitialLoad(true)} />
-          <RunCode initialLoad={initialLoad} />
+          <Stack>
+            <RunCode initialLoad={initialLoad} />
+            <TextEditor isLoaded={() => setInitialLoad(true)} />
+          </Stack>
           <CodeResult />
         </Stack>
       </Stack>
