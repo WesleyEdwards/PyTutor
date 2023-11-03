@@ -5,11 +5,12 @@ import { Divider, Stack } from "@mui/joy";
 import { PythonIOProvider } from "../pyIOContext/PythonIOProvider";
 import { useState } from "react";
 import { Instructions } from "../Instructions";
-import { FunctionGenerator } from "../FunctionGenerator";
-import { GptFunctions } from "../GptFunctions";
+import { FunctionGenerator } from "../AIFunctions/FunctionGenerator";
+import { GptFunctions } from "../AIFunctions/GptFunctions";
 
 function PythonIO() {
   const [initialLoad, setInitialLoad] = useState(false);
+
   return (
     <PythonIOProvider>
       <Stack direction="row" width="100%" gap="1rem" sx={{ p: "2rem" }}>

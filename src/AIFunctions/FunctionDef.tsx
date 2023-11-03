@@ -1,18 +1,12 @@
-import {
-  AccordionDetails,
-  Button,
-  FormControl,
-  FormLabel,
-  Textarea,
-} from "@mui/joy";
+import { Button, FormControl, FormLabel, Textarea } from "@mui/joy";
 import { FC, useState } from "react";
-import { GptFunction } from "./pyIOContext/PythonIOProvider";
+import { GptFunction } from "../pyIOContext/PythonIOProvider";
 
 export const FunctionDef: FC<{ gptFun: GptFunction }> = ({ gptFun }) => {
   const [implementation, setImplementation] = useState<string>();
 
   return (
-    <AccordionDetails>
+    <>
       {implementation !== undefined ? (
         <FormControl>
           <FormLabel>Your own code goes here...</FormLabel>
@@ -31,6 +25,6 @@ export const FunctionDef: FC<{ gptFun: GptFunction }> = ({ gptFun }) => {
           Implement
         </Button>
       )}
-    </AccordionDetails>
+    </>
   );
 };

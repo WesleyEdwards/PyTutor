@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/joy";
 import { FC } from "react";
-import { usePyIOContext } from "./pyIOContext/PyIOContext";
+import { usePyIOContext } from "../pyIOContext/PyIOContext";
 import CopyAll from "@mui/icons-material/CopyAll";
 import { FunctionDef } from "./FunctionDef";
 
@@ -35,7 +35,9 @@ export const GptFunctions: FC = () => {
           </IconButton>
           <Accordion sx={{ flex: 1 }}>
             <AccordionSummary>{gptFunction.def}</AccordionSummary>
-            <FunctionDef gptFun={gptFunction} />
+            <AccordionDetails>
+              <FunctionDef gptFun={gptFunction} />
+            </AccordionDetails>
           </Accordion>
         </Stack>
       ))}

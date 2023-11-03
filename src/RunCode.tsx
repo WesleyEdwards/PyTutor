@@ -43,7 +43,7 @@ export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
   return (
     <Stack
       direction="row"
-      sx={{ justifyContent: "flex-end", minWidth: "2rem", mb: "1rem" }}
+      sx={{ justifyContent: "flex-end", minWidth: "2rem"}}
     >
       <IconButton
         variant="solid"
