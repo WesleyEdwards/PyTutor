@@ -5,8 +5,8 @@ import {
   Sheet,
   ThemeProvider,
 } from "@mui/joy";
-import PythonIO from "./PythonIO";
-import { TopBar } from "./TopBar";
+import PythonIO from "./layout/PythonIO";
+import { TopBar } from "./layout/TopBar";
 
 const theme: CssVarsThemeOptions = {};
 
