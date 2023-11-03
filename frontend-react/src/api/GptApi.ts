@@ -13,7 +13,7 @@ export class GptApi {
   private backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   async getGptFunction(specs: string): Promise<GptFunctionRes> {
-    const functionRes = await fetch(`${this.backendUrl}/gpt-function`, {
+    const functionRes = await fetch(`${this.backendUrl}/gpt/function`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export class GptApi {
   }
 
   async getGptMockFunction(specs: string): Promise<GptFunctionRes> {
-    const functionRes = await fetch(`${this.backendUrl}/gpt-mock-function`, {
+    const functionRes = await fetch(`${this.backendUrl}/gpt/mock-function`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
