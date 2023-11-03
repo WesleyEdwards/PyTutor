@@ -16,23 +16,31 @@ export const FunctionGenerator = () => {
   const { gptApi, addGptFunction } = usePyIOContext();
 
   const [error, setError] = useState("");
-  const [mockEndpoint, setMockEndpoint] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [mockEndpoint, setMockEndpoint] = useState(
+    import.meta.env.MODE === "development"
+  );
 
-  const generateFunction = () => {
+  const generateFunction = async () => {
     setError("");
     const promise: Promise<GptFunctionRes> = mockEndpoint
       ? gptApi.getGptMockFunction(explanation)
       : gptApi.getGptFunction(explanation);
 
-    promise
-      .then((res) => {
-        addGptFunction({ ...res, _id: crypto.randomUUID() });
-      })
-      .catch(() => {
-        setError(
-          "Sorry, we couldn't generate a function for that. Please try again."
-        );
+    try {
+      setFetching(true);
+      const gptFun = await promise;
+      addGptFunction({
+        ...gptFun,
+        _id: crypto.randomUUID(),
+        explanation: explanation,
       });
+    } catch (e) {
+      setError(
+        "Sorry, we couldn't generate a function for that. Please try again."
+      );
+    }
+    setFetching(false);
   };
 
   return (
@@ -53,7 +61,13 @@ export const FunctionGenerator = () => {
           placeholder="Explanation"
         />
       </FormControl>
-      <Button onClick={generateFunction}>Generate</Button>
+      <Button
+        disabled={!explanation}
+        onClick={generateFunction}
+        loading={fetching}
+      >
+        Generate
+      </Button>
       {error && <Alert color="warning">{error}</Alert>}
     </Stack>
   );

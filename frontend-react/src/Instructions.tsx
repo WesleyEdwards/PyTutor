@@ -6,7 +6,6 @@ import {
   Card,
 } from "@mui/joy";
 import { FC } from "react";
-import "./Instructions.css";
 
 export const Instructions: FC = () => {
   return (

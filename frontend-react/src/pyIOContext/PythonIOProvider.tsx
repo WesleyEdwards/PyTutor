@@ -11,6 +11,7 @@ export type GptFunction = {
   def: string;
   code: string;
   implementation?: string;
+  explanation: string;
 };
 
 type PythonIOContextType = {

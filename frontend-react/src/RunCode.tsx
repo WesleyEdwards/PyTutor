@@ -10,15 +10,22 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { usePyIOContext } from "./pyIOContext/PyIOContext";
 
 export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
-  const { code, setCodeOutput } = usePyIOContext();
+  const { code, setCodeOutput, gptFunctions } = usePyIOContext();
 
   const [pyResult, setPyResult] = useState<string[]>([]);
   const [error, setError] = useState<PythonError>();
 
   const [trigger, setTrigger] = useState(0);
 
+  const createRunnableCode = ((): string => {
+    const gptCode = gptFunctions.reduce((acc, gptFunction) => {
+      return acc.concat(gptFunction.code);
+    }, "");
+    return gptCode.concat(code);
+  })();
+
   const runPythonCode = async () => {
-    await runCode(code);
+    await runCode(createRunnableCode);
     setTrigger((prev) => prev + 1);
   };
 
@@ -43,7 +50,7 @@ export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
   return (
     <Stack
       direction="row"
-      sx={{ justifyContent: "flex-end", minWidth: "2rem"}}
+      sx={{ justifyContent: "flex-end", minWidth: "2rem" }}
     >
       <IconButton
         variant="solid"
