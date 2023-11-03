@@ -1,23 +1,27 @@
-import { Card, Divider, Stack, Typography } from "@mui/joy";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionGroup,
+  AccordionSummary,
+  Card,
+} from "@mui/joy";
 import { FC } from "react";
-import { usePyIOContext } from "./PyIOContext";
-import Markdown from "react-markdown";
 import "./Instructions.css";
 
 export const Instructions: FC = () => {
-  const { currExercise } = usePyIOContext();
   return (
-    <Card
-      sx={{
-        width: "100%",
-        p: 1,
-        borderRadius: 10,
-        minHeight: "300px",
-      }}
-    >
-      <Typography>Instructions</Typography>
-      <Divider sx={{ my: "1rem" }} />
-      {Markdown({ children: currExercise.instructions })}
+    <Card sx={{ maxWidth: "1000px" }}>
+      <AccordionGroup size="lg">
+        <Accordion>
+          <AccordionSummary>Assignment Instructions</AccordionSummary>
+          <AccordionDetails>
+            Write a program that prints the numbers from 1 to 100. But for
+            multiples of three print “Fizz” instead of the number and for the
+            multiples of five print “Buzz”. For numbers which are multiples of
+            both three and five print “FizzBuzz”.
+          </AccordionDetails>
+        </Accordion>
+      </AccordionGroup>
     </Card>
   );
 };

@@ -1,12 +1,17 @@
 import { FC, useRef, useState, useEffect } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { useColorScheme } from "@mui/joy";
-import { usePyIOContext } from "./PyIOContext";
+import { usePyIOContext } from "./pyIOContext/PyIOContext";
+import { useMediaQuery } from "@mui/material";
 
-export const TextEditor: FC<{ isLoaded: () => void }> = ({
-  isLoaded,
-}) => {
-  const { code, setCode, resetEditorTrigger } = usePyIOContext();
+export const TextEditor: FC<{ isLoaded: () => void }> = ({ isLoaded }) => {
+  const { code, setCode } = usePyIOContext();
+
+  const smallScreen = useMediaQuery("(max-width: 1400px)");
+
+  const widthHeight = smallScreen
+    ? { width: 600, height: 500 }
+    : { width: 1000, height: 400 };
 
   const [editor, setEditor] =
     useState<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -21,10 +26,7 @@ export const TextEditor: FC<{ isLoaded: () => void }> = ({
         if (editor) return editor;
 
         const edit = monaco.editor.create(monacoEl.current!, {
-          dimension: {
-            height: 400,
-            width: 700,
-          },
+          dimension: widthHeight,
           autoDetectHighContrast: true,
           value: code,
           language: "python",
@@ -43,8 +45,8 @@ export const TextEditor: FC<{ isLoaded: () => void }> = ({
   }, [monacoEl.current]);
 
   useEffect(() => {
-    editor?.setValue(code);
-  }, [resetEditorTrigger]);
+    editor?.layout(widthHeight);
+  }, [smallScreen]);
 
   useEffect(() => {
     monaco.editor.setTheme(mode === "light" ? "vs-light" : "vs-dark");
