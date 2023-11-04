@@ -2,8 +2,8 @@ import { Typography } from "@mui/joy";
 import { FC, useState } from "react";
 import { usePyIOContext } from "../pyIOContext/PyIOContext";
 import { FunctionDef } from "./FunctionDef";
-import { GptFunction } from "../pyIOContext/PythonIOProvider";
 import { ImplementModal } from "./ImplementModal";
+import { GptFunction } from "../types";
 
 export const GptFunctions: FC = () => {
   const { gptFunctions } = usePyIOContext();

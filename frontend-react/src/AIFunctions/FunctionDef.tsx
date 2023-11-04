@@ -1,13 +1,15 @@
 import { IconButton, Stack, Typography } from "@mui/joy";
 import CopyAll from "@mui/icons-material/CopyAll";
 import CreateIcon from "@mui/icons-material/Create";
-import { FC, useState } from "react";
-import { GptFunction } from "../pyIOContext/PythonIOProvider";
+import { FC } from "react";
+import { useToast } from "../Toaster";
+import { GptFunction } from "../types";
 
 export const FunctionDef: FC<{
   gptFun: GptFunction;
   setEditing: () => void;
 }> = ({ gptFun, setEditing }) => {
+  const showToast = useToast();
   return (
     <>
       <Stack
@@ -19,6 +21,10 @@ export const FunctionDef: FC<{
         <Stack direction="row" alignItems="center" gap="1rem">
           <IconButton
             onClick={() => {
+              showToast({
+                message: "Copied to clipboard",
+                color: "success",
+              });
               navigator.clipboard.writeText(
                 gptFun.def.split("(")[0].replace("def ", "")
               );

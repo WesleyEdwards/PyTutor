@@ -63,12 +63,5 @@ export const gptFunction: GPTReq = (aiClient) => async (req, res) => {
   }
 };
 export const gptMockFunction: GPTReq = () => async (req, res) => {
-  const text = req.body.text;
-
-  if (typeof text !== "string" || !text) {
-    res.status(400).send("Invalid input");
-    return;
-  }
-
   res.send(getMockProcessedFunction());
 };

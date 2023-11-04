@@ -1,14 +1,12 @@
-export type GptFunctionRes = {
-  def: string;
-  code: string;
-  raw: string;
-};
+import { GptFunctionRes } from "../types";
+import { AiApi } from "./AiApi";
 
 const isFunctionRes = (x: any): x is GptFunctionRes => {
   return typeof x.def === "string" && typeof x.code === "string";
 };
 
-export class GptApi {
+export class GptApi implements AiApi {
+  name = "real";
   private token = import.meta.env.VITE_API_KEY;
   private backendUrl = import.meta.env.VITE_BACKEND_URL;
 

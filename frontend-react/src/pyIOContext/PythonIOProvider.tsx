@@ -1,17 +1,13 @@
 import { FC, ReactNode, createContext, useState } from "react";
 import { PythonError } from "client-side-python-runner";
 import { GptApi } from "../api/GptApi";
+import { GptFunction } from "../types";
+import { AiApi } from "../api/AiApi";
+import { MockApi } from "../api/mocks/mockApi";
 
 type CodeOutput = {
   res?: string[];
   error?: PythonError;
-};
-export type GptFunction = {
-  _id: string;
-  def: string;
-  code: string;
-  implementation?: string;
-  explanation: string;
 };
 
 type PythonIOContextType = {
@@ -19,7 +15,8 @@ type PythonIOContextType = {
   codeResult: CodeOutput;
   setCodeOutput: (props: { res?: string[]; error?: PythonError }) => void;
   setCode: (code: string) => void;
-  gptApi: GptApi;
+  aiapi: AiApi;
+  changeApi: (type: "mock" | "real") => void;
   gptFunctions: GptFunction[];
   addGptFunction: (props: GptFunction) => void;
   removeGptFunction: (props: GptFunction) => void;
@@ -31,9 +28,14 @@ export const PyIOContext = createContext<PythonIOContextType>(
 );
 
 export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [code, setCode] = useState<string>(`\n\ndef main():\n\tprint("Your code goes here")\n\n\n\nmain()`);
+  const [code, setCode] = useState<string>(
+    `\n\ndef main():\n\tprint("Your code goes here")\n\n\n\nmain()`
+  );
   const [codeResult, setCodeResult] = useState<CodeOutput>({});
   const [gptFunctions, setGptFunctions] = useState<GptFunction[]>([]);
+  const [aiapi, setAiapi] = useState<AiApi>(
+    localStorage.getItem("aiapi") === "mock" ? new MockApi() : new GptApi()
+  );
 
   const setCodeOutput = (props: CodeOutput) => {
     setCodeResult({ ...props });
@@ -52,6 +54,11 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
     );
   };
 
+  const changeApi = (type: "mock" | "real") => {
+    localStorage.setItem("aiapi", type);
+    setAiapi(type === "mock" ? new MockApi() : new GptApi());
+  };
+
   return (
     <PyIOContext.Provider
       value={{
@@ -59,7 +66,8 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setCode,
         codeResult,
         setCodeOutput,
-        gptApi: new GptApi(),
+        aiapi,
+        changeApi,
         gptFunctions,
         addGptFunction,
         removeGptFunction,

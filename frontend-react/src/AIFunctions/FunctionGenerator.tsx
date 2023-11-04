@@ -1,7 +1,6 @@
 import {
   Alert,
   Button,
-  Checkbox,
   FormControl,
   FormLabel,
   Stack,
@@ -9,27 +8,20 @@ import {
 } from "@mui/joy";
 import { useState } from "react";
 import { usePyIOContext } from "../pyIOContext/PyIOContext";
-import { GptFunctionRes } from "../api/GptApi";
 
 export const FunctionGenerator = () => {
   const [explanation, setExplanation] = useState<string>("");
-  const { gptApi, addGptFunction } = usePyIOContext();
+  const { aiapi, addGptFunction } = usePyIOContext();
 
   const [error, setError] = useState("");
   const [fetching, setFetching] = useState(false);
-  const [mockEndpoint, setMockEndpoint] = useState(
-    import.meta.env.MODE === "development"
-  );
 
   const generateFunction = async () => {
     setError("");
-    const promise: Promise<GptFunctionRes> = mockEndpoint
-      ? gptApi.getGptMockFunction(explanation)
-      : gptApi.getGptFunction(explanation);
 
     try {
       setFetching(true);
-      const gptFun = await promise;
+      const gptFun = await aiapi.getGptFunction(explanation);
       addGptFunction({
         ...gptFun,
         _id: crypto.randomUUID(),
@@ -45,13 +37,6 @@ export const FunctionGenerator = () => {
 
   return (
     <Stack spacing={2}>
-      {import.meta.env.MODE === "development" && (
-        <Checkbox
-          label="Mock endpoint"
-          checked={mockEndpoint}
-          onChange={(e) => setMockEndpoint(e.target.checked)}
-        />
-      )}
       <FormControl>
         <FormLabel>Write a function that...</FormLabel>
         <Textarea
