@@ -21,7 +21,7 @@ export const FunctionGenerator = () => {
 
     try {
       setFetching(true);
-      const gptFun = await aiapi.getGptMockFunction(explanation);
+      const gptFun = await aiapi.getGptFunction(explanation);
       addGptFunction({
         ...gptFun,
         _id: crypto.randomUUID(),

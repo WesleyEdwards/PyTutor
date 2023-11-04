@@ -6,15 +6,15 @@ import { Request, Response } from "express";
 type GPTReq = (aiClient: OpenAI) => (req: Request, res: Response) => void;
 
 export const gptRaw: GPTReq = (aiClient) => async (req, res) => {
-  const text = req.body.text;
+  const explanation = req.body.explanation;
 
-  if (typeof text !== "string") {
+  if (typeof explanation !== "string") {
     res.status(400).send("Invalid input");
     return;
   }
   try {
     const completion = await aiClient.chat.completions.create({
-      messages: [{ role: "system", content: text }],
+      messages: [{ role: "system", content: explanation }],
       model: "gpt-3.5-turbo",
     });
     if (completion.choices.length === 0) {
@@ -23,20 +23,19 @@ export const gptRaw: GPTReq = (aiClient) => async (req, res) => {
     }
     res.send(completion.choices[0]);
   } catch (err) {
-    console.log(err);
     res.status(400).send(err);
   }
 };
 
 export const gptFunction: GPTReq = (aiClient) => async (req, res) => {
-  const text = req.body.text;
+  const explanation = req.body.explanation;
 
-  if (typeof text !== "string" || !text) {
+  if (typeof explanation !== "string" || !explanation) {
     res.status(400).send("Invalid input");
     return;
   }
 
-  const instructions = generateInstructions(text);
+  const instructions = generateInstructions(explanation);
 
   try {
     const completion = await aiClient.chat.completions.create({
@@ -56,12 +55,12 @@ export const gptFunction: GPTReq = (aiClient) => async (req, res) => {
       });
       return;
     }
-    res.send({ ...pyFunction, raw: completion.choices[0] });
+    res.send({ ...pyFunction, explanation, raw: completion.choices[0] });
   } catch (err) {
-    console.log(err);
     res.status(400).send(err);
   }
 };
+
 export const gptMockFunction: GPTReq = () => async (req, res) => {
   res.send(getMockProcessedFunction());
 };

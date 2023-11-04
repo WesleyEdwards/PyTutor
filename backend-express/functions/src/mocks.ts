@@ -31,6 +31,7 @@ const mockCompletes: ChatCompletion.Choice[] = [
 export const getMockProcessedFunction = (): {
   def: string;
   code: string;
+  explanation: string;
 } => {
   const randomCompletion =
     mockCompletes[Math.floor(Math.random() * mockCompletes.length)];
@@ -38,5 +39,5 @@ export const getMockProcessedFunction = (): {
   if (typeof generated === "string") {
     throw new Error("Invalid mock completion");
   }
-  return generated;
+  return {...generated, explanation: "¯\_(ツ)_/¯",};
 };

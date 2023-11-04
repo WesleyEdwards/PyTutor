@@ -1,6 +1,7 @@
 export type GptFunctionRes = {
   def: string;
   code: string;
+  explanation: string;
   raw: any;
 };
 

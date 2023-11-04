@@ -10,14 +10,14 @@ export class GptApi implements AiApi {
   private token = import.meta.env.VITE_API_KEY;
   private backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  async getGptFunction(specs: string): Promise<GptFunctionRes> {
+  async getGptFunction(explanation: string): Promise<GptFunctionRes> {
     const functionRes = await fetch(`${this.backendUrl}/gpt/function`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.token}`,
       },
-      body: JSON.stringify({ text: specs }),
+      body: JSON.stringify({ explanation }),
     });
 
     const functionResJson = await functionRes.json();
