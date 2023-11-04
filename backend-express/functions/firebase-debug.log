@@ -1,0 +1,250 @@
+[debug] [2023-11-04T16:48:10.844Z] ----------------------------------------------------------------------
+[debug] [2023-11-04T16:48:10.845Z] Command:       /home/wesley/.nvm/versions/node/v16.15.1/bin/node /home/wesley/.nvm/versions/node/v16.15.1/bin/firebase emulators:start --only functions
+[debug] [2023-11-04T16:48:10.846Z] CLI Version:   12.7.0
+[debug] [2023-11-04T16:48:10.846Z] Platform:      linux
+[debug] [2023-11-04T16:48:10.846Z] Node Version:  v16.15.1
+[debug] [2023-11-04T16:48:10.846Z] Time:          Sat Nov 04 2023 10:48:10 GMT-0600 (Mountain Daylight Time)
+[debug] [2023-11-04T16:48:10.846Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-11-04T16:48:10.904Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-11-04T16:48:10.905Z] > authorizing via signed-in user (westheedwards@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2023-11-04T16:48:10.908Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-04T16:48:10.908Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-11-04T16:48:10.913Z] [hub] writing locator at /tmp/hub-py-tutor.json
+[debug] [2023-11-04T16:48:10.925Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-04T16:48:10.925Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-11-04T16:48:10.926Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub, storage\u001b[22m"}}
+[debug] [2023-11-04T16:48:10.929Z] defaultcredentials: writing to file /home/wesley/.config/firebase/westheedwards_gmail_com_application_default_credentials.json
+[debug] [2023-11-04T16:48:10.930Z] Setting GAC to /home/wesley/.config/firebase/westheedwards_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /home/wesley/.config/firebase/westheedwards_gmail_com_application_default_credentials.json"}}
+[debug] [2023-11-04T16:48:10.932Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/py-tutor/adminSdkConfig [none]
+[debug] [2023-11-04T16:48:10.933Z] *** [apiv2] error from fetch(https://firebase.googleapis.com/v1beta1/projects/py-tutor/adminSdkConfig, {"headers":{},"method":"GET"}): FetchError: request to https://firebase.googleapis.com/v1beta1/projects/py-tutor/adminSdkConfig failed, reason: getaddrinfo EAI_AGAIN firebase.googleapis.com
+[debug] [2023-11-04T16:48:10.933Z] Failed to get Admin SDK config for py-tutor, falling back to cache Failed to get Admin SDK for Firebase project py-tutor. Please make sure the project exists and your account has permission to access it. {"name":"FirebaseError","children":[],"exit":2,"message":"Failed to get Admin SDK for Firebase project py-tutor. Please make sure the project exists and your account has permission to access it.","original":{"name":"FirebaseError","children":[],"exit":1,"message":"Failed to make request to https://firebase.googleapis.com/v1beta1/projects/py-tutor/adminSdkConfig","original":{"message":"request to https://firebase.googleapis.com/v1beta1/projects/py-tutor/adminSdkConfig failed, reason: getaddrinfo EAI_AGAIN firebase.googleapis.com","type":"system","errno":"EAI_AGAIN","code":"EAI_AGAIN"},"status":500},"status":500}
+[debug] [2023-11-04T16:48:10.940Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-11-04T16:48:10.940Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-11-04T16:48:10.940Z] Starting Emulator UI with command {"binary":"node","args":["/home/wesley/.cache/firebase/emulators/ui-v1.11.7/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/home/wesley/.cache/firebase/emulators/ui-v1.11.7/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-11-04T16:48:11.016Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-11-04T16:48:11.016Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "/home/wesley/school/ai-apps/pyTutor/backend-express/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/home/wesley/school/ai-apps/pyTutor/backend-express/functions\" for Cloud Functions..."}}
+[debug] [2023-11-04T16:48:11.215Z] Validating nodejs source
+[debug] [2023-11-04T16:48:21.235Z] checkFunctionsSDKVersion was unable to fetch information from NPM Error: spawnSync npm ETIMEDOUT
+    at Object.spawnSync (node:internal/child_process:1111:20)
+    at Object.spawnSync (node:child_process:814:24)
+    at Function.spawnSync [as sync] (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/node_modules/cross-spawn/index.js:26:23)
+    at Object.getLatestSDKVersion (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/deploy/functions/runtimes/node/versioning.js:54:25)
+    at Object.checkFunctionsSDKVersion (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/deploy/functions/runtimes/node/versioning.js:74:32)
+    at Delegate.validate (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/deploy/functions/runtimes/node/index.js:84:20)
+    at FunctionsEmulator.discoverTriggers (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/emulator/functionsEmulator.js:296:35)
+    at async FunctionsEmulator.loadTriggers (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/emulator/functionsEmulator.js:325:34)
+    at async FunctionsEmulator.connect (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/emulator/functionsEmulator.js:262:13)
+    at async Object.startAll (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/emulator/controller.js:565:13)
+[debug] [2023-11-04T16:48:21.237Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "openai": "^4.14.2",
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "@types/cors": "^2.8.15",
+    "@types/express": "^4.17.20",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2023-11-04T16:48:21.238Z] Building nodejs source
+[debug] [2023-11-04T16:48:21.239Z] Failed to find version of module node: reached end of search path /home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "18" doesn't match your global version "16". Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-11-04T16:48:21.247Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-11-04T16:48:21.252Z] Found firebase-functions binary at '/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8952
+
+[debug] [2023-11-04T16:48:21.507Z] Got response from /__/functions.yaml {"endpoints":{"api":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"api"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] ✔  functions: Loaded functions definitions from source: api. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: api."}}
+[info] ✔  functions[us-central1-api]: http function initialized (http://127.0.0.1:5001/py-tutor/us-central1/api). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/py-tutor/us-central1/api)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-11-04T16:49:08.720Z] [work-queue] {"queuedWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:08.719Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:08.721Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:08.719Z"],"workRunningCount":1}
+[debug] [2023-11-04T16:49:08.722Z] Accepted request OPTIONS /py-tutor/us-central1/api/gpt/mock-function --> us-central1-api
+[debug] [2023-11-04T16:49:08.724Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-11-04T16:49:08.725Z] [functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-11-04T16:49:08.740Z] [worker-pool] addWorker(us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-api)"}}
+[debug] [2023-11-04T16:49:08.741Z] [worker-pool] Adding worker with key us-central1-api, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-api, total=1"}}
+[debug] [2023-11-04T16:49:09.244Z] [runtime-status] [71389] Resolved module firebase-admin {"declared":true,"installed":true,"version":"11.11.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"11.11.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.244Z] [runtime-status] [71389] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.5.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.5.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.246Z] [runtime-status] [71389] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2023-11-04T16:49:09.246Z] [runtime-status] [71389] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.5.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.5.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.345Z] [runtime-status] [71389] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Checked functions.config() {\"config\":{}}"}}
+[debug] [2023-11-04T16:49:09.345Z] [runtime-status] [71389] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"4.5.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"4.5.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js\"}}"}}
+[debug] [2023-11-04T16:49:09.347Z] [runtime-status] [71389] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.5.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.5.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.347Z] [runtime-status] [71389] Resolved module firebase-admin {"declared":true,"installed":true,"version":"11.11.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"11.11.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.349Z] [runtime-status] [71389] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.5.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.5.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-11-04T16:49:09.349Z] [runtime-status] [71389] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"11.11.0","resolution":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"11.11.0\",\"resolution\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2023-11-04T16:49:09.431Z] [runtime-status] [71389] Functions runtime initialized. {"cwd":"/home/wesley/school/ai-apps/pyTutor/backend-express/functions","node_version":"16.15.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Functions runtime initialized. {\"cwd\":\"/home/wesley/school/ai-apps/pyTutor/backend-express/functions\",\"node_version\":\"16.15.1\"}"}}
+[debug] [2023-11-04T16:49:09.431Z] [runtime-status] [71389] Listening to port: /tmp/fire_emu_1a6779267fa7cad8.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[runtime-status] [71389] Listening to port: /tmp/fire_emu_1a6779267fa7cad8.sock"}}
+[debug] [2023-11-04T16:49:09.455Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE"}}
+[debug] [2023-11-04T16:49:09.457Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2023-11-04T16:49:09.458Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY"}}
+[debug] [2023-11-04T16:49:09.462Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 4.573841ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 4.573841ms"}}
+[debug] [2023-11-04T16:49:09.463Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE"}}
+[debug] [2023-11-04T16:49:09.463Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2023-11-04T16:49:09.463Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2023-11-04T16:49:09.464Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:09.465Z] [work-queue] {"queuedWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:09.465Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:09.465Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:09.465Z"],"workRunningCount":1}
+[debug] [2023-11-04T16:49:09.465Z] Accepted request POST /py-tutor/us-central1/api/gpt/mock-function --> us-central1-api
+[debug] [2023-11-04T16:49:09.466Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-11-04T16:49:09.466Z] [functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function"}}
+[debug] [2023-11-04T16:49:09.466Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2023-11-04T16:49:09.466Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY"}}
+[debug] [2023-11-04T16:49:09.485Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 18.63741ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 18.63741ms"}}
+[debug] [2023-11-04T16:49:09.485Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE"}}
+[debug] [2023-11-04T16:49:09.485Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2023-11-04T16:49:09.485Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2023-11-04T16:49:09.485Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:11.388Z] [work-queue] {"queuedWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:11.388Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:11.388Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:11.388Z"],"workRunningCount":1}
+[debug] [2023-11-04T16:49:11.388Z] Accepted request POST /py-tutor/us-central1/api/gpt/mock-function --> us-central1-api
+[debug] [2023-11-04T16:49:11.390Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-11-04T16:49:11.390Z] [functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function"}}
+[debug] [2023-11-04T16:49:11.390Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2023-11-04T16:49:11.390Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY"}}
+[debug] [2023-11-04T16:49:11.395Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-api" in 5.021292ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finished \"us-central1-api\" in 5.021292ms"}}
+[debug] [2023-11-04T16:49:11.396Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: IDLE"}}
+[debug] [2023-11-04T16:49:11.396Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2023-11-04T16:49:11.396Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2023-11-04T16:49:11.396Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:13.361Z] [work-queue] {"queuedWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:13.361Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:49:13.362Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/py-tutor/us-central1/api/gpt/mock-function-2023-11-04T16:49:13.361Z"],"workRunningCount":1}
+[debug] [2023-11-04T16:49:13.362Z] Accepted request GET /py-tutor/us-central1/api/gpt/mock-function --> us-central1-api
+[debug] [2023-11-04T16:49:13.363Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-11-04T16:49:13.363Z] [functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/py-tutor/us-central1/api/gpt/mock-function, mapping to path=/gpt/mock-function"}}
+[debug] [2023-11-04T16:49:13.363Z] [worker-pool] submitRequest(triggerId=us-central1-api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-api)"}}
+[info] i  functions: Beginning execution of "us-central1-api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Beginning execution of \"us-central1-api\""}}
+[debug] [2023-11-04T16:49:13.364Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: BUSY"}}
+[error] i  Your function timed out after ~60s. To configure this timeout, see
+      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Your function timed out after ~60s. To configure this timeout, see\n      https://firebase.google.com/docs/functions/manage-functions#set_timeout_and_memory_allocation."}}
+[error] i  Request to function failed: Error: socket hang up {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"Request to function failed: Error: socket hang up"}}
+[debug] [2023-11-04T16:50:13.374Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-11-04T16:50:13.380Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: exited"}}
+[debug] [2023-11-04T16:50:13.380Z] [worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-api"},"extension":{},"message":"[worker-us-central1-api-b9ada019-8717-4cd5-8b87-76dbaf10dfe8]: FINISHED"}}
+[debug] [2023-11-04T16:50:17.951Z] File /home/wesley/school/ai-apps/pyTutor/backend-express/functions/src/index.ts changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /home/wesley/school/ai-apps/pyTutor/backend-express/functions/src/index.ts changed, reloading triggers"}}
+[debug] [2023-11-04T16:50:18.953Z] Validating nodejs source
+[debug] [2023-11-04T16:50:24.264Z] checkFunctionsSDKVersion encountered error: Unexpected end of JSON input {}
+[debug] [2023-11-04T16:50:24.265Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "openai": "^4.14.2",
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "@types/cors": "^2.8.15",
+    "@types/express": "^4.17.20",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2023-11-04T16:50:24.265Z] Building nodejs source
+[debug] [2023-11-04T16:50:24.265Z] Failed to find version of module node: reached end of search path /home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "18" doesn't match your global version "16". Using node@16 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-11-04T16:50:24.267Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-11-04T16:50:24.270Z] Found firebase-functions binary at '/home/wesley/school/ai-apps/pyTutor/backend-express/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-11-04T16:50:24.282Z] Received signal SIGINT (Ctrl-C) 1
+[info]  
+[info] i  emulators: Received SIGINT (Ctrl-C) for the first time. Starting a clean shutdown. 
+[info] i  emulators: Please wait for a clean shutdown or send the SIGINT (Ctrl-C) signal again to stop right now. 
+[info] i  emulators: Shutting down emulators. {"metadata":{"emulator":{"name":"hub"},"message":"Shutting down emulators."}}
+[info] i  ui: Stopping Emulator UI {"metadata":{"emulator":{"name":"ui"},"message":"Stopping Emulator UI"}}
+[warn] ⚠  Emulator UI has exited upon receiving signal: SIGINT 
+[info] i  functions: Stopping Functions Emulator {"metadata":{"emulator":{"name":"functions"},"message":"Stopping Functions Emulator"}}
+[info] i  eventarc: Stopping Eventarc Emulator {"metadata":{"emulator":{"name":"eventarc"},"message":"Stopping Eventarc Emulator"}}
+[info] i  hub: Stopping emulator hub {"metadata":{"emulator":{"name":"hub"},"message":"Stopping emulator hub"}}
+[info] i  logging: Stopping Logging Emulator {"metadata":{"emulator":{"name":"logging"},"message":"Stopping Logging Emulator"}}
+[info] Serving at port 8296
+
+[debug] [2023-11-04T16:50:24.548Z] Got response from /__/functions.yaml {"endpoints":{"api":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"api"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-11-04T16:50:34.306Z] Error: Timed out.
+    at Timeout._onTimeout (/home/wesley/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/utils.js:254:49)
+    at listOnTimeout (node:internal/timers:559:17)
+    at processTimers (node:internal/timers:502:7)
+[error] 
+[error] Error: An unexpected error has occurred.
