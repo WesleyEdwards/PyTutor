@@ -80,6 +80,20 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "a function that prints out the longest word in an array of words",
   },
+  {
+    def: "def print_datetime():",
+    code: "\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(str(current_datetime))\n",
+    raw: {
+      index: 0,
+      message: {
+        role: "assistant",
+        content:
+          "# Start\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(str(current_datetime))\n# End",
+      },
+      finish_reason: "stop",
+    },
+    explanation: "make a function that prints the current time and date",
+  },
 ];
 
 export const getRandomMockFunction = (): GptFunctionRes => {

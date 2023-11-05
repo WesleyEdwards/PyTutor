@@ -10,34 +10,44 @@ export class GptApi implements AiApi {
   private token = import.meta.env.VITE_API_KEY;
   private backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  async getGptFunction(explanation: string): Promise<GptFunctionRes> {
-    const functionRes = await fetch(`${this.backendUrl}/gpt/function`, {
-      method: "POST",
+  async apiCall(params: {
+    body: { [key: string]: unknown };
+    method: "POST" | "GET";
+    path: string;
+  }): Promise<string> {
+    const { body, method, path } = params;
+    const response = await fetch(`${this.backendUrl}/${path}`, {
+      method,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.token}`,
       },
-      body: JSON.stringify({ explanation }),
+      body: JSON.stringify(body),
     });
 
-    const functionResJson = await functionRes.json();
+    const json = await response.json();
+    return json;
+  }
+
+  async getGptFunction(explanation: string): Promise<GptFunctionRes> {
+    const functionResJson = await this.apiCall({
+      body: { explanation },
+      method: "POST",
+      path: "gpt/function",
+    });
     if (!isFunctionRes(functionResJson)) {
       throw new Error("Invalid response from server");
     }
     return functionResJson;
   }
 
-  async getGptMockFunction(specs: string): Promise<GptFunctionRes> {
-    const functionRes = await fetch(`${this.backendUrl}/gpt/mock-function`, {
+  async getGptMockFunction(explanation: string): Promise<GptFunctionRes> {
+    const functionResJson = await this.apiCall({
+      body: { explanation },
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-      body: JSON.stringify({ text: specs }),
+      path: "gpt/mock-function",
     });
 
-    const functionResJson = await functionRes.json();
     if (!isFunctionRes(functionResJson)) {
       throw new Error("Invalid response from server");
     }
