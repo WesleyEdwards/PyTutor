@@ -16,13 +16,16 @@ export const FunctionGenerator = () => {
   const [error, setError] = useState("");
   const [fetching, setFetching] = useState(false);
 
+  const checkRepeatEx = aiapi.name !== "mock";
+
   const generateFunction = async () => {
     setError("");
 
-    if (!explanation) return setError("Please enter an explanation.");
+    if (!explanation && checkRepeatEx)
+      return setError("Please enter an explanation.");
     if (
       gptFunctions.find((f) => f.explanation === explanation) &&
-      aiapi.name !== "mock"
+      checkRepeatEx
     ) {
       return setError("You've already generated a function for that.");
     }
@@ -35,7 +38,7 @@ export const FunctionGenerator = () => {
         return setError("You've already generated a function for that.");
       }
 
-      addGptFunction({ ...gptFun, explanation, _id: crypto.randomUUID() });
+      addGptFunction({ ...gptFun, _id: crypto.randomUUID() });
     } catch (e) {
       setError(
         "Sorry, we couldn't generate a function for that. Please try again."

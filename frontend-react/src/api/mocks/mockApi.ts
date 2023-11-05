@@ -4,11 +4,16 @@ import { getRandomMockFunction } from "./mockGptRes";
 
 export class MockApi implements AiApi {
   name = "mock";
+  alreadyGenerated: GptFunctionRes[] = [];
+
   async getGptFunction(): Promise<GptFunctionRes> {
-    return Promise.resolve(getRandomMockFunction());
+    const randomMockFunction = getRandomMockFunction(this.alreadyGenerated);
+    if (!randomMockFunction) return Promise.reject();
+    this.alreadyGenerated.push(randomMockFunction);
+    return Promise.resolve(randomMockFunction);
   }
 
   async getGptMockFunction(): Promise<GptFunctionRes> {
-    return Promise.resolve(getRandomMockFunction());
+    return Promise.reject();
   }
 }

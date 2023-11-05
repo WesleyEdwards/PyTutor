@@ -10,7 +10,7 @@ import { usePyIOContext } from "../pyIOContext/PyIOContext";
 export const useRunCode = () => {
   const { code, setCodeOutput, gptFunctions } = usePyIOContext();
 
-  const [pyResult, setPyResult] = useState<string[]>([]);
+  const [pyResult, setPyResult] = useState("");
   const [error, setError] = useState<PythonError>();
   const [runFromKeyBoard, setRunFromKeyBoard] = useState(false);
 
@@ -32,12 +32,11 @@ export const useRunCode = () => {
     setOptions({
       output: (data) => {
         setError(undefined);
-        setPyResult((prev) => prev.concat(data.replace("\n", "")));
+        setPyResult(data);
         setTrigger((prev) => prev + 1);
       },
       error: (e) => {
         setError(e);
-        console.log(e);
         setTrigger((prev) => prev + 1);
       },
     });
@@ -45,7 +44,7 @@ export const useRunCode = () => {
 
   useEffect(() => {
     setCodeOutput({ res: pyResult, error });
-    setPyResult([]);
+    setPyResult("");
   }, [trigger]);
 
   useEffect(() => {

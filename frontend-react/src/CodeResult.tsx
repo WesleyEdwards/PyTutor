@@ -3,10 +3,10 @@ import { FC } from "react";
 import { usePyIOContext } from "./pyIOContext/PyIOContext";
 
 export const CodeResult: FC = () => {
-  const { codeResult } = usePyIOContext();
+  const { codeOutput } = usePyIOContext();
 
   // For Sculpt and Brython, the error is a string, not an Error object.
-  const errorMessage = codeResult?.error?.error as unknown as string;
+  const errorMessage = codeOutput?.error?.error as unknown as string;
 
   return (
     <Card
@@ -21,35 +21,16 @@ export const CodeResult: FC = () => {
         <Typography>Output</Typography>
         <Divider sx={{ my: "1rem" }} />
         <Stack sx={{ overflow: "auto" }}>
-          {(() => {
-            if (codeResult.error) {
-              return (
-                <Typography
-                  sx={{
-                    fontFamily: "monospace",
-                    whiteSpace: "pre",
-                    maxWidth: "100%",
-                    color: "#d10000",
-                  }}
-                >
-                  {errorMessage}
-                </Typography>
-              );
-            }
-
-            return codeResult.res?.map((line, i) => (
-              <Typography
-                key={i}
-                sx={{
-                  fontFamily: "monospace",
-                  whiteSpace: "pre",
-                  maxWidth: "100%",
-                }}
-              >
-                {line}
-              </Typography>
-            ));
-          })()}
+          <Typography
+            sx={{
+              fontFamily: "monospace",
+              whiteSpace: "pre",
+              maxWidth: "100%",
+              color: codeOutput.error ? "#d10000" : undefined,
+            }}
+          >
+            {codeOutput.res ? codeOutput.res : errorMessage}
+          </Typography>
         </Stack>
       </Stack>
     </Card>

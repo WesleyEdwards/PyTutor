@@ -96,6 +96,17 @@ const mockFunctions: GptFunctionRes[] = [
   },
 ];
 
-export const getRandomMockFunction = (): GptFunctionRes => {
-  return mockFunctions[Math.floor(Math.random() * mockFunctions.length)];
+export const getRandomMockFunction = (
+  prevUsed: GptFunctionRes[]
+): GptFunctionRes | null => {
+  if (prevUsed.length === mockFunctions.length) {
+    return null;
+  }
+  const prevDefs = prevUsed.map((p) => p.def);
+
+  const notUsed = mockFunctions.filter((f) => !prevDefs.includes(f.def));
+
+  const random = notUsed[Math.floor(Math.random() * notUsed.length)];
+
+  return random;
 };

@@ -1,15 +1,14 @@
 import { FC, useState } from "react";
-import { GptFunction } from "../pyIOContext/PythonIOProvider";
 import {
   Modal,
-  ModalClose,
   ModalDialog,
   FormControl,
-  FormLabel,
   Textarea,
   DialogTitle,
   DialogContent,
+  ModalClose,
 } from "@mui/joy";
+import { GptFunction } from "../types";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;
@@ -17,11 +16,10 @@ export const ImplementModal: FC<{
 }> = ({ fun, closeModal }) => {
   const [implementation, setImplementation] = useState<string>();
 
-
   return (
     <Modal open={!!fun} onClose={closeModal}>
       <ModalDialog sx={{ p: "2rem", minWidth: "600px" }}>
-        {/* <ModalClose /> */}
+        <ModalClose />
         <DialogTitle>Implement {fun?.def}</DialogTitle>
         <DialogContent>{fun?.explanation}</DialogContent>
         <FormControl>

@@ -6,14 +6,14 @@ import { AiApi } from "../api/AiApi";
 import { MockApi } from "../api/mocks/mockApi";
 
 type CodeOutput = {
-  res?: string[];
+  res?: string;
   error?: PythonError;
 };
 
 type PythonIOContextType = {
   code: string;
-  codeResult: CodeOutput;
-  setCodeOutput: (props: { res?: string[]; error?: PythonError }) => void;
+  codeOutput: CodeOutput;
+  setCodeOutput: (props: { res?: string; error?: PythonError }) => void;
   setCode: (code: string) => void;
   aiapi: AiApi;
   changeApi: (type: "mock" | "real") => void;
@@ -31,7 +31,7 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [code, setCode] = useState<string>(
     `\n\ndef main():\n\tprint("Your code goes here")\n\n\n\nmain()`
   );
-  const [codeResult, setCodeResult] = useState<CodeOutput>({});
+  const [codeOutput, setCodeOutput] = useState<CodeOutput>({});
   const [gptFunctions, setGptFunctions] = useState<GptFunction[]>([]);
   const [aiapi, setAiapi] = useState<AiApi>(
     localStorage.getItem("aiapi") === "mock" ? new MockApi() : new GptApi()
@@ -60,8 +60,8 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         code,
         setCode,
-        codeResult,
-        setCodeOutput: setCodeResult,
+        codeOutput,
+        setCodeOutput,
         aiapi,
         changeApi,
         gptFunctions,
