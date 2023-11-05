@@ -37,10 +37,6 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
     localStorage.getItem("aiapi") === "mock" ? new MockApi() : new GptApi()
   );
 
-  const setCodeOutput = (props: CodeOutput) => {
-    setCodeResult({ ...props });
-  };
-
   const addGptFunction = (props: GptFunction) => {
     setGptFunctions((prev) => [...prev, props]);
   };
@@ -65,7 +61,7 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
         code,
         setCode,
         codeResult,
-        setCodeOutput,
+        setCodeOutput: setCodeResult,
         aiapi,
         changeApi,
         gptFunctions,

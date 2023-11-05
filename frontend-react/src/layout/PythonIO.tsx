@@ -2,12 +2,10 @@ import { TextEditor } from "../TextEditor";
 import { RunCode } from "../RunCode";
 import { CodeResult } from "../CodeResult";
 import { Divider, Stack } from "@mui/joy";
-import { PythonIOProvider } from "../pyIOContext/PythonIOProvider";
 import { useState } from "react";
 import { Instructions } from "../Instructions";
 import { FunctionGenerator } from "../AIFunctions/FunctionGenerator";
 import { GptFunctions } from "../AIFunctions/GptFunctions";
-import { ToastProvider } from "../Toaster";
 
 function PythonIO() {
   const [initialLoad, setInitialLoad] = useState(false);

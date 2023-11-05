@@ -82,13 +82,13 @@ const mockFunctions: GptFunctionRes[] = [
   },
   {
     def: "def print_datetime():",
-    code: "\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(str(current_datetime))\n",
+    code: "\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(current_datetime)\n",
     raw: {
       index: 0,
       message: {
         role: "assistant",
         content:
-          "# Start\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(str(current_datetime))\n# End",
+          "# Start\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(current_datetime)\n# End",
       },
       finish_reason: "stop",
     },

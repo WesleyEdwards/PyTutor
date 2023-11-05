@@ -28,7 +28,7 @@ export const useRunCode = () => {
   };
 
   useEffect(() => {
-    setEngine("pyodide");
+    setEngine("skulpt");
     setOptions({
       output: (data) => {
         setError(undefined);
@@ -37,6 +37,8 @@ export const useRunCode = () => {
       },
       error: (e) => {
         setError(e);
+        console.log(e);
+        setTrigger((prev) => prev + 1);
       },
     });
   }, []);
