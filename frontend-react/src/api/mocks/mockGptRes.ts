@@ -16,83 +16,52 @@ const mockFunctions: GptFunctionRes[] = [
     def: "def add_numbers(a, b):",
     code: "\ndef add_numbers(a, b):\n    return a + b\n",
     explanation: "A function that adds two numbers together",
-    raw: {
-      message: {
-        content: "# Start\ndef add_numbers(a, b):\n    return a + b\n# End",
-      },
-    },
+    raw: null,
   },
   {
     def: "def subtract_numbers(a, b):",
     code: "\ndef subtract_numbers(a, b):\n    return a - b\n",
     explanation: "Write a function that subtracts two numbers",
-    raw: {
-      message: {
-        content:
-          "# Start\ndef subtract_numbers(a, b):\n    return a - b\n# End",
-      },
-    },
+    raw: null,
   },
   {
     def: "def divide_numbers(a, b):",
     code: "\ndef divide_numbers(a, b):\n    return a / b\n",
     explanation: "A function that divides two numbers",
-    raw: {
-      message: {
-        content: "# Start\ndef divide_numbers(a, b):\n    return a / b\n# End",
-      },
-    },
+    raw: null,
   },
   {
     def: "def split_sentence(sentence):",
     code: '\ndef split_sentence(sentence):\n    words = sentence.split(" ")\n    return words\n',
     explanation:
       "A function that splits a sentence into words, given a sentence as input and returning a list of words",
-    raw: {
-      message: {
-        content:
-          '# Start\ndef split_sentence(sentence):\n    words = sentence.split(" ")\n    return words\n# End',
-      },
-    },
+    raw: null,
   },
   {
     def: "def print_words(words):",
     code: '\ndef print_words(words):\n    print(" ".join(words))\n',
     explanation:
       "A function that prints a list of words, given a list of words as input and returning nothing",
-    raw: {
-      message: {
-        content:
-          '# Start\ndef print_words(words):\n    print(" ".join(words))\n# End',
-      },
-    },
+    raw: null,
   },
   {
     def: "def longest_word(words):",
     code: "\ndef longest_word(words):\n    longest = ''\n    for word in words:\n        if len(word) > len(longest):\n            longest = word\n    print(longest)\n",
-    raw: {
-      index: 0,
-      message: {
-        content:
-          "# Start\ndef longest_word(words):\n    longest = ''\n    for word in words:\n        if len(word) > len(longest):\n            longest = word\n    print(longest)\n# End",
-      },
-    },
+    raw: null,
     explanation:
       "a function that prints out the longest word in an array of words",
   },
   {
     def: "def print_datetime():",
     code: "\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(current_datetime)\n",
-    raw: {
-      index: 0,
-      message: {
-        role: "assistant",
-        content:
-          "# Start\nimport datetime\n\ndef print_datetime():\n    current_datetime = datetime.datetime.now()\n    print(current_datetime)\n# End",
-      },
-      finish_reason: "stop",
-    },
+    raw: null,
     explanation: "make a function that prints the current time and date",
+  },
+  {
+    def: "def find_first_30_primes():",
+    code: "\n\ndef find_first_30_primes():\n    primes = []\n    num = 2\n    \n    while len(primes) < 30:\n        is_prime = True\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(num)\n        num += 1\n    \n    return primes\n\n",
+    raw: null,
+    explanation: "Write a function that finds the first 30 prime numbers",
   },
 ];
 
