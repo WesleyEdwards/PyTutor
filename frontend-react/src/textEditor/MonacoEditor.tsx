@@ -1,10 +1,10 @@
 import { FC, useRef, useState, useEffect } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { useColorScheme } from "@mui/joy";
-import { usePyIOContext } from "./pyIOContext/PyIOContext";
+import { usePyIOContext } from "../pyIOContext/PyIOContext";
 import { useMediaQuery } from "@mui/material";
 
-export const TextEditor: FC<{ isLoaded: () => void }> = ({ isLoaded }) => {
+export const MonacoEditor: FC<{ isLoaded: () => void }> = ({ isLoaded }) => {
   const { code, setCode } = usePyIOContext();
 
   const smallScreen = useMediaQuery("(max-width: 1400px)");

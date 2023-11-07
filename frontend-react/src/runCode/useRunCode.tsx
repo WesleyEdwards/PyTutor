@@ -15,7 +15,7 @@ export const useRunCode = () => {
   };
 
   const runPythonCode = () => {
-    appendOutput(null)
+    appendOutput(null);
     setOutputError(undefined);
     runCode(createRunnableCode(code));
   };
@@ -41,7 +41,7 @@ export const useRunCode = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "Enter") {
+      if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
         setRunFromKeyBoard(true);
       }
     };
