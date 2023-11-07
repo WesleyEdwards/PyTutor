@@ -63,6 +63,13 @@ const mockFunctions: GptFunctionRes[] = [
     raw: null,
     explanation: "Write a function that finds the first 30 prime numbers",
   },
+  {
+    def: "def quicksort(arr):",
+    code: "\ndef quicksort(arr):\n    if len(arr) <= 1:\n        return arr\n    pivot = arr[len(arr)//2]\n    left = [x for x in arr if x < pivot]\n    middle = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    return quicksort(left) + middle + quicksort(right)\n",
+    raw: null,
+    explanation:
+      "write a function that sorts a list of numbers using the quicksort algorithm",
+  },
 ];
 
 export const getRandomMockFunction = (

@@ -18,7 +18,7 @@ export const ImplementModal: FC<{
 
   return (
     <Modal open={!!fun} onClose={closeModal}>
-      <ModalDialog sx={{ p: "2rem", minWidth: "600px" }}>
+      <ModalDialog sx={{ p: "2rem" }} size="lg">
         <ModalClose />
         <DialogTitle>Implement {fun?.def}</DialogTitle>
         <DialogContent>{fun?.explanation}</DialogContent>

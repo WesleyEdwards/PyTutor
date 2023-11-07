@@ -1,20 +1,11 @@
-import {
-  PythonError,
-  runCode,
-  setEngine,
-  setOptions,
-} from "client-side-python-runner";
+import { runCode, setEngine, setOptions } from "client-side-python-runner";
 import { useEffect, useState } from "react";
 import { usePyIOContext } from "../pyIOContext/PyIOContext";
 
 export const useRunCode = () => {
-  const { code, setCodeOutput, gptFunctions } = usePyIOContext();
+  const { code, appendOutput, setOutputError, gptFunctions } = usePyIOContext();
 
-  const [pyResult, setPyResult] = useState("");
-  const [error, setError] = useState<PythonError>();
   const [runFromKeyBoard, setRunFromKeyBoard] = useState(false);
-
-  const [trigger, setTrigger] = useState(0);
 
   const createRunnableCode = (code: string): string => {
     const gptCode = gptFunctions.reduce((acc, gptFunction) => {
@@ -24,6 +15,8 @@ export const useRunCode = () => {
   };
 
   const runPythonCode = () => {
+    appendOutput(null)
+    setOutputError(undefined);
     runCode(createRunnableCode(code));
   };
 
@@ -31,21 +24,13 @@ export const useRunCode = () => {
     setEngine("skulpt");
     setOptions({
       output: (data) => {
-        setError(undefined);
-        setPyResult(data);
-        setTrigger((prev) => prev + 1);
+        appendOutput(data);
       },
       error: (e) => {
-        setError(e);
-        setTrigger((prev) => prev + 1);
+        setOutputError(e);
       },
     });
   }, []);
-
-  useEffect(() => {
-    setCodeOutput({ res: pyResult, error });
-    setPyResult("");
-  }, [trigger]);
 
   useEffect(() => {
     if (runFromKeyBoard) {
