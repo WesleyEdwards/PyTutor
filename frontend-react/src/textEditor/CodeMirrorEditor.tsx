@@ -1,24 +1,30 @@
 import { FC, useCallback } from "react";
 import CodeMirror, { ReactCodeMirrorProps } from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { useColorScheme } from "@mui/joy";
 
-export const CodeMirrorEditor: FC = () => {
-  const { code, setCode } = usePyIOContext();
+interface CodeMirrorEditorProps extends ReactCodeMirrorProps {
+  value: string;
+  onChange: (val: string) => void;
+}
 
-  const onChangeFun: ReactCodeMirrorProps["onChange"] = (val, _) => {
-    setCode(val);
-  };
+export const CodeMirrorEditor: FC<CodeMirrorEditorProps> = (props) => {
+  const { value, onChange, ...rest } = props;
 
-  const onChange = useCallback(onChangeFun, []);
+  const onChangeMirrorCode = useCallback(onChange, []);
+  const { mode } = useColorScheme();
 
   return (
     <CodeMirror
-      value={code}
-      height="600px"
+      {...rest}
+      value={value}
+      basicSetup={{
+        tabSize: 4,
+        completionKeymap: false,
+      }}
       extensions={[python()]}
-      onChange={onChange}
-      theme={"dark"}
+      onChange={onChangeMirrorCode}
+      theme={mode === "light" ? "light" : "dark"}
     />
   );
 };

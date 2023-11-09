@@ -9,6 +9,7 @@ export type GptFunction = {
   _id: string;
   def: string;
   code: string;
-  implementation?: string;
+  implementation: string;
+  implemented: boolean;
   explanation: string;
 };

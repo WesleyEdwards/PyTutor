@@ -5,8 +5,7 @@ import { usePyIOContext } from "./pyIOContext/PyIOContext";
 export const CodeResult: FC = () => {
   const { codeOutput } = usePyIOContext();
 
-  // For Sculpt and Brython, the error is a string, not an Error object.
-  const errorMessage = codeOutput?.error?.error as unknown as string;
+  const { error, res } = codeOutput;
 
   return (
     <Card
@@ -29,7 +28,7 @@ export const CodeResult: FC = () => {
               color: codeOutput.error ? "#d10000" : undefined,
             }}
           >
-            {codeOutput.res ? codeOutput.res : errorMessage}
+            {error ? error : res}
           </Typography>
         </Stack>
       </Stack>

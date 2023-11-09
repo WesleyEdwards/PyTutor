@@ -36,7 +36,7 @@ export const FunctionDef: FC<{
           </IconButton>
           <Typography>{gptFun.def}</Typography>
         </Stack>
-        <Stack direction="row" gap="1rem">
+        <Stack direction="row" gap="1rem" alignItems="center">
           <IconButton onClick={setEditing} variant="solid">
             <CreateIcon />
           </IconButton>

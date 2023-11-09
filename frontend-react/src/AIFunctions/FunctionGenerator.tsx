@@ -6,10 +6,12 @@ import {
   Stack,
   Textarea,
 } from "@mui/joy";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { usePyIOContext } from "../pyIOContext/PyIOContext";
 
-export const FunctionGenerator = () => {
+export const FunctionGenerator: FC<{ handleClose: () => void }> = ({
+  handleClose,
+}) => {
   const [explanation, setExplanation] = useState<string>("");
   const { aiapi, addGptFunction, gptFunctions } = usePyIOContext();
 
@@ -38,7 +40,13 @@ export const FunctionGenerator = () => {
         return setError("You've already generated a function for that.");
       }
 
-      addGptFunction({ ...gptFun, _id: crypto.randomUUID() });
+      addGptFunction({
+        ...gptFun,
+        _id: crypto.randomUUID(),
+        implementation: gptFun.def,
+        implemented: false,
+      });
+      handleClose();
     } catch (e) {
       setError(
         "Sorry, we couldn't generate a function for that. Please try again."

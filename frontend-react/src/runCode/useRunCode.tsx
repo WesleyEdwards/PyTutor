@@ -1,6 +1,7 @@
 import { runCode, setEngine, setOptions } from "client-side-python-runner";
 import { useEffect, useState } from "react";
 import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { processErrorMessage } from "../utils";
 
 export const useRunCode = () => {
   const { code, appendOutput, setOutputError, gptFunctions } = usePyIOContext();
@@ -17,7 +18,8 @@ export const useRunCode = () => {
   const runPythonCode = () => {
     appendOutput(null);
     setOutputError(undefined);
-    runCode(createRunnableCode(code));
+    const runnable = createRunnableCode(code);
+    runCode(runnable);
   };
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export const useRunCode = () => {
         appendOutput(data);
       },
       error: (e) => {
-        setOutputError(e);
+        setOutputError(processErrorMessage(e, code, createRunnableCode(code)));
       },
     });
   }, []);

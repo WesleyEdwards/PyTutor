@@ -24,7 +24,7 @@ export const TopBar: FC = () => {
       <Stack direction="row" gap="2rem" alignItems="center">
         {import.meta.env.MODE === "development" && (
           <Checkbox
-            label="Mock endpoint"
+            label="Mock Api"
             checked={aiapi.name === "mock"}
             onChange={(e) => changeApi(e.target.checked ? "mock" : "real")}
           />
