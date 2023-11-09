@@ -12,4 +12,10 @@ export type GptFunction = {
   implementation: string;
   implemented: boolean;
   explanation: string;
+  test: string;
+};
+
+export type CodeOutput = {
+  res: string;
+  error?: string;
 };

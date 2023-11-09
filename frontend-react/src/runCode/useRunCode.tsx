@@ -1,7 +1,7 @@
-import { runCode, setEngine, setOptions } from "client-side-python-runner";
 import { useEffect, useState } from "react";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
 import { processErrorMessage } from "../utils";
+import { useRunPython } from "../hooks/useRunPython";
 
 export const useRunCode = () => {
   const { code, appendOutput, setOutputError, gptFunctions } = usePyIOContext();
@@ -15,28 +15,24 @@ export const useRunCode = () => {
     return gptCode.concat(code);
   };
 
-  const runPythonCode = () => {
+  const { runPythonCode } = useRunPython({
+    key: "main",
+    appendOutput,
+    onError: (e) => {
+      setOutputError(processErrorMessage(e, code, createRunnableCode(code)));
+    },
+    getRunnable: () => createRunnableCode(code),
+  });
+
+  const runMainCode = () => {
     appendOutput(null);
     setOutputError(undefined);
-    const runnable = createRunnableCode(code);
-    runCode(runnable);
+    runPythonCode();
   };
 
   useEffect(() => {
-    setEngine("skulpt");
-    setOptions({
-      output: (data) => {
-        appendOutput(data);
-      },
-      error: (e) => {
-        setOutputError(processErrorMessage(e, code, createRunnableCode(code)));
-      },
-    });
-  }, []);
-
-  useEffect(() => {
     if (runFromKeyBoard) {
-      runPythonCode();
+      runMainCode();
     }
     setRunFromKeyBoard(false);
   }, [runFromKeyBoard]);
@@ -52,6 +48,6 @@ export const useRunCode = () => {
   }, []);
 
   return {
-    runPythonCode,
+    runMainCode,
   };
 };

@@ -9,7 +9,7 @@ import {
   ModalClose,
 } from "@mui/joy";
 import { GptFunction } from "../types";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
 
 export const DeletingModal: FC<{
   fun: GptFunction | null;

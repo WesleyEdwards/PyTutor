@@ -7,7 +7,7 @@ import {
   Textarea,
 } from "@mui/joy";
 import { FC, useState } from "react";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
 
 export const FunctionGenerator: FC<{ handleClose: () => void }> = ({
   handleClose,
@@ -19,6 +19,11 @@ export const FunctionGenerator: FC<{ handleClose: () => void }> = ({
   const [fetching, setFetching] = useState(false);
 
   const checkRepeatEx = aiapi.name !== "mock";
+
+  const getTest = (def: string) => {
+    const newDef = def.replace("def ", "").split("(")[0];
+    return `def test_${newDef}():\n    return False`;
+  };
 
   const generateFunction = async () => {
     setError("");
@@ -43,8 +48,9 @@ export const FunctionGenerator: FC<{ handleClose: () => void }> = ({
       addGptFunction({
         ...gptFun,
         _id: crypto.randomUUID(),
-        implementation: gptFun.def,
+        implementation: `${gptFun.def}\n    return False`,
         implemented: false,
+        test: getTest(gptFun.def),
       });
       handleClose();
     } catch (e) {

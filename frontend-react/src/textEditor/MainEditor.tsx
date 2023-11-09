@@ -1,5 +1,5 @@
 import { CodeMirrorEditor } from "./CodeMirrorEditor";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
 
 export const MainEditor = () => {
   const { code, setCode } = usePyIOContext();

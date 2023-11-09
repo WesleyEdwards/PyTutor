@@ -9,32 +9,36 @@ import {
   Button,
   IconButton,
   Tooltip,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  AccordionGroup,
 } from "@mui/joy";
 import { GptFunction } from "../types";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import RestoreIcon from "@mui/icons-material/Restore";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
+import { WriteTest } from "./WriteTest";
+import { useDebounce } from "../hooks/useDebounce";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;
   closeModal: () => void;
 }> = ({ fun, closeModal }) => {
-  const { defineGptFunction } = usePyIOContext();
+  const { modifyFunction } = usePyIOContext();
   const [impl, setImpl] = useState<string>("");
-  const [debouncedImpl, setDebouncedImpl] = useState<string>("");
+
+  const debouncedImpl = useDebounce(impl, 1000);
+
+  useEffect(() => {
+    if (!fun) return;
+    setImpl(fun.implementation);
+  }, [fun]);
 
   useEffect(() => {
     if (!fun || !debouncedImpl) return;
-    defineGptFunction(fun._id, debouncedImpl);
+    modifyFunction(fun._id, { implementation: debouncedImpl });
   }, [debouncedImpl]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedImpl(impl);
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, [impl]);
 
   return (
     <Modal open={!!fun} onClose={closeModal}>
@@ -42,14 +46,22 @@ export const ImplementModal: FC<{
         <ModalClose />
         <DialogTitle>Implement {fun?.def}</DialogTitle>
         <DialogContent>{fun?.explanation}</DialogContent>
-        <div style={{ height: "300px" }}>
-          <CodeMirrorEditor
-            key="implement"
-            height={"300px"}
-            value={impl}
-            onChange={setImpl}
-          />
-        </div>
+        <AccordionGroup size="lg">
+          <Accordion defaultExpanded>
+            <AccordionSummary>Implementation</AccordionSummary>
+            <AccordionDetails>
+              <div style={{ height: "300px" }}>
+                <CodeMirrorEditor
+                  key="implement"
+                  height={"300px"}
+                  value={impl}
+                  onChange={setImpl}
+                />
+              </div>
+            </AccordionDetails>
+          </Accordion>
+          <WriteTest getImpl={() => impl} fun={fun} />
+        </AccordionGroup>
         <DialogActions>
           <Button sx={{ maxWidth: "12rem" }} color="success">
             Implement
@@ -57,7 +69,7 @@ export const ImplementModal: FC<{
           <Tooltip title="Reset">
             <IconButton
               onClick={() => {
-                setImpl(fun?.def ?? "");
+                setImpl(`${fun?.def}\n    return True` ?? "");
               }}
             >
               <RestoreIcon />

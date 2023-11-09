@@ -4,7 +4,7 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { useRunCode } from "./runCode/useRunCode";
 
 export const RunCode: FC = () => {
-  const { runPythonCode } = useRunCode();
+  const { runMainCode } = useRunCode();
   return (
     <Stack
       direction="row"
@@ -13,9 +13,8 @@ export const RunCode: FC = () => {
       <Tooltip size="sm" variant="soft" title="Run Code (Ctrl + Shift + Enter)">
         <IconButton
           variant="solid"
-          onClick={runPythonCode}
+          onClick={runMainCode}
           sx={{
-            maxWidth: "12rem",
             backgroundColor: "#0b5c04",
             transition: "background-color 0.2s ease-in-out",
             "&:hover": {

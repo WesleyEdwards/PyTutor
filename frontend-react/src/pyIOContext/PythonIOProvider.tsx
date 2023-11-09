@@ -1,14 +1,9 @@
 import { FC, ReactNode, createContext, useState } from "react";
 import { GptApi } from "../api/GptApi";
-import { GptFunction } from "../types";
+import { CodeOutput, GptFunction } from "../types";
 import { AiApi } from "../api/AiApi";
 import { MockApi } from "../api/mocks/mockApi";
 import { starterCode } from "../utils";
-
-type CodeOutput = {
-  res: string;
-  error?: string;
-};
 
 type PythonIOContextType = {
   code: string;
@@ -21,7 +16,7 @@ type PythonIOContextType = {
   gptFunctions: GptFunction[];
   addGptFunction: (props: GptFunction) => void;
   removeGptFunction: (props: GptFunction) => void;
-  defineGptFunction: (id: string, impl: string) => void;
+  modifyFunction: (id: string, mod: Partial<GptFunction>) => void;
 };
 
 export const PyIOContext = createContext<PythonIOContextType>(
@@ -44,9 +39,9 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setGptFunctions((prev) => prev.filter((func) => func.def !== props.def));
   };
 
-  const defineGptFunction = (id: string, implementation: string) => {
+  const modifyFunction = (id: string, mod: Partial<GptFunction>) => {
     setGptFunctions((prev) =>
-      prev.map((func) => (func._id === id ? { ...func, implementation } : func))
+      prev.map((func) => (func._id === id ? { ...func, ...mod } : func))
     );
   };
 
@@ -73,7 +68,7 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
         gptFunctions,
         addGptFunction,
         removeGptFunction,
-        defineGptFunction,
+        modifyFunction,
       }}
     >
       {children}

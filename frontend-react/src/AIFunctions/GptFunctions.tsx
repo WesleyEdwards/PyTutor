@@ -1,6 +1,6 @@
 import { Typography } from "@mui/joy";
 import { FC, useState } from "react";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
+import { usePyIOContext } from "../hooks/usePyIOContext";
 import { FunctionDef } from "./FunctionDef";
 import { ImplementModal } from "./ImplementModal";
 import { GptFunction } from "../types";

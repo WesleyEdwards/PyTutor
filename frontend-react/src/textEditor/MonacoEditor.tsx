@@ -1,12 +1,12 @@
 import { FC, useRef, useState, useEffect } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { useColorScheme } from "@mui/joy";
-import { usePyIOContext } from "../pyIOContext/PyIOContext";
 import { useMediaQuery } from "@mui/material";
 
-export const MonacoEditor: FC<{ isLoaded: () => void }> = ({ isLoaded }) => {
-  const { code, setCode } = usePyIOContext();
-
+export const MonacoEditor: FC<{
+  code: string;
+  setCode: (code: string) => void;
+}> = ({ code, setCode }) => {
   const smallScreen = useMediaQuery("(max-width: 1400px)");
 
   const widthHeight = smallScreen
@@ -36,7 +36,6 @@ export const MonacoEditor: FC<{ isLoaded: () => void }> = ({ isLoaded }) => {
         edit.onDidChangeModelContent(() => {
           setCode(edit.getValue());
         });
-        isLoaded();
         return edit;
       });
     }
