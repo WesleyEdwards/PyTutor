@@ -45,23 +45,25 @@ export const ImplementModal: FC<{
       <ModalDialog sx={{ p: "2rem", width: "800px" }} size="lg">
         <ModalClose />
         <DialogTitle>Implement {fun?.def}</DialogTitle>
-        <DialogContent>{fun?.explanation}</DialogContent>
-        <AccordionGroup size="lg">
-          <Accordion defaultExpanded>
-            <AccordionSummary>Implementation</AccordionSummary>
-            <AccordionDetails>
-              <div style={{ height: "300px" }}>
-                <CodeMirrorEditor
-                  key="implement"
-                  height={"300px"}
-                  value={impl}
-                  onChange={setImpl}
-                />
-              </div>
-            </AccordionDetails>
-          </Accordion>
-          <WriteTest getImpl={() => impl} fun={fun} />
-        </AccordionGroup>
+        <DialogContent>
+          {fun?.explanation}
+          <AccordionGroup size="lg">
+            <Accordion defaultExpanded>
+              <AccordionSummary>Implementation</AccordionSummary>
+              <AccordionDetails>
+                <div style={{ height: "300px" }}>
+                  <CodeMirrorEditor
+                    key="implement"
+                    height={"300px"}
+                    value={impl}
+                    onChange={setImpl}
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+            <WriteTest getImpl={() => impl} fun={fun} />
+          </AccordionGroup>
+        </DialogContent>
         <DialogActions>
           <Button sx={{ maxWidth: "12rem" }} color="success">
             Implement
