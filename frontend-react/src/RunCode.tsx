@@ -1,72 +1,30 @@
-import { IconButton, Stack } from "@mui/joy";
-import {
-  PythonError,
-  runCode,
-  setEngine,
-  setOptions,
-} from "client-side-python-runner";
-import { FC, useEffect, useState } from "react";
+import { IconButton, Stack, Tooltip } from "@mui/joy";
+import { FC } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
-import { usePyIOContext } from "./pyIOContext/PyIOContext";
+import { useRunCode } from "./runCode/useRunCode";
 
-export const RunCode: FC<{ initialLoad: boolean }> = ({ initialLoad }) => {
-  const { code, setCodeOutput, gptFunctions } = usePyIOContext();
-
-  const [pyResult, setPyResult] = useState<string[]>([]);
-  const [error, setError] = useState<PythonError>();
-
-  const [trigger, setTrigger] = useState(0);
-
-  const createRunnableCode = ((): string => {
-    const gptCode = gptFunctions.reduce((acc, gptFunction) => {
-      return acc.concat(gptFunction.code);
-    }, "");
-    return gptCode.concat(code);
-  })();
-
-  const runPythonCode = async () => {
-    await runCode(createRunnableCode);
-    setTrigger((prev) => prev + 1);
-  };
-
-  useEffect(() => {
-    setEngine("pyodide");
-    setOptions({
-      output: (data) => {
-        setError(undefined);
-        setPyResult((prev) => prev.concat(data.replace("\n", "")));
-      },
-      error: (e) => {
-        setError(e);
-      },
-    });
-  }, []);
-
-  useEffect(() => {
-    setPyResult([]);
-    setCodeOutput({ res: pyResult, error });
-  }, [trigger]);
-
+export const RunCode: FC = () => {
+  const { runMainCode } = useRunCode();
   return (
     <Stack
       direction="row"
       sx={{ justifyContent: "flex-end", minWidth: "2rem" }}
     >
-      <IconButton
-        variant="solid"
-        onClick={runPythonCode}
-        disabled={!initialLoad}
-        sx={{
-          maxWidth: "12rem",
-          backgroundColor: "#0b5c04",
-          transition: "background-color 0.2s ease-in-out",
-          "&:hover": {
-            backgroundColor: "#198908",
-          },
-        }}
-      >
-        <PlayArrowRoundedIcon />
-      </IconButton>
+      <Tooltip size="sm" variant="soft" title="Run Code (Ctrl + Shift + Enter)">
+        <IconButton
+          variant="solid"
+          onClick={runMainCode}
+          sx={{
+            backgroundColor: "#0b5c04",
+            transition: "background-color 0.2s ease-in-out",
+            "&:hover": {
+              backgroundColor: "#198908",
+            },
+          }}
+        >
+          <PlayArrowRoundedIcon />
+        </IconButton>
+      </Tooltip>
     </Stack>
   );
 };

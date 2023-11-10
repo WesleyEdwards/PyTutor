@@ -1,8 +1,9 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import * as express from "express";
+import * as cors from "cors";
+import * as dotenv from "dotenv";
 import OpenAI from "openai";
 import { gptController } from "./controller/gptController";
+import * as functions from "firebase-functions";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.get("/", function (req, res) {
 
 gptController(app, openai);
 
-app.listen(8080, function () {
-  console.log("Example app listening on port 8080!");
-});
+// app.listen(8080, function () {
+//   console.log("Example app listening on port 8080!");
+// });
+
+export const api = functions.https.onRequest(app);

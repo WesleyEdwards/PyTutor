@@ -1,4 +1,5 @@
-import express, { RequestHandler, Express } from "express";
+import * as express from "express";
+import { RequestHandler, Express } from "express";
 import OpenAI from "openai";
 import { gptFunction, gptMockFunction, gptRaw } from "./gptFunctions";
 

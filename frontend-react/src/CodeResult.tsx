@@ -1,9 +1,11 @@
 import { Card, Divider, Stack, Typography } from "@mui/joy";
 import { FC } from "react";
-import { usePyIOContext } from "./pyIOContext/PyIOContext";
+import { usePyIOContext } from "./hooks/usePyIOContext";
 
 export const CodeResult: FC = () => {
-  const { codeResult } = usePyIOContext();
+  const { codeOutput } = usePyIOContext();
+
+  const { error, res } = codeOutput;
 
   return (
     <Card
@@ -18,35 +20,16 @@ export const CodeResult: FC = () => {
         <Typography>Output</Typography>
         <Divider sx={{ my: "1rem" }} />
         <Stack sx={{ overflow: "auto" }}>
-          {(() => {
-            if (codeResult.error) {
-              return (
-                <Typography
-                  sx={{
-                    fontFamily: "monospace",
-                    whiteSpace: "pre",
-                    maxWidth: "100%",
-                    color: "#d10000",
-                  }}
-                >
-                  {codeResult.error.error.message}
-                </Typography>
-              );
-            }
-
-            return codeResult.res?.map((line, i) => (
-              <Typography
-                key={i}
-                sx={{
-                  fontFamily: "monospace",
-                  whiteSpace: "pre",
-                  maxWidth: "100%",
-                }}
-              >
-                {line}
-              </Typography>
-            ));
-          })()}
+          <Typography
+            sx={{
+              fontFamily: "monospace",
+              whiteSpace: "pre",
+              maxWidth: "100%",
+              color: codeOutput.error ? "#d10000" : undefined,
+            }}
+          >
+            {error ? error : res}
+          </Typography>
         </Stack>
       </Stack>
     </Card>
