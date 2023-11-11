@@ -24,12 +24,12 @@ function offsetErrorLineNumber(
   return updatedMessage;
 }
 
-export const processErrorMessage = (
+export const processMainError = (
   error: PythonError | undefined,
   original: string,
   addedOnCode: string
-) => {
-  if (!error) return;
+): string | undefined => {
+  if (!error) return undefined;
   const ogLines = original.split("\n").length;
   const processedLines = addedOnCode.split("\n").length;
 
@@ -42,3 +42,30 @@ export const processErrorMessage = (
 
   return processed;
 };
+
+export const processTestError = (
+  errorMessage: PythonError | undefined,
+  impl: string
+): string | undefined => {
+  if (!errorMessage) return undefined;
+  const errorString = errorMessage?.error as unknown as string;
+  const regex = /line (\d+)/;
+  const match: RegExpMatchArray | null = errorString.match(regex);
+  const line = match ? parseInt(match[1]) : 0;
+
+  const implLength = impl.split("\n").length;
+  if (implLength >= line) return errorString.concat(" (in Implementation)");
+
+  const updatedLineNumber = line - implLength;
+
+  const updatedMessage = errorString
+    .replace(regex, `line ${updatedLineNumber}`)
+    .concat(" (in Test)");
+
+  return updatedMessage;
+};
+
+export function extractFunctionName(functionDefinition: string): string | null {
+  const match = functionDefinition.match(/def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
+  return match ? match[1] : null;
+}

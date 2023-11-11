@@ -1,10 +1,8 @@
 import { Card, Divider, Stack, Typography } from "@mui/joy";
 import { FC } from "react";
-import { usePyIOContext } from "./hooks/usePyIOContext";
+import { CodeOutput } from "./types";
 
-export const CodeResult: FC = () => {
-  const { codeOutput } = usePyIOContext();
-
+export const CodeResult: FC<{ codeOutput: CodeOutput }> = ({ codeOutput }) => {
   const { error, res } = codeOutput;
 
   return (

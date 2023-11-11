@@ -7,12 +7,11 @@ import {
 import { useEffect } from "react";
 
 export const useRunPython = (params: {
-  key: string;
   appendOutput: (data: string | null) => void;
   onError: (error: PythonError | undefined) => void;
   getRunnable: () => string;
 }) => {
-  const { appendOutput, onError, getRunnable, key } = params;
+  const { appendOutput, onError, getRunnable } = params;
 
   const runPythonCode = () => {
     appendOutput(null);
@@ -30,7 +29,7 @@ export const useRunPython = (params: {
 
   useEffect(() => {
     setEngine("skulpt");
-  }, [key]);
+  }, []);
 
   return {
     runPythonCode,

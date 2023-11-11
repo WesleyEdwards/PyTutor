@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
   Modal,
   ModalDialog,
@@ -7,68 +7,91 @@ import {
   ModalClose,
   DialogActions,
   Button,
-  IconButton,
-  Tooltip,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  AccordionGroup,
+  Stack,
+  Alert,
 } from "@mui/joy";
-import { GptFunction } from "../types";
-import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
-import RestoreIcon from "@mui/icons-material/Restore";
-import { usePyIOContext } from "../hooks/usePyIOContext";
+import { CodeOutput, GptFunction } from "../types";
 import { WriteTest } from "./WriteTest";
-import { useDebounce } from "../hooks/useDebounce";
+import { ImplementFun } from "./ImplementFun";
+import { CodeResult } from "../CodeResult";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;
   closeModal: () => void;
 }> = ({ fun, closeModal }) => {
-  const { modifyFunction } = usePyIOContext();
-  const [impl, setImpl] = useState<string>("");
-
-  const debouncedImpl = useDebounce(impl, 1000);
+  const [writingTest, setWritingTest] = useState(false);
+  const [testRes, setTestRes] = useState<CodeOutput>({
+    res: "",
+    error: undefined,
+  });
 
   useEffect(() => {
     if (!fun) return;
-    setImpl(fun.implementation);
+    setWritingTest(!fun.test.split("\n")[1].includes("return False"));
   }, [fun]);
 
-  useEffect(() => {
-    if (!fun || !debouncedImpl) return;
-    modifyFunction(fun._id, { implementation: debouncedImpl });
-  }, [debouncedImpl]);
+  const processTestRes = useMemo(() => {
+    const res = testRes.res.trim();
+    if (res.endsWith("True")) {
+      return { ...testRes, res: res.substring(0, res.length - 4) };
+    }
+    if (res.endsWith("False")) {
+      return { ...testRes, res: res.substring(0, res.length - 5) };
+    }
+    return testRes;
+  }, [testRes.res, testRes.error]);
+
+  const testResult = useMemo(() => {
+    if (testRes.error) return false;
+    if (testRes.res === "") return undefined;
+    return testRes.res.trim().endsWith("True");
+  }, [testRes.res]);
 
   return (
     <Modal open={!!fun} onClose={closeModal}>
-      <ModalDialog sx={{ p: "2rem", width: "800px" }} size="lg">
+      <ModalDialog layout="fullscreen" size="lg">
         <ModalClose />
-        <DialogTitle>Implement {fun?.def}</DialogTitle>
+        <DialogTitle>{fun?.def}</DialogTitle>
         <DialogContent>
-          {fun?.explanation}
-          <AccordionGroup size="lg">
-            <Accordion defaultExpanded>
-              <AccordionSummary>Implementation</AccordionSummary>
-              <AccordionDetails>
-                <div style={{ height: "300px" }}>
-                  <CodeMirrorEditor
-                    key="implement"
-                    height={"300px"}
-                    value={impl}
-                    onChange={setImpl}
+          {fun && (
+            <>
+              <Stack gap="1rem" alignItems="center" width="100%">
+                <Stack
+                  direction="row"
+                  width={writingTest ? "64rem" : "32rem"}
+                  gap="1rem"
+                  justifyContent="center"
+                >
+                  <ImplementFun
+                    writingTest={writingTest}
+                    openTestSection={() => setWritingTest(true)}
+                    fun={fun}
                   />
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <WriteTest getImpl={() => impl} fun={fun} />
-          </AccordionGroup>
+                  {writingTest && (
+                    <WriteTest fun={fun} setTestRes={setTestRes} />
+                  )}
+                </Stack>
+                {writingTest && (
+                  <>
+                    <Stack gap="1rem" maxWidth="64rem" width="100%">
+                      {testResult !== undefined && (
+                        <Alert color={testResult ? "success" : "danger"}>
+                          {testResult ? "Test Passed" : "Test Failed"}
+                        </Alert>
+                      )}
+                      <CodeResult codeOutput={processTestRes} />
+                    </Stack>
+                  </>
+                )}
+              </Stack>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button sx={{ maxWidth: "12rem" }} color="success">
             Implement
           </Button>
-          <Tooltip title="Reset">
+          {/* <Tooltip title="Reset">
             <IconButton
               onClick={() => {
                 setImpl(`${fun?.def}\n    return True` ?? "");
@@ -76,7 +99,7 @@ export const ImplementModal: FC<{
             >
               <RestoreIcon />
             </IconButton>
-          </Tooltip>
+          </Tooltip> */}
         </DialogActions>
       </ModalDialog>
     </Modal>
