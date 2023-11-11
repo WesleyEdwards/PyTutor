@@ -1,10 +1,10 @@
-import { RunCode } from "../runCode/RunCode";
+import { RunCode } from "./codeResults/RunCode";
 import { Divider, Stack } from "@mui/joy";
-import { Instructions } from "../Instructions";
-import { GptFunctions } from "../AIFunctions/GptFunctions";
+import { Instructions } from "./Instructions";
+import { GptFunctions } from "./AIFunctions/GptFunctions";
 import { GenerateFunModal } from "./generateFunction/GenerateFunModal";
-import { MainEditor } from "../textEditor/MainEditor";
-import { MainCodeResult } from "../PyOutput/MainCodeResult";
+import { MainEditor } from "./textEditor/MainEditor";
+import { MainCodeResult } from "./codeResults/MainCodeResult";
 
 function PythonIO() {
   return (

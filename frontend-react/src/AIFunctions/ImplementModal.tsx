@@ -13,7 +13,7 @@ import {
 import { CodeOutput, GptFunction } from "../types";
 import { WriteTest } from "./WriteTest";
 import { ImplementFun } from "./ImplementFun";
-import { CodeResult } from "../CodeResult";
+import { CodeResult } from "../codeResults/CodeResult";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;

@@ -1,6 +1,6 @@
 import { Button, Checkbox, Stack, Typography, useColorScheme } from "@mui/joy";
 import { FC, useEffect } from "react";
-import { usePyIOContext } from "../hooks/usePyIOContext";
+import { usePyIOContext } from "./hooks/usePyIOContext";
 
 export const TopBar: FC = () => {
   const { mode, setMode } = useColorScheme();

@@ -1,4 +1,4 @@
-import { CodeResult } from "../CodeResult";
+import { CodeResult } from "./CodeResult";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 
 export const MainCodeResult = () => {

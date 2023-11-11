@@ -1,6 +1,6 @@
 import { Card, Divider, Stack, Typography } from "@mui/joy";
 import { FC } from "react";
-import { CodeOutput } from "./types";
+import { CodeOutput } from "../types";
 
 export const CodeResult: FC<{ codeOutput: CodeOutput }> = ({ codeOutput }) => {
   const { error, res } = codeOutput;

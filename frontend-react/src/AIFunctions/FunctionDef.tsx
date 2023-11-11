@@ -3,7 +3,7 @@ import CopyAll from "@mui/icons-material/CopyAll";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FC } from "react";
-import { useToast } from "../Toaster";
+import { useToast } from "../contexts/Toaster";
 import { GptFunction } from "../types";
 
 export const FunctionDef: FC<{

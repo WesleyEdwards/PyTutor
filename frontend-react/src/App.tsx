@@ -5,10 +5,10 @@ import {
   Sheet,
   ThemeProvider,
 } from "@mui/joy";
-import PythonIO from "./layout/PythonIO";
-import { TopBar } from "./layout/TopBar";
-import { ToastProvider } from "./Toaster";
-import { PythonIOProvider } from "./pyIOContext/PythonIOProvider";
+import PythonIO from "./PythonIO";
+import { TopBar } from "./TopBar";
+import { ToastProvider } from "./contexts/Toaster";
+import { PythonIOProvider } from "./contexts/PythonIOProvider";
 
 const theme: CssVarsThemeOptions = {};
 
