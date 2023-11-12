@@ -2,7 +2,10 @@ import { Card, Divider, Stack, Typography } from "@mui/joy";
 import { FC } from "react";
 import { CodeOutput } from "../types";
 
-export const CodeResult: FC<{ codeOutput: CodeOutput }> = ({ codeOutput }) => {
+export const CodeResult: FC<{ codeOutput: CodeOutput; height: string }> = ({
+  codeOutput,
+  height,
+}) => {
   const { error, res } = codeOutput;
 
   return (
@@ -14,7 +17,7 @@ export const CodeResult: FC<{ codeOutput: CodeOutput }> = ({ codeOutput }) => {
         borderRadius: 10,
       }}
     >
-      <Stack sx={{ maxHeight: "500px", minHeight: "500px" }}>
+      <Stack sx={{ maxHeight: height, minHeight: height }}>
         <Typography>Output</Typography>
         <Divider sx={{ my: "1rem" }} />
         <Stack sx={{ overflow: "auto" }}>

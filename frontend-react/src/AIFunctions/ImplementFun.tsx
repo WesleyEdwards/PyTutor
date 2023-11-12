@@ -7,9 +7,7 @@ import { useDebounce } from "../hooks/useDebounce";
 
 export const ImplementFun: FC<{
   fun: GptFunction;
-  writingTest: boolean;
-  openTestSection: () => void;
-}> = ({ fun, writingTest, openTestSection }) => {
+}> = ({ fun }) => {
   const { modifyFunction } = usePyIOContext();
   const [impl, setImpl] = useState<string>("");
 
@@ -26,17 +24,15 @@ export const ImplementFun: FC<{
 
   return (
     <Stack gap="1rem" width="100%">
-      <Typography level="h2">Implement</Typography>
-      <Typography height="4rem" overflow="auto">
-        {fun?.explanation}
-      </Typography>
+      <Typography>{fun?.explanation}</Typography>
       <CodeMirrorEditor
         key="implement"
         height={"300px"}
         value={impl}
         onChange={setImpl}
       />
-      {!writingTest && (
+
+      {/* {!writingTest && (
         <>
           <Typography level="body-sm">
             When you've written the function and are ready, write a test to make
@@ -50,7 +46,7 @@ export const ImplementFun: FC<{
             Write Test
           </Button>
         </>
-      )}
+      )} */}
     </Stack>
   );
 };

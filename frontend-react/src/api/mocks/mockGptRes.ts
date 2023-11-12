@@ -70,6 +70,13 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "write a function that sorts a list of numbers using the quicksort algorithm",
   },
+  {
+    def: "def divisible_numbers(n):",
+    code: "\ndef divisible_numbers(n):\n    numbers = []\n    i = 1\n    while len(numbers) < 10:\n        if i % n == 0:\n            numbers.append(i)\n        i += 1\n    return numbers\n",
+    raw: null,
+    explanation:
+      "Write a function that creates a list of the first 10 numbers divisible by a number that I provide ",
+  },
 ];
 
 export const getRandomMockFunction = (

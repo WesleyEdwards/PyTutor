@@ -65,6 +65,17 @@ export const processTestError = (
   return updatedMessage;
 };
 
+export function getOutputChopOffBool(output: string): string {
+  const res = output.trim();
+  if (res.endsWith("True")) {
+    return res.substring(0, res.length - 4);
+  }
+  if (res.endsWith("False")) {
+    return res.substring(0, res.length - 5);
+  }
+  return res;
+}
+
 export function extractFunctionName(functionDefinition: string): string | null {
   const match = functionDefinition.match(/def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
   return match ? match[1] : null;

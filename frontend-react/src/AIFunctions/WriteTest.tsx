@@ -1,4 +1,4 @@
-import { Stack, Typography, Button } from "@mui/joy";
+import { Stack, Typography, Button, Alert } from "@mui/joy";
 import { FC, useEffect, useState } from "react";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { useDebounce } from "../hooks/useDebounce";
@@ -11,20 +11,18 @@ import { extractFunctionName, processTestError } from "../utils";
 export const WriteTest: FC<{
   fun: GptFunction;
   setTestRes: React.Dispatch<React.SetStateAction<CodeOutput>>;
-}> = ({ fun, setTestRes }) => {
-  const { modifyFunction, gptFunctions } = usePyIOContext();
+  testInstructions: React.ReactNode;
+  testResult: boolean | undefined;
+  codeToTest: () => string;
+}> = ({ fun, setTestRes, testInstructions, codeToTest, testResult }) => {
+  const { modifyFunction } = usePyIOContext();
   const [testCode, setTestCode] = useState<string>(fun.test);
-  
 
   const debouncedTestCode = useDebounce(testCode, 500);
 
-  const getImpl = () => {
-    return gptFunctions.find((f) => f._id === fun._id)?.implementation ?? "";
-  };
-
   const createRunnableTestCode = () => {
     const callTest = extractFunctionName(testCode);
-    return `${getImpl()}\n${testCode}\nprint(${callTest}())`;
+    return `${codeToTest()}\n${testCode}\nprint(${callTest}())`;
   };
 
   useEffect(() => {
@@ -35,24 +33,17 @@ export const WriteTest: FC<{
   const { runPythonCode } = useRunPython({
     appendOutput: (data) => {
       if (!data) return setTestRes((prev) => ({ ...prev, res: "" }));
-      setTestRes((prev) => ({
-        res: prev.res.concat(data),
-        error: undefined,
-      }));
+      setTestRes((prev) => ({ res: prev.res.concat(data), error: undefined }));
     },
     onError: (e) => {
-      setTestRes({ res: "", error: processTestError(e, getImpl()) });
+      setTestRes({ res: "", error: processTestError(e, codeToTest()) });
     },
     getRunnable: createRunnableTestCode,
   });
 
   return (
     <Stack gap="1rem" width="100%">
-      <Typography level="h2">Write a test</Typography>
-      <Typography height="4rem" overflow="auto">
-        The test should return True if the function produces the correct
-        behavior
-      </Typography>
+      {testInstructions}
       <div style={{ height: "300px" }}>
         <CodeMirrorEditor
           key="implement"
@@ -61,24 +52,36 @@ export const WriteTest: FC<{
           onChange={setTestCode}
         />
       </div>
-      <Button
-        variant="solid"
-        onClick={runPythonCode}
-        endDecorator={<PlayArrowRoundedIcon />}
-        sx={{
-          alignSelf: "flex-end",
-          backgroundColor: "#0b5c04",
-          transition: "background-color 0.2s ease-in-out",
-          "&:hover": {
-            backgroundColor: "#198908",
-          },
-        }}
+      <Stack
+        direction="row"
+        gap="1rem"
+        justifyContent="flex-end"
+        alignItems="center"
       >
-        Run Test
-      </Button>
-
-
-      
+        {testResult !== undefined && (
+          <Alert
+            sx={{ width: "100%" }}
+            color={testResult ? "success" : "danger"}
+          >
+            {testResult ? "Test Passed" : "Test Failed"}
+          </Alert>
+        )}
+        <Button
+          variant="solid"
+          onClick={runPythonCode}
+          endDecorator={<PlayArrowRoundedIcon />}
+          sx={{
+            minWidth: "8rem",
+            backgroundColor: "#0b5c04",
+            transition: "background-color 0.2s ease-in-out",
+            "&:hover": {
+              backgroundColor: "#198908",
+            },
+          }}
+        >
+          Run Test
+        </Button>
+      </Stack>
     </Stack>
   );
 };

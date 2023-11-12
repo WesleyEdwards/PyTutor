@@ -8,38 +8,40 @@ import {
   DialogActions,
   Button,
   Stack,
-  Alert,
+  Typography,
+  AccordionGroup,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/joy";
 import { CodeOutput, GptFunction } from "../types";
 import { WriteTest } from "./WriteTest";
 import { ImplementFun } from "./ImplementFun";
 import { CodeResult } from "../codeResults/CodeResult";
+import { usePyIOContext } from "../hooks/usePyIOContext";
+import { highlightedText } from "../renderHelpers";
+import { extractFunctionName, getOutputChopOffBool } from "../utils";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;
   closeModal: () => void;
 }> = ({ fun, closeModal }) => {
-  const [writingTest, setWritingTest] = useState(false);
   const [testRes, setTestRes] = useState<CodeOutput>({
     res: "",
     error: undefined,
   });
+  const { gptFunctions } = usePyIOContext();
 
   useEffect(() => {
     if (!fun) return;
-    setWritingTest(!fun.test.split("\n")[1].includes("return False"));
+    // setWritingTest(!fun.test.split("\n")[1].includes("return False"));
+    setTestRes({ res: "", error: undefined });
   }, [fun]);
 
-  const processTestRes = useMemo(() => {
-    const res = testRes.res.trim();
-    if (res.endsWith("True")) {
-      return { ...testRes, res: res.substring(0, res.length - 4) };
-    }
-    if (res.endsWith("False")) {
-      return { ...testRes, res: res.substring(0, res.length - 5) };
-    }
-    return testRes;
-  }, [testRes.res, testRes.error]);
+  const processTestRes = useMemo(
+    () => ({ ...testRes, res: getOutputChopOffBool(testRes.res) }),
+    [testRes.res, testRes.error]
+  );
 
   const testResult = useMemo(() => {
     if (testRes.error) return false;
@@ -56,33 +58,56 @@ export const ImplementModal: FC<{
           {fun && (
             <>
               <Stack gap="1rem" alignItems="center" width="100%">
-                <Stack
-                  direction="row"
-                  width={writingTest ? "64rem" : "32rem"}
-                  gap="1rem"
-                  justifyContent="center"
-                >
-                  <ImplementFun
-                    writingTest={writingTest}
-                    openTestSection={() => setWritingTest(true)}
-                    fun={fun}
-                  />
-                  {writingTest && (
-                    <WriteTest fun={fun} setTestRes={setTestRes} />
-                  )}
+                <Stack width="48rem" gap="1rem" justifyContent="center">
+                  <AccordionGroup>
+                    <Accordion variant="soft" defaultExpanded>
+                      <AccordionSummary>
+                        <Typography level="h2">Implement</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <ImplementFun fun={fun} />
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion variant="soft">
+                      <AccordionSummary>
+                        <Typography level="h2">Test</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <WriteTest
+                          fun={fun}
+                          setTestRes={setTestRes}
+                          testInstructions={
+                            <Typography>
+                              This will test your implementation of the function{" "}
+                              {highlightedText(
+                                extractFunctionName(fun.def) ?? "",
+                                "function"
+                              )}
+                              . The test should return True if the function
+                              produces the correct behavior
+                            </Typography>
+                          }
+                          codeToTest={() =>
+                            gptFunctions.find((f) => f._id === fun._id)
+                              ?.implementation ?? ""
+                          }
+                          testResult={testResult}
+                        />
+                        <Stack gap="1rem" maxWidth="64rem" width="100%">
+                          <CodeResult
+                            codeOutput={processTestRes}
+                            height="200px"
+                          />
+                        </Stack>
+                      </AccordionDetails>
+                    </Accordion>
+                  </AccordionGroup>
                 </Stack>
-                {writingTest && (
-                  <>
-                    <Stack gap="1rem" maxWidth="64rem" width="100%">
-                      {testResult !== undefined && (
-                        <Alert color={testResult ? "success" : "danger"}>
-                          {testResult ? "Test Passed" : "Test Failed"}
-                        </Alert>
-                      )}
-                      <CodeResult codeOutput={processTestRes} />
-                    </Stack>
-                  </>
-                )}
+                {/* {writingTest && (
+                  <Stack gap="1rem" maxWidth="64rem" width="100%">
+                    <CodeResult codeOutput={processTestRes} height="200px" />
+                  </Stack>
+                )} */}
               </Stack>
             </>
           )}
@@ -91,15 +116,6 @@ export const ImplementModal: FC<{
           <Button sx={{ maxWidth: "12rem" }} color="success">
             Implement
           </Button>
-          {/* <Tooltip title="Reset">
-            <IconButton
-              onClick={() => {
-                setImpl(`${fun?.def}\n    return True` ?? "");
-              }}
-            >
-              <RestoreIcon />
-            </IconButton>
-          </Tooltip> */}
         </DialogActions>
       </ModalDialog>
     </Modal>
