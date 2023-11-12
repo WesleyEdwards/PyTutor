@@ -1,10 +1,27 @@
-import { IconButton, Stack, Typography } from "@mui/joy";
+import {
+  Card,
+  Dropdown,
+  IconButton,
+  ListDivider,
+  ListItemDecorator,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/joy";
 import CopyAll from "@mui/icons-material/CopyAll";
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { FC } from "react";
 import { useToast } from "../contexts/Toaster";
 import { GptFunction } from "../types";
+import {
+  Check,
+  DeleteForever,
+  Edit,
+  MoreVert,
+  Restore,
+} from "@mui/icons-material";
 
 export const FunctionDef: FC<{
   gptFun: GptFunction;
@@ -13,13 +30,8 @@ export const FunctionDef: FC<{
 }> = ({ gptFun, setEditing, setDeleting }) => {
   const showToast = useToast();
   return (
-    <>
-      <Stack
-        direction="row"
-        paddingY="1rem"
-        justifyContent="space-between"
-        width="100%"
-      >
+    <Card sx={{ p: 1 }} variant="soft">
+      <Stack direction="row" justifyContent="space-between" width="100%">
         <Stack direction="row" alignItems="center" gap="1rem">
           <IconButton
             onClick={() => {
@@ -37,14 +49,36 @@ export const FunctionDef: FC<{
           <Typography>{gptFun.def}</Typography>
         </Stack>
         <Stack direction="row" gap="1rem" alignItems="center">
+          {gptFun.implemented && (
+            <Tooltip title="Implemented">
+              <Check color="success" />
+            </Tooltip>
+          )}
           <IconButton onClick={setEditing} variant="solid">
-            <CreateIcon />
+            <Edit />
           </IconButton>
-          <IconButton onClick={setDeleting} variant="solid" color="danger">
-            <DeleteIcon />
-          </IconButton>
+          <Dropdown>
+            <MenuButton slots={{ root: IconButton }} variant="solid">
+              <MoreVert />
+            </MenuButton>
+            <Menu placement="bottom-end">
+              <MenuItem>
+                <ListItemDecorator>
+                  <Restore />
+                </ListItemDecorator>
+                Restore
+              </MenuItem>
+              <ListDivider />
+              <MenuItem onClick={setDeleting} variant="soft" color="danger">
+                <ListItemDecorator sx={{ color: "inherit" }}>
+                  <DeleteForever />
+                </ListItemDecorator>{" "}
+                Delete
+              </MenuItem>
+            </Menu>
+          </Dropdown>
         </Stack>
       </Stack>
-    </>
+    </Card>
   );
 };

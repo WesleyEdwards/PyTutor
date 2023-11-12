@@ -1,4 +1,4 @@
-import { Stack, Typography, Button, Alert } from "@mui/joy";
+import { Stack, Button, Alert } from "@mui/joy";
 import { FC, useEffect, useState } from "react";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { useDebounce } from "../hooks/useDebounce";
@@ -42,16 +42,14 @@ export const WriteTest: FC<{
   });
 
   return (
-    <Stack gap="1rem" width="100%">
+    <Stack gap="1rem" mb="1rem" width="100%">
       {testInstructions}
-      <div style={{ height: "300px" }}>
-        <CodeMirrorEditor
-          key="implement"
-          height={"300px"}
-          value={testCode}
-          onChange={setTestCode}
-        />
-      </div>
+      <CodeMirrorEditor
+        key="implement"
+        height={"300px"}
+        value={testCode}
+        onChange={setTestCode}
+      />
       <Stack
         direction="row"
         gap="1rem"

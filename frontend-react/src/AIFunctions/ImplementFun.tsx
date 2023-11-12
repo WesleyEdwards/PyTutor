@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Typography, Stack } from "@mui/joy";
+import { Typography, Stack } from "@mui/joy";
 import { GptFunction } from "../types";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { usePyIOContext } from "../hooks/usePyIOContext";

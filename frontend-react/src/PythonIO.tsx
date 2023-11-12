@@ -14,7 +14,7 @@ function PythonIO() {
         <RunCode />
         <MainCodeResult />
       </Stack>
-      <Stack width="100%" gap="1rem" sx={{ maxWidth: "24rem" }} flex={1}>
+      <Stack width="100%" gap="1rem" sx={{ maxWidth: "28rem" }} flex={1}>
         <Instructions />
         <GenerateFunModal />
         <Divider sx={{ my: "1rem" }} />

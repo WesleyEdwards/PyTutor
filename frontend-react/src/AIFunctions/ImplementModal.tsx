@@ -19,8 +19,10 @@ import { WriteTest } from "./WriteTest";
 import { ImplementFun } from "./ImplementFun";
 import { CodeResult } from "../codeResults/CodeResult";
 import { usePyIOContext } from "../hooks/usePyIOContext";
+import CheckIcon from "@mui/icons-material/Check";
 import { highlightedText } from "../renderHelpers";
 import { extractFunctionName, getOutputChopOffBool } from "../utils";
+import CodeIcon from "@mui/icons-material/Code";
 
 export const ImplementModal: FC<{
   fun: GptFunction | null;
@@ -30,12 +32,14 @@ export const ImplementModal: FC<{
     res: "",
     error: undefined,
   });
-  const { gptFunctions } = usePyIOContext();
+  const { gptFunctions, modifyFunction } = usePyIOContext();
+  const [implemented, setImplemented] = useState(false);
 
   useEffect(() => {
     if (!fun) return;
     // setWritingTest(!fun.test.split("\n")[1].includes("return False"));
     setTestRes({ res: "", error: undefined });
+    setImplemented(fun.implemented);
   }, [fun]);
 
   const processTestRes = useMemo(
@@ -60,7 +64,7 @@ export const ImplementModal: FC<{
               <Stack gap="1rem" alignItems="center" width="100%">
                 <Stack width="48rem" gap="1rem" justifyContent="center">
                   <AccordionGroup>
-                    <Accordion variant="soft" defaultExpanded>
+                    <Accordion defaultExpanded>
                       <AccordionSummary>
                         <Typography level="h2">Implement</Typography>
                       </AccordionSummary>
@@ -68,7 +72,7 @@ export const ImplementModal: FC<{
                         <ImplementFun fun={fun} />
                       </AccordionDetails>
                     </Accordion>
-                    <Accordion variant="soft">
+                    <Accordion>
                       <AccordionSummary>
                         <Typography level="h2">Test</Typography>
                       </AccordionSummary>
@@ -78,7 +82,8 @@ export const ImplementModal: FC<{
                           setTestRes={setTestRes}
                           testInstructions={
                             <Typography>
-                              This will test your implementation of the function{" "}
+                              This should test your implementation of the
+                              function{" "}
                               {highlightedText(
                                 extractFunctionName(fun.def) ?? "",
                                 "function"
@@ -113,7 +118,16 @@ export const ImplementModal: FC<{
           )}
         </DialogContent>
         <DialogActions>
-          <Button sx={{ maxWidth: "12rem" }} color="success">
+          <Button
+            disabled={testResult !== true}
+            sx={{ maxWidth: "12rem" }}
+            color="success"
+            endDecorator={implemented ? <CheckIcon /> : <CodeIcon />}
+            onClick={() => {
+              modifyFunction(fun?._id ?? "", { implemented: true });
+              setImplemented(true);
+            }}
+          >
             Implement
           </Button>
         </DialogActions>

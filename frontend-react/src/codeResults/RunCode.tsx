@@ -12,7 +12,9 @@ export const RunCode: FC = () => {
 
   const createRunnableCode = (code: string): string => {
     const gptCode = gptFunctions.reduce((acc, gptFunction) => {
-      return acc.concat(gptFunction.code);
+      return gptFunction.implemented
+        ? acc.concat(gptFunction.implementation)
+        : acc.concat(gptFunction.code);
     }, "");
     return gptCode.concat(code);
   };
