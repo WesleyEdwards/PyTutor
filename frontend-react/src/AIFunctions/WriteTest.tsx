@@ -46,7 +46,7 @@ export const WriteTest: FC<{
       {testInstructions}
       <CodeMirrorEditor
         key="implement"
-        height={"300px"}
+        height="300px"
         value={testCode}
         onChange={setTestCode}
       />

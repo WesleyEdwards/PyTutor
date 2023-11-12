@@ -44,16 +44,22 @@ function highlightVariables(def: string): React.ReactNode {
   ));
 }
 
+export function highlightFunSignature(fun: GptFunction): React.ReactNode {
+  return (
+    <Typography>
+      {highlightedText("def", "keyword")}{" "}
+      {highlightedText(extractFunctionName(fun.def) ?? "", "function")}
+      {highlightedText("(", "punctuation")}
+      {highlightVariables(fun.def)}
+      {highlightedText(")", "punctuation")}
+    </Typography>
+  );
+}
+
 export function highlightTextInstructions(fun: GptFunction): React.ReactNode {
   return (
     <>
-      <Typography>
-        {highlightedText("def", "keyword")}{" "}
-        {highlightedText(extractFunctionName(fun.def) ?? "", "function")}
-        {highlightedText("(", "punctuation")}
-        {highlightVariables(fun.def)}
-        {highlightedText(")", "punctuation")}
-      </Typography>
+      {highlightFunSignature(fun)}
       <Typography overflow="auto">
         Write a test to ensure that the function{" "}
         {highlightedText(extractFunctionName(fun.def) ?? "", "function")} works

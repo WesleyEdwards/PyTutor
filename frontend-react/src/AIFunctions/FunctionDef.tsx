@@ -9,7 +9,6 @@ import {
   MenuItem,
   Stack,
   Tooltip,
-  Typography,
 } from "@mui/joy";
 import CopyAll from "@mui/icons-material/CopyAll";
 import { FC } from "react";
@@ -22,31 +21,37 @@ import {
   MoreVert,
   Restore,
 } from "@mui/icons-material";
+import { highlightFunSignature } from "../renderHelpers";
+import { useMediaQuery } from "@mui/material";
 
 export const FunctionDef: FC<{
   gptFun: GptFunction;
-  setEditing: () => void;
-  setDeleting: () => void;
-}> = ({ gptFun, setEditing, setDeleting }) => {
+  setActionFun: (action: "implement" | "delete" | "restore") => void;
+}> = ({ gptFun, setActionFun }) => {
   const showToast = useToast();
+
+  const smallScreen = useMediaQuery("(max-width: 600px)");
+
   return (
     <Card sx={{ p: 1 }} variant="soft">
       <Stack direction="row" justifyContent="space-between" width="100%">
         <Stack direction="row" alignItems="center" gap="1rem">
-          <IconButton
-            onClick={() => {
-              const defCopy = gptFun.def.split("(")[0].replace("def ", "");
-              showToast({
-                message: `Copied '${defCopy}' to clipboard`,
-                color: "success",
-              });
-              navigator.clipboard.writeText(defCopy);
-            }}
-            sx={{ alignSelf: "flex-start", p: "3px" }}
-          >
-            <CopyAll />
-          </IconButton>
-          <Typography>{gptFun.def}</Typography>
+          {!smallScreen && (
+            <IconButton
+              onClick={() => {
+                const defCopy = gptFun.def.split("(")[0].replace("def ", "");
+                showToast({
+                  message: `Copied '${defCopy}' to clipboard`,
+                  color: "success",
+                });
+                navigator.clipboard.writeText(defCopy);
+              }}
+              sx={{ alignSelf: "flex-start", p: "3px" }}
+            >
+              <CopyAll />
+            </IconButton>
+          )}
+          {highlightFunSignature(gptFun)}
         </Stack>
         <Stack direction="row" gap="1rem" alignItems="center">
           {gptFun.implemented && (
@@ -54,22 +59,39 @@ export const FunctionDef: FC<{
               <Check color="success" />
             </Tooltip>
           )}
-          <IconButton onClick={setEditing} variant="solid">
-            <Edit />
-          </IconButton>
+          {!smallScreen && (
+            <IconButton
+              onClick={() => setActionFun("implement")}
+              variant="solid"
+            >
+              <Edit />
+            </IconButton>
+          )}
           <Dropdown>
             <MenuButton slots={{ root: IconButton }} variant="solid">
               <MoreVert />
             </MenuButton>
             <Menu placement="bottom-end">
-              <MenuItem>
+              {smallScreen && (
+                <MenuItem onClick={() => setActionFun("implement")}>
+                  <ListItemDecorator>
+                    <Edit />
+                  </ListItemDecorator>
+                  Edit
+                </MenuItem>
+              )}
+              <MenuItem onClick={() => setActionFun("restore")}>
                 <ListItemDecorator>
                   <Restore />
                 </ListItemDecorator>
                 Restore
               </MenuItem>
               <ListDivider />
-              <MenuItem onClick={setDeleting} variant="soft" color="danger">
+              <MenuItem
+                onClick={() => setActionFun("delete")}
+                variant="soft"
+                color="danger"
+              >
                 <ListItemDecorator sx={{ color: "inherit" }}>
                   <DeleteForever />
                 </ListItemDecorator>{" "}

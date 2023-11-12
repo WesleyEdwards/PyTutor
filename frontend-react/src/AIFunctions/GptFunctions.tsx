@@ -5,14 +5,19 @@ import { FunctionDef } from "./FunctionDef";
 import { ImplementModal } from "./ImplementModal";
 import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
+import { RestoreModal } from "./RestoreModal";
 
 export const GptFunctions: FC = () => {
   const { gptFunctions } = usePyIOContext();
 
-  const [editingFun, setEditingFun] = useState<GptFunction | null>(null);
-  const [deletingFun, setDeletingFun] = useState<GptFunction | null>(null);
+  const [actionFun, setActionFun] = useState<{
+    fun: GptFunction;
+    action: "implement" | "delete" | "restore";
+  } | null>(null);
 
   if (gptFunctions.length === 0) return null;
+
+  const closeModal = () => setActionFun(null);
 
   return (
     <>
@@ -21,12 +26,21 @@ export const GptFunctions: FC = () => {
         <FunctionDef
           key={gptFunction._id}
           gptFun={gptFunction}
-          setEditing={() => setEditingFun(gptFunction)}
-          setDeleting={() => setDeletingFun(gptFunction)}
+          setActionFun={(action) => setActionFun({ fun: gptFunction, action })}
         />
       ))}
-      <ImplementModal fun={editingFun} closeModal={() => setEditingFun(null)} />
-      <DeletingModal fun={deletingFun} closeModal={() => setDeletingFun(null)} />
+      <ImplementModal
+        fun={actionFun?.action === "implement" ? actionFun.fun : null}
+        closeModal={closeModal}
+      />
+      <DeletingModal
+        fun={actionFun?.action === "delete" ? actionFun.fun : null}
+        closeModal={closeModal}
+      />
+      <RestoreModal
+        fun={actionFun?.action === "restore" ? actionFun.fun : null}
+        closeModal={closeModal}
+      />
     </>
   );
 };

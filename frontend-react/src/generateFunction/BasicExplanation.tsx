@@ -1,7 +1,7 @@
 import { Button, FormControl, FormLabel, Stack, Textarea } from "@mui/joy";
 import { FC, useState } from "react";
 import { usePyIOContext } from "../hooks/usePyIOContext";
-import { extractFunctionName } from "../utils";
+import { getInitialValuesFromDef } from "../utils";
 import { GenError } from "./GenerateFunModal";
 import { GptFunction } from "../types";
 
@@ -36,13 +36,9 @@ export const BasicExplanation: FC<{
       }
 
       createFun({
-        ...gptFun,
         _id: crypto.randomUUID(),
-        implementation: `${gptFun.def}\n    return False`,
-        implemented: false,
-        test: `def test_${extractFunctionName(
-          gptFun.def
-        )}():\n    return False`,
+        ...gptFun,
+        ...getInitialValuesFromDef(gptFun.def),
       });
     } catch (e) {
       setError("unableToGenerate");

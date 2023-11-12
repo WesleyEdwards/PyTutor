@@ -4,6 +4,7 @@ import { GptFunction } from "../types";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { useDebounce } from "../hooks/useDebounce";
+import { highlightFunSignature } from "../renderHelpers";
 
 export const ImplementFun: FC<{
   fun: GptFunction;
@@ -24,29 +25,13 @@ export const ImplementFun: FC<{
 
   return (
     <Stack gap="1rem" width="100%">
-      <Typography>{fun?.explanation}</Typography>
+      <Typography sx={{ fontStyle: "italic" }}>{fun?.explanation}</Typography>
       <CodeMirrorEditor
         key="implement"
         height={"300px"}
         value={impl}
         onChange={setImpl}
       />
-
-      {/* {!writingTest && (
-        <>
-          <Typography level="body-sm">
-            When you've written the function and are ready, write a test to make
-            sure it works as intended
-          </Typography>
-          <Button
-            onClick={openTestSection}
-            color="success"
-            sx={{ maxWidth: "12rem", alignSelf: "flex-end" }}
-          >
-            Write Test
-          </Button>
-        </>
-      )} */}
     </Stack>
   );
 };

@@ -1,4 +1,5 @@
 import { PythonError } from "client-side-python-runner";
+import { GptFunction } from "./types";
 
 export const testCode = ["for i in range(40):", '\tprint("Time:", i)'].join(
   "\n"
@@ -79,4 +80,14 @@ export function getOutputChopOffBool(output: string): string {
 export function extractFunctionName(functionDefinition: string): string | null {
   const match = functionDefinition.match(/def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
   return match ? match[1] : null;
+}
+
+export function getInitialValuesFromDef(
+  def: string
+): Pick<GptFunction, "implementation" | "implemented" | "test"> {
+  return {
+    implementation: `${def}\n    return False`,
+    implemented: false,
+    test: `def test_${extractFunctionName(def)}():\n    return False`,
+  };
 }

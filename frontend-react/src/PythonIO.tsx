@@ -5,10 +5,17 @@ import { GptFunctions } from "./AIFunctions/GptFunctions";
 import { GenerateFunModal } from "./generateFunction/GenerateFunModal";
 import { MainEditor } from "./textEditor/MainEditor";
 import { MainCodeResult } from "./codeResults/MainCodeResult";
+import { useMediaQuery } from "@mui/material";
 
 function PythonIO() {
+  const smallScreen = useMediaQuery("(max-width: 900px)");
   return (
-    <Stack direction="row" width="100%" gap="1rem" sx={{ p: "2rem" }}>
+    <Stack
+      direction={smallScreen ? "column-reverse" : "row"}
+      width="100%"
+      gap="1rem"
+      sx={{ p: "2rem" }}
+    >
       <Stack direction="column" gap="1rem" flex={1}>
         <MainEditor />
         <RunCode />

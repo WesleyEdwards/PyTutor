@@ -31,7 +31,7 @@ export const TestCreatedFun: FC<{ fun: GptFunction }> = ({ fun }) => {
     if (testRes.error) return false;
     if (testRes.res === "") return undefined;
     return testRes.res.trim().endsWith("True");
-  }, [testRes.res]);
+  }, [testRes.res, testRes.error]);
 
   return (
     <>
@@ -43,7 +43,12 @@ export const TestCreatedFun: FC<{ fun: GptFunction }> = ({ fun }) => {
         codeToTest={() => fun.code}
         testResult={testResult}
       />
-      <CodeResult codeOutput={processTestRes} height="150px" />
+      <CodeResult
+        defaultExpanded={false}
+        codeOutput={processTestRes}
+        title="Test Result"
+        height="200px"
+      />
     </>
   );
 };

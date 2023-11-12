@@ -1,6 +1,5 @@
 import {
   Button,
-  Card,
   DialogContent,
   DialogTitle,
   Modal,
@@ -14,7 +13,6 @@ export const Instructions: FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    // <Card sx={{ maxWidth: "1000px" }}>
     <>
       <Button
         variant="soft"
@@ -35,7 +33,6 @@ export const Instructions: FC = () => {
           </DialogContent>
         </ModalDialog>
       </Modal>
-      {/* </Card> */}
     </>
   );
 };
