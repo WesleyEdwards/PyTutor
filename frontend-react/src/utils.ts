@@ -86,8 +86,13 @@ export function getInitialValuesFromDef(
   def: string
 ): Pick<GptFunction, "implementation" | "implemented" | "test"> {
   return {
-    implementation: `${def}\n    return False`,
+    implementation: `${def}\n    return`,
     implemented: false,
-    test: `def test_${extractFunctionName(def)}():\n    return False`,
+    test: `def test():\n    # ${def
+      .replace("def ", "")
+      .replace(
+        ":",
+        ""
+      )}\n    # Return True if the function produces the correct behavior\n    return`,
   };
 }

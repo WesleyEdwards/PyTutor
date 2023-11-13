@@ -77,6 +77,13 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "Write a function that creates a list of the first 10 numbers divisible by a number that I provide ",
   },
+  {
+    def: "def get_unique_letters(sentence):",
+    code: '\ndef get_unique_letters(sentence):\n    return list(set(sentence.replace(" ", "")))\n',
+    raw: null,
+    explanation:
+      "Write a function that gives a list of letters used in a sentence, without repeating them",
+  },
 ];
 
 export const getRandomMockFunction = (

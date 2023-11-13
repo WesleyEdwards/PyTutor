@@ -21,7 +21,7 @@ export const GptFunctions: FC = () => {
 
   return (
     <>
-      <Typography level="h4">GPT Functions</Typography>
+      <Typography level="h4">My Functions</Typography>
       {gptFunctions.map((gptFunction) => (
         <FunctionDef
           key={gptFunction._id}

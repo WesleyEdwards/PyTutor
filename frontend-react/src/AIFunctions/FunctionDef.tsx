@@ -9,6 +9,7 @@ import {
   MenuItem,
   Stack,
   Tooltip,
+  Typography,
 } from "@mui/joy";
 import CopyAll from "@mui/icons-material/CopyAll";
 import { FC } from "react";
@@ -34,8 +35,8 @@ export const FunctionDef: FC<{
 
   return (
     <Card sx={{ p: 1 }} variant="soft">
-      <Stack direction="row" justifyContent="space-between" width="100%">
-        <Stack direction="row" alignItems="center" gap="1rem">
+      <Stack direction="row" justifyContent="space-between" overflow={"auto"}>
+        <Stack direction="row" alignItems="center" gap="5px">
           {!smallScreen && (
             <IconButton
               onClick={() => {
@@ -51,15 +52,17 @@ export const FunctionDef: FC<{
               <CopyAll />
             </IconButton>
           )}
-          {highlightFunSignature(gptFun)}
+          <Typography level="body-sm">
+            {highlightFunSignature(gptFun)}
+          </Typography>
         </Stack>
         <Stack direction="row" gap="1rem" alignItems="center">
           {gptFun.implemented && (
             <Tooltip title="Implemented">
-              <Check color="success" />
+              <Check width="2rem" color="success" />
             </Tooltip>
           )}
-          {!smallScreen && (
+          {!smallScreen && !gptFun.implemented && (
             <IconButton
               onClick={() => setActionFun("implement")}
               variant="solid"
@@ -72,14 +75,15 @@ export const FunctionDef: FC<{
               <MoreVert />
             </MenuButton>
             <Menu placement="bottom-end">
-              {smallScreen && (
-                <MenuItem onClick={() => setActionFun("implement")}>
-                  <ListItemDecorator>
-                    <Edit />
-                  </ListItemDecorator>
-                  Edit
-                </MenuItem>
-              )}
+              {smallScreen ||
+                (gptFun.implemented && (
+                  <MenuItem onClick={() => setActionFun("implement")}>
+                    <ListItemDecorator>
+                      <Edit />
+                    </ListItemDecorator>
+                    Edit
+                  </MenuItem>
+                ))}
               <MenuItem onClick={() => setActionFun("restore")}>
                 <ListItemDecorator>
                   <Restore />

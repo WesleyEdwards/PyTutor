@@ -4,6 +4,7 @@ import { usePyIOContext } from "../hooks/usePyIOContext";
 import { getInitialValuesFromDef } from "../utils";
 import { GenError } from "./GenerateFunModal";
 import { GptFunction } from "../types";
+import { useToast } from "../contexts/Toaster";
 
 export const BasicExplanation: FC<{
   setError: (error?: GenError) => void;
@@ -11,6 +12,7 @@ export const BasicExplanation: FC<{
 }> = ({ setError, createFun }) => {
   const [explanation, setExplanation] = useState<string>("");
   const { aiapi, gptFunctions } = usePyIOContext();
+  const toast = useToast();
 
   const [fetching, setFetching] = useState(false);
 
@@ -40,6 +42,19 @@ export const BasicExplanation: FC<{
         ...gptFun,
         ...getInitialValuesFromDef(gptFun.def),
       });
+      if (aiapi.name === "mock") {
+        toast(
+          aiapi.name === "mock"
+            ? {
+                message: "The generated function was created using MOCK data.",
+                color: "warning",
+              }
+            : {
+                message: `AI successfully generated ${gptFun.def}.`,
+                color: "success",
+              }
+        );
+      }
     } catch (e) {
       setError("unableToGenerate");
     }

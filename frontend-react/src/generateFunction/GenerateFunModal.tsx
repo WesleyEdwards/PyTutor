@@ -29,9 +29,9 @@ export const GenerateFunModal = () => {
     <>
       <Button onClick={() => setOpen(true)}>Create a Function</Button>
       <Modal open={open} onClose={onClose}>
-        <ModalDialog sx={{ p: "2rem" }} size="lg" minWidth="64rem">
+        <ModalDialog minWidth="64rem">
           <ModalClose />
-          <DialogContent>
+          <DialogContent sx={{ mx: "2rem", px: "1rem" }}>
             {createdFun ? (
               <TestCreatedFun fun={createdFun} />
             ) : (
@@ -60,9 +60,6 @@ export const GenerateFunModal = () => {
               </Alert>
             )}
           </DialogContent>
-          {/* <DialogActions>
-            <Button onClick={() => setOpen(false)}>Close</Button>
-          </DialogActions> */}
         </ModalDialog>
       </Modal>
     </>

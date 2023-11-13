@@ -61,15 +61,11 @@ export function highlightTextInstructions(fun: GptFunction): React.ReactNode {
     <>
       {highlightFunSignature(fun)}
       <Typography overflow="auto">
-        Write a test to ensure that the function{" "}
-        {highlightedText(extractFunctionName(fun.def) ?? "", "function")} works
-        as intended. The test should return {highlightedText("True", "boolean")}{" "}
-        if the function works as intended and{" "}
-        {highlightedText("False", "boolean")} otherwise. You can use the{" "}
+        AI created the function{" "}
+        {highlightedText(extractFunctionName(fun.def) ?? "", "function")}. To
+        ensure it behaves as intended, write a test. You can use the{" "}
         {highlightedText("print", "function")}
-        {highlightedText("()", "punctuation")} function to print the output of
-        the function and the {highlightedText("return", "keyword")} keyword to
-        return the output of the function.
+        {highlightedText("()", "punctuation")} function to help.
       </Typography>
     </>
   );

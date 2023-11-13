@@ -35,7 +35,7 @@ export const TestCreatedFun: FC<{ fun: GptFunction }> = ({ fun }) => {
 
   return (
     <>
-      <Typography level="h2">Write a Test</Typography>
+      <Typography level="h3">Write a Test</Typography>
       <WriteTest
         fun={fun}
         setTestRes={setTestRes}
@@ -44,7 +44,6 @@ export const TestCreatedFun: FC<{ fun: GptFunction }> = ({ fun }) => {
         testResult={testResult}
       />
       <CodeResult
-        defaultExpanded={false}
         codeOutput={processTestRes}
         title="Test Result"
         height="200px"

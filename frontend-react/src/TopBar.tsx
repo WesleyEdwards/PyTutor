@@ -1,6 +1,19 @@
-import { Button, Checkbox, Stack, Typography, useColorScheme } from "@mui/joy";
+import {
+  Button,
+  Checkbox,
+  Chip,
+  Dropdown,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Stack,
+  Typography,
+  useColorScheme,
+} from "@mui/joy";
 import { FC, useEffect } from "react";
 import { usePyIOContext } from "./hooks/usePyIOContext";
+import { Settings } from "@mui/icons-material";
 
 export const TopBar: FC = () => {
   const { mode, setMode } = useColorScheme();
@@ -22,21 +35,36 @@ export const TopBar: FC = () => {
     >
       <Typography level="h1">PyTutor</Typography>
       <Stack direction="row" gap="2rem" alignItems="center">
-        {import.meta.env.MODE === "development" && (
-          <Checkbox
-            label="Mock Api"
-            checked={aiapi.name === "mock"}
-            onChange={(e) => changeApi(e.target.checked ? "mock" : "real")}
-          />
-        )}
-        <Button
-          variant="soft"
-          onClick={() => {
-            setMode(mode === "dark" ? "light" : "dark");
-          }}
-        >
-          {mode === "dark" ? "Light Mode" : "Dark Mode"}
-        </Button>
+        <Dropdown>
+          <MenuButton
+            slots={{ root: IconButton }}
+            slotProps={{ root: { variant: "plain", color: "neutral" } }}
+            sx={{ borderRadius: 40 }}
+          >
+            <Settings />
+          </MenuButton>
+          <Menu sx={{ p: "1rem" }}>
+            <Stack gap="1rem">
+              {true && (
+                <Checkbox
+                  label="Mock Api"
+                  checked={aiapi.name === "mock"}
+                  onChange={(e) =>
+                    changeApi(e.target.checked ? "mock" : "real")
+                  }
+                />
+              )}
+              <Button
+                variant="soft"
+                onClick={() => {
+                  setMode(mode === "dark" ? "light" : "dark");
+                }}
+              >
+                {mode === "dark" ? "Light Mode" : "Dark Mode"}
+              </Button>
+            </Stack>
+          </Menu>
+        </Dropdown>
       </Stack>
     </Stack>
   );

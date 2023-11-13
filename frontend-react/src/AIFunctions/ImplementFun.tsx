@@ -4,7 +4,6 @@ import { GptFunction } from "../types";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { useDebounce } from "../hooks/useDebounce";
-import { highlightFunSignature } from "../renderHelpers";
 
 export const ImplementFun: FC<{
   fun: GptFunction;
