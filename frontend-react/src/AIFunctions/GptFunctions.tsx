@@ -7,12 +7,11 @@ import {
 import { FC, useState } from "react";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { FunctionDef } from "./FunctionDef";
-import { ImplementModal } from "./ImplementModal";
+import { TestModal } from "./TestModal";
 import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
-import { RestoreModal } from "./RestoreModal";
 
-export type ModalType = "implement" | "delete" | "restore";
+export type ModalType = "implement" | "delete";
 
 export const GptFunctions: FC = () => {
   const { gptFunctions } = usePyIOContext();
@@ -55,16 +54,12 @@ export const GptFunctions: FC = () => {
           />
         ))}
       </AccordionGroup>
-      <ImplementModal
+      <TestModal
         fun={actionFun?.action === "implement" ? actionFun.fun : null}
         closeModal={closeModal}
       />
       <DeletingModal
         fun={actionFun?.action === "delete" ? actionFun.fun : null}
-        closeModal={closeModal}
-      />
-      <RestoreModal
-        fun={actionFun?.action === "restore" ? actionFun.fun : null}
         closeModal={closeModal}
       />
     </>

@@ -16,8 +16,6 @@ import {
   Edit,
   MoreVert,
   Restore,
-  Check,
-  Code,
   PublishedWithChanges,
 } from "@mui/icons-material";
 import { ModalType } from "./GptFunctions";
@@ -31,16 +29,19 @@ export const DefActionSpace: FC<{
   noHovering: () => void;
 }> = ({ setActionFun, fun, noHovering }) => {
   const showToast = useToast();
-  const { gptFunctions, modifyFunction } = usePyIOContext();
+  const { modifyFunction } = usePyIOContext();
 
-  const clickIcon = (
-    e:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    modal: ModalType
-  ) => {
-    e.stopPropagation();
-    setActionFun(modal);
+  const funName = extractFunctionName(fun.def) ?? "";
+
+  const changeImplementation = (implement: boolean) => {
+    showToast({
+      message: implement
+        ? "Function implemented!"
+        : `AI functionality restored for ${funName}!`,
+      color: "success",
+    });
+    modifyFunction(fun._id, { implemented: implement });
+    noHovering();
   };
 
   return (
@@ -48,7 +49,6 @@ export const DefActionSpace: FC<{
       <IconButton
         size="sm"
         onClick={(e) => {
-          const funName = extractFunctionName(fun.def) ?? "";
           e.stopPropagation();
           navigator.clipboard.writeText(funName);
           showToast({
@@ -60,7 +60,13 @@ export const DefActionSpace: FC<{
         <CopyAll />
       </IconButton>
       <Tooltip title="Test" size="sm" variant="soft">
-        <IconButton size="sm" onClick={(e) => clickIcon(e, "implement")}>
+        <IconButton
+          size="sm"
+          onClick={(e) => {
+            e.stopPropagation();
+            setActionFun("implement");
+          }}
+        >
           <Edit />
         </IconButton>
       </Tooltip>
@@ -75,24 +81,22 @@ export const DefActionSpace: FC<{
         </MenuButton>
         <Menu placement="bottom-end">
           {fun.implemented ? (
-            <MenuItem onClick={(e) => clickIcon(e, "restore")}>
+            <MenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                changeImplementation(false);
+              }}
+            >
               <ListItemDecorator>
                 <Restore />
               </ListItemDecorator>
-              Restore
+              Un-Implement
             </MenuItem>
           ) : (
             <MenuItem
               onClick={(e) => {
                 e.stopPropagation();
-                showToast({
-                  message: fun.implemented
-                    ? "Your implementation has been updated!"
-                    : "Function implemented!",
-                  color: "success",
-                });
-                modifyFunction(fun?._id ?? "", { implemented: true });
-                noHovering();
+                changeImplementation(true);
               }}
             >
               <ListItemDecorator>
@@ -104,7 +108,10 @@ export const DefActionSpace: FC<{
 
           <ListDivider />
           <MenuItem
-            onClick={(e) => clickIcon(e, "delete")}
+            onClick={(e) => {
+              e.stopPropagation();
+              setActionFun("delete");
+            }}
             variant="soft"
             color="danger"
           >
