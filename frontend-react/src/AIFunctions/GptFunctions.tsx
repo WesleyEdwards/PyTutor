@@ -7,12 +7,14 @@ import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
 import { RestoreModal } from "./RestoreModal";
 
+export type ModalType = "implement" | "delete" | "restore";
+
 export const GptFunctions: FC = () => {
   const { gptFunctions } = usePyIOContext();
 
   const [actionFun, setActionFun] = useState<{
     fun: GptFunction;
-    action: "implement" | "delete" | "restore";
+    action: ModalType;
   } | null>(null);
 
   if (gptFunctions.length === 0) return null;

@@ -1,31 +1,31 @@
-import { RunCode } from "./codeResults/RunCode";
 import { Divider, Stack } from "@mui/joy";
-import { Instructions } from "./Instructions";
 import { GptFunctions } from "./AIFunctions/GptFunctions";
 import { GenerateFunModal } from "./generateFunction/GenerateFunModal";
 import { MainEditor } from "./textEditor/MainEditor";
-import { MainCodeResult } from "./codeResults/MainCodeResult";
 import { useMediaQuery } from "@mui/material";
+import { RunCode } from "./codeResults/RunCode";
+import { MainCodeResult } from "./codeResults/MainCodeResult";
 
 function PythonIO() {
-  const smallScreen = useMediaQuery("(max-width: 900px)");
+  const smallScreen = useMediaQuery("(max-width: 1200px)");
   return (
-    <Stack
-      direction={smallScreen ? "column-reverse" : "row"}
-      width="100%"
-      gap="1rem"
-      sx={{ p: "2rem" }}
-    >
-      <Stack direction="column" gap="1rem" flex={1}>
-        <MainEditor />
-        <RunCode />
-        <MainCodeResult />
-      </Stack>
-      <Stack width="100%" gap="1rem" sx={{ maxWidth: "28rem" }} flex={1}>
-        <Instructions />
+    <Stack direction={smallScreen ? "column" : "row"} gap="1rem" padding="1rem">
+      <Stack gap="1rem" width="100%" flex={4}>
         <GenerateFunModal />
         <Divider sx={{ my: "1rem" }} />
         <GptFunctions />
+        <RunCode />
+        <MainEditor />
+      </Stack>
+
+      <Stack
+        gap="1rem"
+        width="100%"
+        overflow="auto"
+        justifyContent="flex-end"
+        flex={3}
+      >
+        <MainCodeResult />
       </Stack>
     </Stack>
   );

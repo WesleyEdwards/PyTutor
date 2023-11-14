@@ -50,25 +50,21 @@ export const RunCode: FC = () => {
   }, []);
 
   return (
-    <Stack
-      direction="row"
-      sx={{ justifyContent: "flex-end", minWidth: "2rem" }}
-    >
-      <Tooltip size="sm" variant="soft" title="Run Code (Ctrl + Shift + Enter)">
-        <IconButton
-          variant="solid"
-          onClick={runMainCode}
-          sx={{
-            backgroundColor: "#0b5c04",
-            transition: "background-color 0.2s ease-in-out",
-            "&:hover": {
-              backgroundColor: "#198908",
-            },
-          }}
-        >
-          <PlayArrowRoundedIcon />
-        </IconButton>
-      </Tooltip>
-    </Stack>
+    <Tooltip size="sm" variant="soft" title="Run Code (Ctrl + Shift + Enter)">
+      <IconButton
+        variant="solid"
+        onClick={runMainCode}
+        sx={{
+          alignSelf: "flex-end",
+          backgroundColor: "#0b5c04",
+          transition: "background-color 0.2s ease-in-out",
+          "&:hover": {
+            backgroundColor: "#198908",
+          },
+        }}
+      >
+        <PlayArrowRoundedIcon />
+      </IconButton>
+    </Tooltip>
   );
 };

@@ -19,12 +19,12 @@ export const Instructions: FC = () => {
         onClick={() => setOpen(true)}
         startDecorator={<Description />}
       >
-        Instructions
+        Assignment
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog>
           <ModalClose />
-          <DialogTitle>Instructions</DialogTitle>
+          <DialogTitle>Assignment</DialogTitle>
           <DialogContent>
             Write a program that prints the numbers from 1 to 100. But for
             multiples of three print “Fizz” instead of the number and for the

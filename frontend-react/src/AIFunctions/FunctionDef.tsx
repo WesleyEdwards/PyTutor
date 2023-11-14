@@ -24,10 +24,11 @@ import {
 } from "@mui/icons-material";
 import { highlightFunSignature } from "../renderHelpers";
 import { useMediaQuery } from "@mui/material";
+import { ModalType } from "./GptFunctions";
 
 export const FunctionDef: FC<{
   gptFun: GptFunction;
-  setActionFun: (action: "implement" | "delete" | "restore") => void;
+  setActionFun: (action: ModalType) => void;
 }> = ({ gptFun, setActionFun }) => {
   const showToast = useToast();
 
