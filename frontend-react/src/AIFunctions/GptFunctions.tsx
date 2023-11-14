@@ -1,4 +1,9 @@
-import { Typography } from "@mui/joy";
+import {
+  AccordionGroup,
+  Typography,
+  accordionDetailsClasses,
+  accordionSummaryClasses,
+} from "@mui/joy";
 import { FC, useState } from "react";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { FunctionDef } from "./FunctionDef";
@@ -24,13 +29,32 @@ export const GptFunctions: FC = () => {
   return (
     <>
       <Typography level="h4">My Functions</Typography>
-      {gptFunctions.map((gptFunction) => (
-        <FunctionDef
-          key={gptFunction._id}
-          gptFun={gptFunction}
-          setActionFun={(action) => setActionFun({ fun: gptFunction, action })}
-        />
-      ))}
+      <AccordionGroup
+        variant="outlined"
+        transition="0.2s"
+        sx={{
+          borderRadius: "lg",
+          [`& .${accordionSummaryClasses.button}:hover`]: {
+            bgcolor: "transparent",
+          },
+          [`& .${accordionDetailsClasses.content}`]: {
+            boxShadow: (theme) => `inset 0 1px ${theme.vars.palette.divider}`,
+            [`&.${accordionDetailsClasses.expanded}`]: {
+              paddingBlock: "0.75rem",
+            },
+          },
+        }}
+      >
+        {gptFunctions.map((gptFunction) => (
+          <FunctionDef
+            key={gptFunction._id}
+            gptFun={gptFunction}
+            setActionFun={(action) =>
+              setActionFun({ fun: gptFunction, action })
+            }
+          />
+        ))}
+      </AccordionGroup>
       <ImplementModal
         fun={actionFun?.action === "implement" ? actionFun.fun : null}
         closeModal={closeModal}

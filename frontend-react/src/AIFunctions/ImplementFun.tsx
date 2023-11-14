@@ -23,14 +23,11 @@ export const ImplementFun: FC<{
   }, [debouncedImpl]);
 
   return (
-    <Stack gap="1rem" width="100%">
-      <Typography sx={{ fontStyle: "italic" }}>{fun?.explanation}</Typography>
-      <CodeMirrorEditor
-        key="implement"
-        height={"300px"}
-        value={impl}
-        onChange={setImpl}
-      />
+    <Stack width="100%">
+      <Typography level="body-sm" sx={{ fontStyle: "italic", pb: "0.5rem" }}>
+        {fun?.explanation}
+      </Typography>
+      <CodeMirrorEditor key="implement" value={impl} onChange={setImpl} />
     </Stack>
   );
 };

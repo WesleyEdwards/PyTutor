@@ -1,111 +1,68 @@
 import {
-  Card,
-  Dropdown,
-  IconButton,
-  ListDivider,
-  ListItemDecorator,
-  Menu,
-  MenuButton,
-  MenuItem,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/joy";
-import CopyAll from "@mui/icons-material/CopyAll";
-import { FC } from "react";
-import { useToast } from "../contexts/Toaster";
+import { FC, useState } from "react";
 import { GptFunction } from "../types";
-import {
-  Check,
-  DeleteForever,
-  Edit,
-  MoreVert,
-  Restore,
-} from "@mui/icons-material";
+import { DragIndicator, PublishedWithChanges } from "@mui/icons-material";
 import { highlightFunSignature } from "../renderHelpers";
-import { useMediaQuery } from "@mui/material";
 import { ModalType } from "./GptFunctions";
+import { ImplementFun } from "./ImplementFun";
+import { DefActionSpace } from "./DefActionSpace";
 
 export const FunctionDef: FC<{
   gptFun: GptFunction;
   setActionFun: (action: ModalType) => void;
 }> = ({ gptFun, setActionFun }) => {
-  const showToast = useToast();
-
-  const smallScreen = useMediaQuery("(max-width: 600px)");
+  const [hovering, setHovering] = useState(false);
 
   return (
-    <Card sx={{ p: 1 }} variant="soft">
-      <Stack direction="row" justifyContent="space-between" overflow={"auto"}>
-        <Stack direction="row" alignItems="center" gap="5px">
-          {!smallScreen && (
-            <IconButton
-              onClick={() => {
-                const defCopy = gptFun.def.split("(")[0].replace("def ", "");
-                showToast({
-                  message: `Copied '${defCopy}' to clipboard`,
-                  color: "success",
-                });
-                navigator.clipboard.writeText(defCopy);
-              }}
-              sx={{ alignSelf: "flex-start", p: "3px" }}
-            >
-              <CopyAll />
-            </IconButton>
-          )}
-          <Typography level="body-sm">
-            {highlightFunSignature(gptFun)}
-          </Typography>
+    <Accordion
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
+      <AccordionSummary>
+        <Stack
+          direction="row"
+          width="100%"
+          justifyContent="space-between"
+          overflow="auto"
+          minHeight="2.5rem"
+        >
+          <Stack direction="row" alignItems="center" gap="10px">
+            <DragIndicator />
+            <Typography level="body-sm">
+              {highlightFunSignature(gptFun)}
+            </Typography>
+          </Stack>
+          <Stack direction="row" alignItems="center">
+            {hovering && (
+              <DefActionSpace
+                setActionFun={setActionFun}
+                fun={gptFun}
+                noHovering={() => setHovering(false)}
+              />
+            )}
+            {gptFun.implemented ? (
+              <Tooltip size="sm" variant="soft" title="Implemented">
+                <PublishedWithChanges width="2rem" color="success" />
+              </Tooltip>
+            ) : (
+              <PublishedWithChanges
+                width="2rem"
+                sx={{ opacity: "100%", fill: "none" }}
+              />
+            )}
+          </Stack>
         </Stack>
-        <Stack direction="row" gap="1rem" alignItems="center">
-          {gptFun.implemented && (
-            <Tooltip title="Implemented">
-              <Check width="2rem" color="success" />
-            </Tooltip>
-          )}
-          {!smallScreen && !gptFun.implemented && (
-            <IconButton
-              onClick={() => setActionFun("implement")}
-              variant="solid"
-            >
-              <Edit />
-            </IconButton>
-          )}
-          <Dropdown>
-            <MenuButton slots={{ root: IconButton }} variant="solid">
-              <MoreVert />
-            </MenuButton>
-            <Menu placement="bottom-end">
-              {smallScreen ||
-                (gptFun.implemented && (
-                  <MenuItem onClick={() => setActionFun("implement")}>
-                    <ListItemDecorator>
-                      <Edit />
-                    </ListItemDecorator>
-                    Edit
-                  </MenuItem>
-                ))}
-              <MenuItem onClick={() => setActionFun("restore")}>
-                <ListItemDecorator>
-                  <Restore />
-                </ListItemDecorator>
-                Restore
-              </MenuItem>
-              <ListDivider />
-              <MenuItem
-                onClick={() => setActionFun("delete")}
-                variant="soft"
-                color="danger"
-              >
-                <ListItemDecorator sx={{ color: "inherit" }}>
-                  <DeleteForever />
-                </ListItemDecorator>{" "}
-                Delete
-              </MenuItem>
-            </Menu>
-          </Dropdown>
-        </Stack>
-      </Stack>
-    </Card>
+      </AccordionSummary>
+      <AccordionDetails>
+        <ImplementFun fun={gptFun} />
+      </AccordionDetails>
+    </Accordion>
   );
 };

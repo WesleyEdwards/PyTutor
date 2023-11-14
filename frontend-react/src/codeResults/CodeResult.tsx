@@ -70,7 +70,7 @@ export const CodeResult: FC<{
             fontFamily: "monospace",
             whiteSpace: "pre",
             maxWidth: "100%",
-            color: codeOutput.error ? "#d10000" : undefined,
+            // color: codeOutput.error ? "#d10000" : undefined,
           }}
         >
           {error ? error : res}
