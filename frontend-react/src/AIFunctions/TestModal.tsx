@@ -44,13 +44,16 @@ export const TestModal: FC<{
 
   return (
     <Modal open={!!fun} onClose={closeModal}>
-      <ModalDialog layout="fullscreen">
+      <ModalDialog
+        layout="fullscreen"
+        sx={{ marginInlineEnd: 0, paddingInlineEnd: 0 }}
+      >
         <ModalClose />
         <DialogTitle>{fun && highlightFunSignature(fun)}</DialogTitle>
         <DialogContent>
           {fun && (
             <Stack gap="1rem" alignItems="center" width="100%">
-              <Stack maxWidth="1000px" justifyContent="center">
+              <Stack maxWidth="1000px" width="90%" justifyContent="center">
                 <Typography level="h2">Test</Typography>
                 <WriteTest
                   fun={fun}

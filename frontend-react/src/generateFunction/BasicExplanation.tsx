@@ -1,5 +1,7 @@
 import {
+  Alert,
   Button,
+  Divider,
   FormControl,
   FormLabel,
   Stack,
@@ -28,6 +30,13 @@ export const BasicExplanation: FC<{
 
   const checkRepeatEx = aiapi.name !== "mock";
 
+  const processExplanation = () => {
+    if (input || output) {
+      return `${explanation}\n\nInput Specifications:\n${input}\n\nOutput Specifications:\n${output}`;
+    }
+    return explanation;
+  };
+
   const generateFunction = async () => {
     setError(undefined);
 
@@ -41,7 +50,7 @@ export const BasicExplanation: FC<{
 
     try {
       setFetching(true);
-      const gptFun = await aiapi.getGptFunction(explanation);
+      const gptFun = await aiapi.getGptFunction(processExplanation());
       if (gptFunctions.find((f) => f.def === gptFun.def)) {
         setFetching(false);
         return setError("repeatName");
@@ -73,6 +82,11 @@ export const BasicExplanation: FC<{
 
   return (
     <Stack spacing={2} sx={{ my: "10px" }}>
+      <Alert color="primary">
+        To help the AI generate the correct function, specify the input and
+        expected output of the function. Try being specific, using examples, and
+        refining your explanation.
+      </Alert>
       <FormControl>
         <FormLabel>Explanation</FormLabel>
         <Textarea
@@ -84,7 +98,7 @@ export const BasicExplanation: FC<{
       </FormControl>
       {moreExplanation && (
         <>
-          <Typography level="h3">Define Input/Output</Typography>
+          <Divider />
           <Stack direction="row" gap="1rem">
             <FormControl sx={{ width: "100%" }}>
               <FormLabel>Input</FormLabel>

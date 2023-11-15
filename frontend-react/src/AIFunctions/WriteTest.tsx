@@ -7,6 +7,7 @@ import { CodeOutput, GptFunction } from "../types";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { useRunPython } from "../hooks/useRunPython";
 import { extractFunctionName, processTestError } from "../utils";
+import { Check, Close } from "@mui/icons-material";
 
 export const WriteTest: FC<{
   fun: GptFunction;
@@ -14,15 +15,7 @@ export const WriteTest: FC<{
   testInstructions: React.ReactNode;
   testResult: boolean | undefined;
   codeToTest: () => string;
-  correctGenerateButton?: React.ReactNode;
-}> = ({
-  fun,
-  setTestRes,
-  testInstructions,
-  codeToTest,
-  testResult,
-  correctGenerateButton,
-}) => {
+}> = ({ fun, setTestRes, testInstructions, codeToTest, testResult }) => {
   const { updateFuns } = usePyIOContext();
   const [testCode, setTestCode] = useState<string>(fun.test);
 
@@ -63,17 +56,17 @@ export const WriteTest: FC<{
         gap="1rem"
         justifyContent="flex-end"
         alignItems="center"
-        height={"3rem"}
+        height="3rem"
       >
         {testResult !== undefined && (
           <Alert
             sx={{ width: "100%" }}
             color={testResult ? "success" : "danger"}
+            startDecorator={testResult ? <Check /> : <Close />}
           >
             {testResult ? "Test Passed" : "Test Failed"}
           </Alert>
         )}
-        {correctGenerateButton}
         <Button
           variant="solid"
           onClick={runPythonCode}

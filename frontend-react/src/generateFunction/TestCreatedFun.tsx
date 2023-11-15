@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { CodeOutput, GptFunction } from "../types";
-import { Button, Typography } from "@mui/joy";
+import { Button, Stack, Typography } from "@mui/joy";
 import { WriteTest } from "../AIFunctions/WriteTest";
 import { CodeResult } from "../codeResults/CodeResult";
 import { getOutputChopOffBool } from "../utils";
@@ -38,20 +38,20 @@ export const TestCreatedFun: FC<{
 
   return (
     <>
-      <Typography level="h3">Write a Test</Typography>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography level="h3">Write a Test</Typography>
+        <Button onClick={retryGenerate} sx={{ alignSelf: "flex-end" }}>
+          Didn't generate correctly?
+        </Button>
+      </Stack>
+
       <WriteTest
         fun={fun}
         setTestRes={setTestRes}
         testInstructions={testInstructions}
         codeToTest={() => fun.code}
         testResult={testResult}
-        correctGenerateButton={
-          <Button onClick={retryGenerate} sx={{ minWidth: "14rem" }}>
-            Didn't generate correctly?
-          </Button>
-        }
       />
-
       <CodeResult
         codeOutput={processTestRes}
         title="Test Result"

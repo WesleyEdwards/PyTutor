@@ -4,7 +4,6 @@ import {
   AccordionGroup,
   AccordionSummary,
   Card,
-  CardProps,
   Divider,
   Stack,
   Typography,
@@ -35,17 +34,12 @@ export const CodeResult: FC<{
     color: error ? "#d10000" : undefined,
   };
 
-  const sxCardProps: CardProps["sx"] = {
-    width: "100%",
-    height,
-    minWidth: "400px",
-    p: 1,
-    borderRadius: 10,
-  };
-
   if (expandable) {
     return (
-      <Card variant="soft" sx={sxCardProps}>
+      <Card
+        variant="soft"
+        sx={{ width: "100%", p: 1, my: 1, borderRadius: 10 }}
+      >
         <AccordionGroup>
           <Accordion defaultExpanded={defaultExpanded}>
             <AccordionSummary>
@@ -68,7 +62,10 @@ export const CodeResult: FC<{
   }
 
   return (
-    <Card variant="soft" sx={sxCardProps}>
+    <Card
+      variant="soft"
+      sx={{ width: "100%", height, minWidth: "400px", p: 1, borderRadius: 10 }}
+    >
       <Typography>{title}</Typography>
       <Divider sx={{ my: "1rem" }} />
       <Stack sx={{ overflow: "auto" }}>
