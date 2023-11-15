@@ -1,6 +1,6 @@
 import {
   AccordionGroup,
-  Typography,
+  Divider,
   accordionDetailsClasses,
   accordionSummaryClasses,
 } from "@mui/joy";
@@ -10,7 +10,7 @@ import { FunctionDef } from "./FunctionDef";
 import { TestModal } from "./TestModal";
 import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "./StrictModeDroppable";
 
 export type ModalType = "implement" | "delete";
@@ -23,18 +23,17 @@ export const GptFunctions: FC = () => {
     action: ModalType;
   } | null>(null);
 
-  if (gptFunctions.length === 0) return null;
-
   const closeModal = () => setActionFun(null);
+
+  if (gptFunctions.length === 0) return <Divider />;
 
   return (
     <>
-      <Typography level="h4">My Functions</Typography>
       <AccordionGroup
         variant="outlined"
         transition="0.2s"
         sx={{
-          borderRadius: "lg",
+          borderRadius: "sm",
           [`& .${accordionSummaryClasses.button}:hover`]: {
             bgcolor: "transparent",
           },
@@ -59,13 +58,11 @@ export const GptFunctions: FC = () => {
           <StrictModeDroppable droppableId="droppable">
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                {gptFunctions.map((item) => (
+                {gptFunctions.map((fun) => (
                   <FunctionDef
-                    key={item._id}
-                    gptFun={item}
-                    setActionFun={(action) =>
-                      setActionFun({ fun: item, action })
-                    }
+                    key={fun._id}
+                    fun={fun}
+                    setActionFun={(action) => setActionFun({ fun, action })}
                   />
                 ))}
                 {provided.placeholder}

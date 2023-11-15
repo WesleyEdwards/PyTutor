@@ -29,7 +29,6 @@ export const TopBar: FC = () => {
   return (
     <Stack
       direction="row"
-      width="100%"
       padding={2}
       justifyContent="space-between"
     >

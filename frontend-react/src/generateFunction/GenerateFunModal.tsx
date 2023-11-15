@@ -31,6 +31,7 @@ export const GenerateFunModal = () => {
     setError(undefined);
     setRetryGenerate(undefined);
   };
+
   return (
     <>
       <Button

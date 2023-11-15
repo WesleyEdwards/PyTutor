@@ -1,4 +1,4 @@
-import { Divider, Stack } from "@mui/joy";
+import { Stack, Typography } from "@mui/joy";
 import { GptFunctions } from "./AIFunctions/GptFunctions";
 import { GenerateFunModal } from "./generateFunction/GenerateFunModal";
 import { MainEditor } from "./textEditor/MainEditor";
@@ -11,7 +11,10 @@ function PythonIO() {
   return (
     <Stack direction={smallScreen ? "column" : "row"} gap="1rem" padding="1rem">
       <Stack gap="1rem" width="100%" flex={4}>
-        <GenerateFunModal />
+        <Stack direction="row" justifyContent="space-between">
+          <Typography level="h4">My Functions</Typography>
+          <GenerateFunModal />
+        </Stack>
         <GptFunctions />
         <RunCode />
         <MainEditor />

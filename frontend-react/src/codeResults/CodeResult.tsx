@@ -4,9 +4,11 @@ import {
   AccordionGroup,
   AccordionSummary,
   Card,
+  CardProps,
   Divider,
   Stack,
   Typography,
+  TypographyProps,
 } from "@mui/joy";
 import { FC } from "react";
 import { CodeOutput } from "../types";
@@ -26,9 +28,24 @@ export const CodeResult: FC<{
 }) => {
   const { error, res } = codeOutput;
 
+  const sxTextProps: TypographyProps["sx"] = {
+    fontFamily: "monospace",
+    whiteSpace: "pre",
+    maxWidth: "100%",
+    color: error ? "#d10000" : undefined,
+  };
+
+  const sxCardProps: CardProps["sx"] = {
+    width: "100%",
+    height,
+    minWidth: "400px",
+    p: 1,
+    borderRadius: 10,
+  };
+
   if (expandable) {
     return (
-      <Card variant="soft" sx={{ width: "100%", p: 1, borderRadius: 10 }}>
+      <Card variant="soft" sx={sxCardProps}>
         <AccordionGroup>
           <Accordion defaultExpanded={defaultExpanded}>
             <AccordionSummary>
@@ -38,14 +55,7 @@ export const CodeResult: FC<{
               <Stack sx={{ height }}>
                 <Divider sx={{ my: "1rem" }} />
                 <Stack sx={{ overflow: "auto" }}>
-                  <Typography
-                    sx={{
-                      fontFamily: "monospace",
-                      whiteSpace: "pre",
-                      maxWidth: "100%",
-                      color: codeOutput.error ? "#d10000" : undefined,
-                    }}
-                  >
+                  <Typography sx={sxTextProps}>
                     {error ? error : res}
                   </Typography>
                 </Stack>
@@ -58,23 +68,11 @@ export const CodeResult: FC<{
   }
 
   return (
-    <Card
-      variant="soft"
-      sx={{ width: "100%", height, minWidth: "400px", p: 1, borderRadius: 10 }}
-    >
+    <Card variant="soft" sx={sxCardProps}>
       <Typography>{title}</Typography>
       <Divider sx={{ my: "1rem" }} />
       <Stack sx={{ overflow: "auto" }}>
-        <Typography
-          sx={{
-            fontFamily: "monospace",
-            whiteSpace: "pre",
-            maxWidth: "100%",
-            // color: codeOutput.error ? "#d10000" : undefined,
-          }}
-        >
-          {error ? error : res}
-        </Typography>
+        <Typography sx={sxTextProps}>{error ? error : res}</Typography>
       </Stack>
     </Card>
   );

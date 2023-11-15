@@ -11,38 +11,18 @@ import {
 import CopyAll from "@mui/icons-material/CopyAll";
 import { FC } from "react";
 import { useToast } from "../contexts/Toaster";
-import {
-  DeleteForever,
-  Edit,
-  MoreVert,
-  Restore,
-  PublishedWithChanges,
-} from "@mui/icons-material";
+import { DeleteForever, Edit, MoreVert } from "@mui/icons-material";
 import { ModalType } from "./GptFunctions";
 import { extractFunctionName } from "../utils";
 import { GptFunction } from "../types";
-import { usePyIOContext } from "../hooks/usePyIOContext";
 
 export const DefActionSpace: FC<{
   setActionFun: (action: ModalType) => void;
   fun: GptFunction;
-  noHovering: () => void;
-}> = ({ setActionFun, fun, noHovering }) => {
+}> = ({ setActionFun, fun }) => {
   const showToast = useToast();
-  const { updateFuns } = usePyIOContext();
 
   const funName = extractFunctionName(fun.def) ?? "";
-
-  const changeImplementation = (implement: boolean) => {
-    showToast({
-      message: implement
-        ? "Function implemented!"
-        : `AI functionality restored for ${funName}!`,
-      color: "success",
-    });
-    updateFuns("modify", { id: fun._id, mod: { implemented: implement } });
-    noHovering();
-  };
 
   return (
     <>
@@ -79,32 +59,6 @@ export const DefActionSpace: FC<{
           <MoreVert />
         </MenuButton>
         <Menu placement="bottom-end">
-          {fun.implemented ? (
-            <MenuItem
-              onClick={(e) => {
-                e.stopPropagation();
-                changeImplementation(false);
-              }}
-            >
-              <ListItemDecorator>
-                <Restore />
-              </ListItemDecorator>
-              Un-Implement
-            </MenuItem>
-          ) : (
-            <MenuItem
-              onClick={(e) => {
-                e.stopPropagation();
-                changeImplementation(true);
-              }}
-            >
-              <ListItemDecorator>
-                <PublishedWithChanges />
-              </ListItemDecorator>
-              Implement
-            </MenuItem>
-          )}
-
           <ListDivider />
           <MenuItem
             onClick={(e) => {
