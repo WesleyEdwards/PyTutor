@@ -1,3 +1,7 @@
 .cm-content {
   width: 100px;
 }
+
+/* *, *::before, *::after {
+  border-radius: 10px;
+} */

@@ -10,11 +10,13 @@ import { FunctionDef } from "./FunctionDef";
 import { TestModal } from "./TestModal";
 import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { StrictModeDroppable } from "./StrictModeDroppable";
 
 export type ModalType = "implement" | "delete";
 
 export const GptFunctions: FC = () => {
-  const { gptFunctions } = usePyIOContext();
+  const { gptFunctions, updateFuns } = usePyIOContext();
 
   const [actionFun, setActionFun] = useState<{
     fun: GptFunction;
@@ -44,15 +46,33 @@ export const GptFunctions: FC = () => {
           },
         }}
       >
-        {gptFunctions.map((gptFunction) => (
-          <FunctionDef
-            key={gptFunction._id}
-            gptFun={gptFunction}
-            setActionFun={(action) =>
-              setActionFun({ fun: gptFunction, action })
+        <DragDropContext
+          onDragEnd={({ draggableId, destination }) => {
+            if (destination?.index) {
+              updateFuns("reorder", {
+                fun: draggableId,
+                destination: destination.index,
+              });
             }
-          />
-        ))}
+          }}
+        >
+          <StrictModeDroppable droppableId="droppable">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {gptFunctions.map((item) => (
+                  <FunctionDef
+                    key={item._id}
+                    gptFun={item}
+                    setActionFun={(action) =>
+                      setActionFun({ fun: item, action })
+                    }
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </StrictModeDroppable>
+        </DragDropContext>
       </AccordionGroup>
       <TestModal
         fun={actionFun?.action === "implement" ? actionFun.fun : null}

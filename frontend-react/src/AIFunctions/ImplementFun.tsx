@@ -8,7 +8,7 @@ import { useDebounce } from "../hooks/useDebounce";
 export const ImplementFun: FC<{
   fun: GptFunction;
 }> = ({ fun }) => {
-  const { modifyFunction } = usePyIOContext();
+  const { updateFuns } = usePyIOContext();
   const [impl, setImpl] = useState<string>("");
 
   const debouncedImpl = useDebounce(impl, 500);
@@ -19,7 +19,10 @@ export const ImplementFun: FC<{
 
   useEffect(() => {
     if (!fun || !debouncedImpl) return;
-    modifyFunction(fun._id, { implementation: debouncedImpl });
+    updateFuns("modify", {
+      id: fun._id,
+      mod: { implementation: debouncedImpl },
+    });
   }, [debouncedImpl]);
 
   return (

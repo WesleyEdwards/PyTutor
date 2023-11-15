@@ -14,14 +14,24 @@ type PythonIOContextType = {
   aiapi: AiApi;
   changeApi: (type: "mock" | "real") => void;
   gptFunctions: GptFunction[];
-  addGptFunction: (props: GptFunction) => void;
-  removeGptFunction: (props: GptFunction) => void;
-  modifyFunction: (id: string, mod: Partial<GptFunction>) => void;
+  updateFuns: UpdateFunsType;
 };
 
 export const PyIOContext = createContext<PythonIOContextType>(
   {} as PythonIOContextType
 );
+
+type FunChange = {
+  add: GptFunction;
+  remove: GptFunction;
+  modify: { id: string; mod: Partial<GptFunction> };
+  reorder: { fun: string; destination: number };
+};
+
+type UpdateFunsType = <T extends keyof FunChange>(
+  type: T,
+  params: FunChange[T]
+) => void;
 
 export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [code, setCode] = useState<string>(starterCode);
@@ -32,19 +42,6 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
     localStorage.getItem("aiapi") === "mock" ? new MockApi() : new GptApi()
   );
 
-  const addGptFunction = (props: GptFunction) => {
-    setGptFunctions((prev) => [...prev, props]);
-  };
-  const removeGptFunction = (props: GptFunction) => {
-    setGptFunctions((prev) => prev.filter((func) => func.def !== props.def));
-  };
-
-  const modifyFunction = (id: string, mod: Partial<GptFunction>) => {
-    setGptFunctions((prev) =>
-      prev.map((func) => (func._id === id ? { ...func, ...mod } : func))
-    );
-  };
-
   const changeApi = (type: "mock" | "real") => {
     localStorage.setItem("aiapi", type);
     setAiapi(type === "mock" ? new MockApi() : new GptApi());
@@ -53,6 +50,38 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const appendOutput = (out: string | null) => {
     if (out === null) return setCodeOutput("");
     setCodeOutput((prev) => prev.concat(out));
+  };
+
+  const addGptFunction = (fun: FunChange["add"]) => {
+    setGptFunctions((prev) => [...prev, fun]);
+  };
+
+  const removeGptFunction = (props: FunChange["remove"]) => {
+    setGptFunctions((prev) => prev.filter((func) => func.def !== props.def));
+  };
+
+  const modifyFunction = (props: FunChange["modify"]) => {
+    setGptFunctions((prev) =>
+      prev.map((func) =>
+        func._id === props.id ? { ...func, ...props.mod } : func
+      )
+    );
+  };
+
+  const reorderFunctions = (props: FunChange["reorder"]) => {
+    const { fun, destination } = props;
+    const functions = [...gptFunctions];
+    const funToMove = functions.find((f) => f._id === fun) ?? functions[0];
+    functions.splice(functions.indexOf(funToMove), 1);
+    functions.splice(destination, 0, funToMove);
+    setGptFunctions(functions);
+  };
+
+  const updateFuns: UpdateFunsType = (type, params) => {
+    if (type === "add") addGptFunction(params as FunChange["add"]);
+    if (type === "remove") removeGptFunction(params as FunChange["remove"]);
+    if (type === "modify") modifyFunction(params as FunChange["modify"]);
+    if (type === "reorder") reorderFunctions(params as FunChange["reorder"]);
   };
 
   return (
@@ -66,9 +95,7 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
         aiapi,
         changeApi,
         gptFunctions,
-        addGptFunction,
-        removeGptFunction,
-        modifyFunction,
+        updateFuns,
       }}
     >
       {children}

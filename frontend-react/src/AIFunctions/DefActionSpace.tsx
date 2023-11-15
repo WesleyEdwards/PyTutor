@@ -29,7 +29,7 @@ export const DefActionSpace: FC<{
   noHovering: () => void;
 }> = ({ setActionFun, fun, noHovering }) => {
   const showToast = useToast();
-  const { modifyFunction } = usePyIOContext();
+  const { updateFuns } = usePyIOContext();
 
   const funName = extractFunctionName(fun.def) ?? "";
 
@@ -40,7 +40,7 @@ export const DefActionSpace: FC<{
         : `AI functionality restored for ${funName}!`,
       color: "success",
     });
-    modifyFunction(fun._id, { implemented: implement });
+    updateFuns("modify", { id: fun._id, mod: { implemented: implement } });
     noHovering();
   };
 
@@ -73,8 +73,8 @@ export const DefActionSpace: FC<{
       <Dropdown>
         <MenuButton
           onClick={(e) => e.stopPropagation()}
-          variant="solid"
           size="sm"
+          slots={{ root: IconButton }}
         >
           <MoreVert />
         </MenuButton>

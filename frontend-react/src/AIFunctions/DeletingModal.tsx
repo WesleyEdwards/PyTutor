@@ -16,12 +16,12 @@ export const DeletingModal: FC<{
   fun: GptFunction | null;
   closeModal: () => void;
 }> = ({ fun, closeModal }) => {
-  const { removeGptFunction } = usePyIOContext();
+  const { updateFuns } = usePyIOContext();
 
   const onDelete = () => {
     if (!fun) return;
     closeModal();
-    removeGptFunction(fun);
+    updateFuns("remove", fun);
   };
 
   return (

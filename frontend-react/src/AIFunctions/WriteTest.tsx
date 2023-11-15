@@ -23,7 +23,7 @@ export const WriteTest: FC<{
   testResult,
   correctGenerateButton,
 }) => {
-  const { modifyFunction } = usePyIOContext();
+  const { updateFuns } = usePyIOContext();
   const [testCode, setTestCode] = useState<string>(fun.test);
 
   const debouncedTestCode = useDebounce(testCode, 500);
@@ -35,7 +35,7 @@ export const WriteTest: FC<{
 
   useEffect(() => {
     if (!debouncedTestCode) return;
-    modifyFunction(fun._id, { test: debouncedTestCode });
+    updateFuns("modify", { id: fun._id, mod: { test: debouncedTestCode } });
   }, [debouncedTestCode]);
 
   const { runPythonCode } = useRunPython({

@@ -16,7 +16,7 @@ import { TestCreatedFun } from "./TestCreatedFun";
 export type GenError = "repeatName" | "unableToGenerate" | "noExplanation";
 
 export const GenerateFunModal = () => {
-  const { addGptFunction, removeGptFunction } = usePyIOContext();
+  const { updateFuns } = usePyIOContext();
 
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<GenError>();
@@ -53,7 +53,7 @@ export const GenerateFunModal = () => {
                       setRetryGenerate({
                         initialExplanation: createdFun.explanation,
                       });
-                      removeGptFunction(createdFun);
+                      updateFuns("remove", createdFun);
                     }}
                   />
                 );
@@ -63,7 +63,7 @@ export const GenerateFunModal = () => {
                   <BasicExplanation
                     createFun={(fun) => {
                       setRetryGenerate(undefined);
-                      addGptFunction(fun);
+                      updateFuns("add", fun);
                       setCreatedFun(fun);
                     }}
                     setError={setError}
