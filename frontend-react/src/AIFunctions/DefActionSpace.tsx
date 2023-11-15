@@ -73,7 +73,6 @@ export const DefActionSpace: FC<{
       <Dropdown>
         <MenuButton
           onClick={(e) => e.stopPropagation()}
-          slots={{ root: IconButton }}
           variant="solid"
           size="sm"
         >

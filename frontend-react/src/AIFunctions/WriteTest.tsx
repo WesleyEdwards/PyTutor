@@ -14,7 +14,15 @@ export const WriteTest: FC<{
   testInstructions: React.ReactNode;
   testResult: boolean | undefined;
   codeToTest: () => string;
-}> = ({ fun, setTestRes, testInstructions, codeToTest, testResult }) => {
+  correctGenerateButton?: React.ReactNode;
+}> = ({
+  fun,
+  setTestRes,
+  testInstructions,
+  codeToTest,
+  testResult,
+  correctGenerateButton,
+}) => {
   const { modifyFunction } = usePyIOContext();
   const [testCode, setTestCode] = useState<string>(fun.test);
 
@@ -42,10 +50,11 @@ export const WriteTest: FC<{
   });
 
   return (
-    <Stack gap="1rem" mb="1rem" width="100%">
+    <Stack gap="1rem" width="100%">
       {testInstructions}
       <CodeMirrorEditor
         key="implement"
+        maxHeight="20rem"
         value={testCode}
         onChange={setTestCode}
       />
@@ -54,6 +63,7 @@ export const WriteTest: FC<{
         gap="1rem"
         justifyContent="flex-end"
         alignItems="center"
+        height={"3rem"}
       >
         {testResult !== undefined && (
           <Alert
@@ -63,6 +73,7 @@ export const WriteTest: FC<{
             {testResult ? "Test Passed" : "Test Failed"}
           </Alert>
         )}
+        {correctGenerateButton}
         <Button
           variant="solid"
           onClick={runPythonCode}

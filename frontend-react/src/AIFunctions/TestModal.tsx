@@ -50,12 +50,7 @@ export const TestModal: FC<{
         <DialogContent>
           {fun && (
             <Stack gap="1rem" alignItems="center" width="100%">
-              <Stack
-                gap="1rem"
-                width="100%"
-                maxWidth="1000px"
-                justifyContent="center"
-              >
+              <Stack width="100%" maxWidth="1000px" justifyContent="center">
                 <Typography level="h2">Test</Typography>
                 <WriteTest
                   fun={fun}

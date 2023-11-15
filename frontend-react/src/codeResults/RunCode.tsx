@@ -1,4 +1,4 @@
-import { IconButton, Stack, Tooltip } from "@mui/joy";
+import { IconButton, Tooltip } from "@mui/joy";
 import { FC, useEffect, useState } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { processMainError } from "../utils";

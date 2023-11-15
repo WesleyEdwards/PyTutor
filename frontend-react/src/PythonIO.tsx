@@ -12,7 +12,6 @@ function PythonIO() {
     <Stack direction={smallScreen ? "column" : "row"} gap="1rem" padding="1rem">
       <Stack gap="1rem" width="100%" flex={4}>
         <GenerateFunModal />
-        <Divider sx={{ my: "1rem" }} />
         <GptFunctions />
         <RunCode />
         <MainEditor />

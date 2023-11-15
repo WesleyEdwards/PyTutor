@@ -84,6 +84,13 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "Write a function that gives a list of letters used in a sentence, without repeating them",
   },
+  {
+    def: "def scramble_sentence(sentence):",
+    code: "\nimport random\n\ndef scramble_sentence(sentence):\n    scrambled_sentence = ' '.join(random.sample(sentence, len(sentence)))\n    return scrambled_sentence\n",
+    raw: null,
+    explanation:
+      "takes a sentence as a list of words, and returns a string that is the same words but scrambled up",
+  },
 ];
 
 export const getRandomMockFunction = (

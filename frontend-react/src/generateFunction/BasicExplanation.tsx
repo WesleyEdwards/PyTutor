@@ -1,4 +1,11 @@
-import { Button, FormControl, FormLabel, Stack, Textarea } from "@mui/joy";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Stack,
+  Textarea,
+  Typography,
+} from "@mui/joy";
 import { FC, useState } from "react";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { getInitialValuesFromDef } from "../utils";
@@ -9,8 +16,11 @@ import { useToast } from "../contexts/Toaster";
 export const BasicExplanation: FC<{
   setError: (error?: GenError) => void;
   createFun: (fun: GptFunction) => void;
-}> = ({ setError, createFun }) => {
-  const [explanation, setExplanation] = useState<string>("");
+  moreExplanation?: string;
+}> = ({ setError, createFun, moreExplanation }) => {
+  const [explanation, setExplanation] = useState<string>(moreExplanation ?? "");
+  const [input, setInput] = useState<string>("");
+  const [output, setOutput] = useState<string>("");
   const { aiapi, gptFunctions } = usePyIOContext();
   const toast = useToast();
 
@@ -62,7 +72,7 @@ export const BasicExplanation: FC<{
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} sx={{ my: "10px" }}>
       <FormControl>
         <FormLabel>Explanation</FormLabel>
         <Textarea
@@ -72,7 +82,36 @@ export const BasicExplanation: FC<{
           placeholder="Write a function that..."
         />
       </FormControl>
-      <Button onClick={generateFunction} loading={fetching}>
+      {moreExplanation && (
+        <>
+          <Typography level="h3">Define Input/Output</Typography>
+          <Stack direction="row" gap="1rem">
+            <FormControl sx={{ width: "100%" }}>
+              <FormLabel>Input</FormLabel>
+              <Textarea
+                minRows={6}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="The parameters to the function are..."
+              />
+            </FormControl>
+            <FormControl sx={{ width: "100%" }}>
+              <FormLabel>Output</FormLabel>
+              <Textarea
+                minRows={6}
+                value={output}
+                onChange={(e) => setOutput(e.target.value)}
+                placeholder="The function should return..."
+              />
+            </FormControl>
+          </Stack>
+        </>
+      )}
+      <Button
+        onClick={generateFunction}
+        loading={fetching}
+        sx={{ alignSelf: "flex-end" }}
+      >
         Generate
       </Button>
     </Stack>
