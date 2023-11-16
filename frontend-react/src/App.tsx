@@ -24,6 +24,7 @@ function App() {
               variant="outlined"
               sx={{
                 mx: 2,
+                mb: 2,
                 borderRadius: 10,
               }}
             >

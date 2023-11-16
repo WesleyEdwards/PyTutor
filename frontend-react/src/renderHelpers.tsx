@@ -44,10 +44,13 @@ function highlightVariables(def: string): React.ReactNode {
   ));
 }
 
-export function highlightFunSignature(fun: GptFunction): React.ReactNode {
+export function highlightFunSignature(
+  fun: GptFunction,
+  def?: boolean
+): React.ReactNode {
   return (
     <Typography>
-      {highlightedText("def", "keyword")}{" "}
+      {def === false ? "" : highlightedText("def", "keyword")}{" "}
       {highlightedText(extractFunctionName(fun.def) ?? "", "function")}
       {highlightedText("(", "punctuation")}
       {highlightVariables(fun.def)}

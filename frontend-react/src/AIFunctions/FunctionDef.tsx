@@ -9,7 +9,11 @@ import {
 } from "@mui/joy";
 import { FC, useState } from "react";
 import { GptFunction } from "../types";
-import { DragIndicator, PublishedWithChanges } from "@mui/icons-material";
+import {
+  CopyAll,
+  DragIndicator,
+  PublishedWithChanges,
+} from "@mui/icons-material";
 import { highlightFunSignature } from "../renderHelpers";
 import { ModalType } from "./GptFunctions";
 import { ImplementFun } from "./ImplementFun";
@@ -40,7 +44,6 @@ export const FunctionDef: FC<{
         <Accordion
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
@@ -53,15 +56,32 @@ export const FunctionDef: FC<{
               minHeight="2.5rem"
             >
               <Stack direction="row" alignItems="center" gap="10px">
-                <DragIndicator sx={{ cursor: "grab" }} />
+                <div {...provided.dragHandleProps}>
+                  <DragIndicator sx={{ cursor: "grab" }} />
+                </div>
                 <Typography level="body-sm">
-                  {highlightFunSignature(fun)}
+                  {highlightFunSignature(fun, false)}
                 </Typography>
+                <IconButton
+                  size="sm"
+                  sx={{ visibility: hovering ? "visible" : "hidden" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText(funName);
+                    showToast({
+                      message: `Copied '${funName}' to clipboard`,
+                      color: "success",
+                    });
+                  }}
+                >
+                  <CopyAll />
+                </IconButton>
               </Stack>
               <Stack direction="row" alignItems="center">
-                {hovering && (
-                  <DefActionSpace setActionFun={setActionFun} fun={fun} />
-                )}
+                <DefActionSpace
+                  setActionFun={setActionFun}
+                  hovering={hovering}
+                />
                 <Tooltip
                   size="sm"
                   variant="soft"

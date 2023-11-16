@@ -47,7 +47,10 @@ export const GptFunctions: FC = () => {
       >
         <DragDropContext
           onDragEnd={({ draggableId, destination }) => {
-            if (destination?.index) {
+            if (
+              destination?.index !== undefined &&
+              destination?.index !== null
+            ) {
               updateFuns("reorder", {
                 fun: draggableId,
                 destination: destination.index,

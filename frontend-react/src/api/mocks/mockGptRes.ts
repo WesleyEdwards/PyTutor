@@ -91,6 +91,13 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "takes a sentence as a list of words, and returns a string that is the same words but scrambled up",
   },
+  {
+    def: "def remove_punctuation(s):",
+    code: '\nimport string\n\ndef remove_punctuation(s):\n    for punctuation in string.punctuation:\n        s = s.replace(punctuation, "")\n    return s\n',
+    raw: null,
+    explanation:
+      "removes all punctuation\n\nInput Specifications:\ntakes a string\n\nOutput Specifications:\nreturns the same string but it takes out all periods, commas, question marks, and colons",
+  },
 ];
 
 export const getRandomMockFunction = (

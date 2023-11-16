@@ -1,5 +1,5 @@
 import { Stack, Button, Alert } from "@mui/joy";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { useDebounce } from "../hooks/useDebounce";
 import { usePyIOContext } from "../hooks/usePyIOContext";
@@ -9,21 +9,51 @@ import { useRunPython } from "../hooks/useRunPython";
 import { extractFunctionName, processTestError } from "../utils";
 import { Check, Close } from "@mui/icons-material";
 
+export type TestFunction = {
+  _id: string;
+  defCode: string;
+  length: number;
+  def: string;
+};
+
 export const WriteTest: FC<{
   fun: GptFunction;
   setTestRes: React.Dispatch<React.SetStateAction<CodeOutput>>;
   testInstructions: React.ReactNode;
   testResult: boolean | undefined;
-  codeToTest: () => string;
+  codeToTest: "implementation" | "code";
 }> = ({ fun, setTestRes, testInstructions, codeToTest, testResult }) => {
-  const { updateFuns } = usePyIOContext();
+  const { updateFuns, gptFunctions } = usePyIOContext();
   const [testCode, setTestCode] = useState<string>(fun.test);
 
   const debouncedTestCode = useDebounce(testCode, 500);
 
+  const functions: TestFunction[] = useMemo(
+    () =>
+      gptFunctions.map((f) => {
+        if (f._id === fun._id) {
+          return {
+            _id: f._id,
+            def: f.def,
+            defCode: f[codeToTest],
+            length: f[codeToTest].split("\n").length,
+          };
+        }
+        const code = f.implemented ? f.implementation : f.code;
+        return {
+          _id: f._id,
+          def: f.def,
+          defCode: code,
+          length: code.split("\n").length,
+        };
+      }),
+    [fun._id, codeToTest]
+  );
+
   const createRunnableTestCode = () => {
     const callTest = extractFunctionName(testCode);
-    return `${codeToTest()}\n${testCode}\nprint(${callTest}())`;
+    const funs = functions.map((f) => f.defCode).join("\n");
+    return `${funs}\n${testCode}\nprint(${callTest}())`;
   };
 
   useEffect(() => {
@@ -37,7 +67,7 @@ export const WriteTest: FC<{
       setTestRes((prev) => ({ res: prev.res.concat(data), error: undefined }));
     },
     onError: (e) => {
-      setTestRes({ res: "", error: processTestError(e, codeToTest()) });
+      setTestRes({ res: "", error: processTestError(e, functions) });
     },
     getRunnable: createRunnableTestCode,
   });
@@ -47,7 +77,7 @@ export const WriteTest: FC<{
       {testInstructions}
       <CodeMirrorEditor
         key="implement"
-        maxHeight="20rem"
+        height="20rem"
         value={testCode}
         onChange={setTestCode}
       />

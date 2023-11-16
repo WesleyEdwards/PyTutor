@@ -1,47 +1,18 @@
-import {
-  Dropdown,
-  IconButton,
-  ListDivider,
-  ListItemDecorator,
-  Menu,
-  MenuButton,
-  MenuItem,
-  Tooltip,
-} from "@mui/joy";
-import CopyAll from "@mui/icons-material/CopyAll";
+import { IconButton, Tooltip } from "@mui/joy";
 import { FC } from "react";
-import { useToast } from "../contexts/Toaster";
-import { DeleteForever, Edit, MoreVert } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { ModalType } from "./GptFunctions";
-import { extractFunctionName } from "../utils";
-import { GptFunction } from "../types";
 
 export const DefActionSpace: FC<{
   setActionFun: (action: ModalType) => void;
-  fun: GptFunction;
-}> = ({ setActionFun, fun }) => {
-  const showToast = useToast();
-
-  const funName = extractFunctionName(fun.def) ?? "";
-
+  hovering: boolean;
+}> = ({ setActionFun, hovering }) => {
   return (
     <>
-      <IconButton
-        size="sm"
-        onClick={(e) => {
-          e.stopPropagation();
-          navigator.clipboard.writeText(funName);
-          showToast({
-            message: `Copied '${funName}' to clipboard`,
-            color: "success",
-          });
-        }}
-      >
-        <CopyAll />
-      </IconButton>
       <Tooltip title="Test" size="sm" variant="soft">
         <IconButton
           size="sm"
+          sx={{ visibility: hovering ? "visible" : "hidden" }}
           onClick={(e) => {
             e.stopPropagation();
             setActionFun("implement");
@@ -50,7 +21,19 @@ export const DefActionSpace: FC<{
           <Edit />
         </IconButton>
       </Tooltip>
-      <Dropdown>
+      <Tooltip title="Test" size="sm" variant="soft">
+        <IconButton
+          size="sm"
+          sx={{ visibility: hovering ? "visible" : "hidden" }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setActionFun("delete");
+          }}
+        >
+          <Delete />
+        </IconButton>
+      </Tooltip>
+      {/* <Dropdown>
         <MenuButton
           onClick={(e) => e.stopPropagation()}
           size="sm"
@@ -74,7 +57,7 @@ export const DefActionSpace: FC<{
             Delete
           </MenuItem>
         </Menu>
-      </Dropdown>
+      </Dropdown> */}
     </>
   );
 };

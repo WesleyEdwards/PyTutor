@@ -68,11 +68,8 @@ export const TestModal: FC<{
                       .
                     </Typography>
                   }
-                  codeToTest={() =>
-                    gptFunctions.find((f) => f._id === fun._id)
-                      ?.implementation ?? ""
-                  }
                   testResult={testResult}
+                  codeToTest={"implementation"}
                 />
                 <CodeResult
                   codeOutput={processTestRes}

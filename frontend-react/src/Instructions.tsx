@@ -2,12 +2,69 @@ import {
   Button,
   DialogContent,
   DialogTitle,
+  Divider,
   Modal,
   ModalClose,
   ModalDialog,
 } from "@mui/joy";
 import { Description } from "@mui/icons-material";
 import { FC, useState } from "react";
+
+const instructions = {
+  genes: (
+    <DialogContent>
+      This program processes DNA sequences.
+      <ul>
+        <li>
+          A sequence will be made up of letters <b>A, C, T, and G</b>. ALl
+          others should be ignored.
+        </li>
+        <li>
+          a sequence starts after the sequence <b>ATG</b>
+        </li>
+        <li>Sequences will be Multiple of 3</li>
+      </ul>
+      <Divider />
+      Example: "TTATGTTTTAAGGATGGGGCGTTAGTT" should print the following:
+      <br />
+      ---
+      <br /> TTATGTTTTAAGGATGGGGCGTTAGTT
+      <br /> TTT <br />
+      GGGCGT
+      <br /> ---
+    </DialogContent>
+  ),
+  speech: (
+    <DialogContent>
+      This program helps edit speeches. In order to make the speech better, do
+      the following
+      <ul>
+        <li>Remove all usages of 'umm' and 'I guess'</li>
+        <li>Add an exclamation point at the end of the speech!</li>
+      </ul>
+      Print the following:
+      <ul>
+        <li>How many times I was going to use the word 'umm'</li>
+        <li>How many times I was going to use the phrase 'I guess'</li>
+        <li>The speech with the modifications specified above.</li>
+      </ul>
+      <Divider />
+      Example:
+      <br />
+      Initial Speech: "This umm I guess is umm my thrilling umm speech I guess I
+      will give"
+      <br />
+      <br />
+      Output:
+      <br />
+      -------------
+      <br />
+      umm: 3<br />
+      I guess: 2<br />
+      This is my thrilling speech!
+    </DialogContent>
+  ),
+};
 
 export const Instructions: FC = () => {
   const [open, setOpen] = useState(false);
@@ -25,12 +82,7 @@ export const Instructions: FC = () => {
         <ModalDialog>
           <ModalClose />
           <DialogTitle>Assignment</DialogTitle>
-          <DialogContent>
-            Write a program that prints the numbers from 1 to 100. But for
-            multiples of three print “Fizz” instead of the number and for the
-            multiples of five print “Buzz”. For numbers which are multiples of
-            both three and five print “FizzBuzz”.
-          </DialogContent>
+          {instructions.speech}
         </ModalDialog>
       </Modal>
     </>

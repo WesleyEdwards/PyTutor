@@ -1,11 +1,13 @@
 import { PythonError } from "client-side-python-runner";
 import { GptFunction } from "./types";
+import { TestFunction } from "./AIFunctions/WriteTest";
 
 export const testCode = ["for i in range(40):", '\tprint("Time:", i)'].join(
   "\n"
 );
 
-export const starterCode = `\n\ndef main():\n    print("Your code goes here")\n\n\n\nmain()`;
+export const starterCode = `\n\ndef main():\n    initialSpeech = "This umm I guess is umm my thrilling umm speech I guess I will give"\n\n    print("TODO: read assignment description")\n\nmain()`;
+// export const starterCode = `\n\ndef main():\n    print("Your code goes here")\n\n\n\nmain()`;
 
 function offsetErrorLineNumber(
   errorMessage: string,
@@ -46,7 +48,7 @@ export const processMainError = (
 
 export const processTestError = (
   errorMessage: PythonError | undefined,
-  impl: string
+  functions: TestFunction[]
 ): string | undefined => {
   if (!errorMessage) return undefined;
   const errorString = errorMessage?.error as unknown as string;
@@ -54,14 +56,26 @@ export const processTestError = (
   const match: RegExpMatchArray | null = errorString.match(regex);
   const line = match ? parseInt(match[1]) : 0;
 
-  const implLength = impl.split("\n").length;
-  if (implLength >= line) return errorString.concat(" (in Implementation)");
+  // const implLength = impl.split("\n").length;
 
-  const updatedLineNumber = line - implLength;
+  let lineNum = 0;
+  const funWithError = functions.reduce((acc, fun) => {
+    if (typeof acc !== "number") return acc;
+    if (fun.length + acc >= line) {
+      lineNum = line - acc;
+      return fun;
+    }
+    return acc + fun.length;
+  }, 0 as TestFunction | number);
+
+
+  if (typeof funWithError === "number") {
+    return errorString.replace(regex, `line ${line - funWithError}`).concat(" (in Test)");
+  }
 
   const updatedMessage = errorString
-    .replace(regex, `line ${updatedLineNumber}`)
-    .concat(" (in Test)");
+    .replace(regex, `line ${lineNum}`)
+    .concat(` (${funWithError.def})`);
 
   return updatedMessage;
 };

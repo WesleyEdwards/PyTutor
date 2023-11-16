@@ -49,8 +49,8 @@ export const TestCreatedFun: FC<{
         fun={fun}
         setTestRes={setTestRes}
         testInstructions={testInstructions}
-        codeToTest={() => fun.code}
         testResult={testResult}
+        codeToTest={"code"}
       />
       <CodeResult
         codeOutput={processTestRes}

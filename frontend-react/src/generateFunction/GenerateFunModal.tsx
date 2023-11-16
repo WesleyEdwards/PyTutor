@@ -5,6 +5,7 @@ import {
   Modal,
   ModalClose,
   ModalDialog,
+  Typography,
 } from "@mui/joy";
 import { useState } from "react";
 import { BasicExplanation } from "./BasicExplanation";
@@ -14,6 +15,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { TestCreatedFun } from "./TestCreatedFun";
 
 export type GenError = "repeatName" | "unableToGenerate" | "noExplanation";
+export type Explanation = {
+  general: string;
+  input: string;
+  output: string;
+};
 
 export const GenerateFunModal = () => {
   const { updateFuns } = usePyIOContext();
@@ -21,15 +27,19 @@ export const GenerateFunModal = () => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<GenError>();
   const [createdFun, setCreatedFun] = useState<GptFunction>();
-  const [retryGenerate, setRetryGenerate] = useState<{
-    initialExplanation: string;
-  }>();
+  const [retryGenerate, setRetryGenerate] = useState(false);
+  const [explanation, setExplanation] = useState<Explanation>({
+    general: "",
+    input: "",
+    output: "",
+  });
 
   const onClose = () => {
     setCreatedFun(undefined);
     setOpen(false);
     setError(undefined);
-    setRetryGenerate(undefined);
+    setRetryGenerate(false);
+    setExplanation({ general: "", input: "", output: "" });
   };
 
   return (
@@ -43,6 +53,7 @@ export const GenerateFunModal = () => {
       </Button>
       <Modal open={open} onClose={onClose}>
         <ModalDialog minWidth="64rem">
+          {/* <DialogTitle>Create a Function</DialogTitle> */}
           <ModalClose />
           <DialogContent sx={{ mx: "2rem", px: "1rem" }}>
             {(() => {
@@ -51,9 +62,7 @@ export const GenerateFunModal = () => {
                   <TestCreatedFun
                     fun={createdFun}
                     retryGenerate={() => {
-                      setRetryGenerate({
-                        initialExplanation: createdFun.explanation,
-                      });
+                      setRetryGenerate(true);
                       updateFuns("remove", createdFun);
                     }}
                   />
@@ -61,14 +70,17 @@ export const GenerateFunModal = () => {
               }
               return (
                 <>
+                  <Typography level="h3">Create a Function</Typography>
                   <BasicExplanation
                     createFun={(fun) => {
-                      setRetryGenerate(undefined);
+                      setRetryGenerate(false);
                       updateFuns("add", fun);
                       setCreatedFun(fun);
                     }}
                     setError={setError}
-                    moreExplanation={retryGenerate?.initialExplanation}
+                    explanation={explanation}
+                    setExplanation={setExplanation}
+                    moreExplanation={retryGenerate}
                   />
 
                   {error && (

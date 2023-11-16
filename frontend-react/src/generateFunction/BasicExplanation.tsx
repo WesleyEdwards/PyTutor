@@ -6,45 +6,50 @@ import {
   FormLabel,
   Stack,
   Textarea,
-  Typography,
 } from "@mui/joy";
 import { FC, useState } from "react";
 import { usePyIOContext } from "../hooks/usePyIOContext";
 import { getInitialValuesFromDef } from "../utils";
-import { GenError } from "./GenerateFunModal";
+import { Explanation, GenError } from "./GenerateFunModal";
 import { GptFunction } from "../types";
 import { useToast } from "../contexts/Toaster";
+import { useMediaQuery } from "@mui/material";
 
 export const BasicExplanation: FC<{
   setError: (error?: GenError) => void;
   createFun: (fun: GptFunction) => void;
-  moreExplanation?: string;
-}> = ({ setError, createFun, moreExplanation }) => {
-  const [explanation, setExplanation] = useState<string>(moreExplanation ?? "");
-  const [input, setInput] = useState<string>("");
-  const [output, setOutput] = useState<string>("");
+  explanation: Explanation;
+  setExplanation: React.Dispatch<React.SetStateAction<Explanation>>;
+  moreExplanation: boolean;
+}> = ({
+  setError,
+  createFun,
+  explanation,
+  setExplanation,
+  moreExplanation,
+}) => {
   const { aiapi, gptFunctions } = usePyIOContext();
   const toast = useToast();
+  const smallScreen = useMediaQuery("(max-width: 700px)");
 
   const [fetching, setFetching] = useState(false);
 
   const checkRepeatEx = aiapi.name !== "mock";
 
   const processExplanation = () => {
+    const { general, input, output } = explanation;
     if (input || output) {
-      return `${explanation}\n\nInput Specifications:\n${input}\n\nOutput Specifications:\n${output}`;
+      return `${general}\n\nInput Specifications:\n${input}\n\nOutput Specifications:\n${output}`;
     }
-    return explanation;
+    return general;
   };
 
   const generateFunction = async () => {
+    const { general } = explanation;
     setError(undefined);
 
-    if (!explanation && checkRepeatEx) return setError("noExplanation");
-    if (
-      gptFunctions.find((f) => f.explanation === explanation) &&
-      checkRepeatEx
-    ) {
+    if (!general && checkRepeatEx) return setError("noExplanation");
+    if (gptFunctions.find((f) => f.explanation === general) && checkRepeatEx) {
       return setError("repeatName");
     }
 
@@ -82,30 +87,36 @@ export const BasicExplanation: FC<{
 
   return (
     <Stack spacing={2} sx={{ my: "10px" }}>
-      <Alert color="primary">
-        To help the AI generate the correct function, specify the input and
-        expected output of the function. Try being specific, using examples, and
-        refining your explanation.
-      </Alert>
+      {moreExplanation && (
+        <Alert color="primary">
+          To help the AI generate the correct function, specify the input and
+          expected output of the function. Try being specific, using examples,
+          and refining your explanation.
+        </Alert>
+      )}
       <FormControl>
         <FormLabel>Explanation</FormLabel>
         <Textarea
           minRows={6}
-          value={explanation}
-          onChange={(e) => setExplanation(e.target.value)}
+          value={explanation.general}
+          onChange={(e) =>
+            setExplanation((prev) => ({ ...prev, general: e.target.value }))
+          }
           placeholder="Write a function that..."
         />
       </FormControl>
       {moreExplanation && (
         <>
           <Divider />
-          <Stack direction="row" gap="1rem">
+          <Stack direction={smallScreen ? "column" : "row"} gap="1rem">
             <FormControl sx={{ width: "100%" }}>
               <FormLabel>Input</FormLabel>
               <Textarea
                 minRows={6}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
+                value={explanation.input}
+                onChange={(e) =>
+                  setExplanation((prev) => ({ ...prev, input: e.target.value }))
+                }
                 placeholder="The parameters to the function are..."
               />
             </FormControl>
@@ -113,8 +124,13 @@ export const BasicExplanation: FC<{
               <FormLabel>Output</FormLabel>
               <Textarea
                 minRows={6}
-                value={output}
-                onChange={(e) => setOutput(e.target.value)}
+                value={explanation.output}
+                onChange={(e) =>
+                  setExplanation((prev) => ({
+                    ...prev,
+                    output: e.target.value,
+                  }))
+                }
                 placeholder="The function should return..."
               />
             </FormControl>
