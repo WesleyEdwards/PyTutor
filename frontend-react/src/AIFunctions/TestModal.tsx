@@ -11,7 +11,6 @@ import {
 import { CodeOutput, GptFunction } from "../types";
 import { WriteTest } from "./WriteTest";
 import { CodeResult } from "../codeResults/CodeResult";
-import { usePyIOContext } from "../hooks/usePyIOContext";
 import { highlightFunSignature, highlightedText } from "../renderHelpers";
 import { extractFunctionName, getOutputChopOffBool } from "../utils";
 
@@ -19,8 +18,6 @@ export const TestModal: FC<{
   fun: GptFunction | null;
   closeModal: () => void;
 }> = ({ fun, closeModal }) => {
-  const { gptFunctions } = usePyIOContext();
-
   const [testRes, setTestRes] = useState<CodeOutput>({
     res: "",
     error: undefined,

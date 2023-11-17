@@ -36,8 +36,8 @@ const instructions = {
   ),
   speech: (
     <DialogContent>
-      This program helps edit speeches. In order to make the speech better, do
-      the following
+      Write a program that revises speeches. In order to make the speech better,
+      do the following:
       <ul>
         <li>Remove all usages of 'umm' and 'I guess'</li>
         <li>Add an exclamation point at the end of the speech!</li>
@@ -51,17 +51,22 @@ const instructions = {
       <Divider />
       Example:
       <br />
-      Initial Speech: "This umm I guess is umm my thrilling umm speech I guess I
-      will give"
+      Initial Speech:
       <br />
+      <code>
+        This umm I guess is umm my thrilling umm speech I guess I will give
+      </code>
       <br />
       Output:
       <br />
       -------------
       <br />
-      umm: 3<br />
-      I guess: 2<br />
-      This is my thrilling speech!
+      <code>
+        umm: 3<br />
+        I guess: 2<br />
+        This is my thrilling speech!
+      </code>
+      -------------
     </DialogContent>
   ),
 };

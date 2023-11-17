@@ -6,13 +6,14 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuItem,
   Stack,
   Typography,
   useColorScheme,
 } from "@mui/joy";
 import { FC, useEffect } from "react";
 import { usePyIOContext } from "./hooks/usePyIOContext";
-import { Settings } from "@mui/icons-material";
+import { GitHub, Settings } from "@mui/icons-material";
 import { Instructions } from "./Instructions";
 
 export const TopBar: FC = () => {
@@ -27,14 +28,17 @@ export const TopBar: FC = () => {
   }, []);
 
   return (
-    <Stack
-      direction="row"
-      padding={2}
-      justifyContent="space-between"
-    >
+    <Stack direction="row" padding={2} justifyContent="space-between">
       <Typography level="h1">PyTutor</Typography>
       <Stack direction="row" gap="2rem" alignItems="center">
         <Instructions />
+
+        <a href="https://github.com/WesleyEdwards/PyTutor">
+          <IconButton variant="plain" disabled>
+            <GitHub />
+          </IconButton>
+        </a>
+
         <Dropdown>
           <MenuButton slots={{ root: IconButton }} sx={{ borderRadius: 40 }}>
             {aiapi.name === "mock" ? (
@@ -46,21 +50,20 @@ export const TopBar: FC = () => {
             )}
           </MenuButton>
           <Menu sx={{ p: "1rem" }}>
-            <Stack gap="1rem">
-              <Checkbox
-                label="Mock Api"
-                checked={aiapi.name === "mock"}
-                onChange={(e) => changeApi(e.target.checked ? "mock" : "real")}
-              />
-              <Button
-                variant="soft"
-                onClick={() => {
-                  setMode(mode === "dark" ? "light" : "dark");
-                }}
-              >
-                {mode === "dark" ? "Light Mode" : "Dark Mode"}
-              </Button>
-            </Stack>
+            <Checkbox
+              sx={{ mb: "1rem" }}
+              label="Mock Api"
+              checked={aiapi.name === "mock"}
+              onChange={(e) => changeApi(e.target.checked ? "mock" : "real")}
+            />
+            <MenuItem
+              slots={{ root: Button }}
+              onClick={() => {
+                setMode(mode === "dark" ? "light" : "dark");
+              }}
+            >
+              {mode === "dark" ? "Light Mode" : "Dark Mode"}
+            </MenuItem>
           </Menu>
         </Dropdown>
       </Stack>

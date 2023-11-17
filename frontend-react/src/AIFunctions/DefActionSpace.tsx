@@ -21,18 +21,16 @@ export const DefActionSpace: FC<{
           <Edit />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Test" size="sm" variant="soft">
-        <IconButton
-          size="sm"
-          sx={{ visibility: hovering ? "visible" : "hidden" }}
-          onClick={(e) => {
-            e.stopPropagation();
-            setActionFun("delete");
-          }}
-        >
-          <Delete />
-        </IconButton>
-      </Tooltip>
+      <IconButton
+        size="sm"
+        sx={{ visibility: hovering ? "visible" : "hidden" }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setActionFun("delete");
+        }}
+      >
+        <Delete />
+      </IconButton>
       {/* <Dropdown>
         <MenuButton
           onClick={(e) => e.stopPropagation()}
