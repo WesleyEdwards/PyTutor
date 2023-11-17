@@ -1,6 +1,15 @@
-import { IconButton, Tooltip } from "@mui/joy";
+import {
+  Dropdown,
+  IconButton,
+  ListDivider,
+  ListItemDecorator,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Tooltip,
+} from "@mui/joy";
 import { FC } from "react";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, FactCheck, MoreVert } from "@mui/icons-material";
 import { ModalType } from "./GptFunctions";
 
 export const DefActionSpace: FC<{
@@ -11,27 +20,16 @@ export const DefActionSpace: FC<{
     <>
       <Tooltip title="Test" size="sm" variant="soft">
         <IconButton
-          size="sm"
           sx={{ visibility: hovering ? "visible" : "hidden" }}
           onClick={(e) => {
             e.stopPropagation();
-            setActionFun("implement");
+            setActionFun("test");
           }}
         >
-          <Edit />
+          <FactCheck />
         </IconButton>
       </Tooltip>
-      <IconButton
-        size="sm"
-        sx={{ visibility: hovering ? "visible" : "hidden" }}
-        onClick={(e) => {
-          e.stopPropagation();
-          setActionFun("delete");
-        }}
-      >
-        <Delete />
-      </IconButton>
-      {/* <Dropdown>
+      <Dropdown>
         <MenuButton
           onClick={(e) => e.stopPropagation()}
           size="sm"
@@ -40,6 +38,18 @@ export const DefActionSpace: FC<{
           <MoreVert />
         </MenuButton>
         <Menu placement="bottom-end">
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              setActionFun("rename");
+            }}
+            variant="soft"
+          >
+            <ListItemDecorator sx={{ color: "inherit" }}>
+              <Edit />
+            </ListItemDecorator>{" "}
+            Rename
+          </MenuItem>
           <ListDivider />
           <MenuItem
             onClick={(e) => {
@@ -50,12 +60,12 @@ export const DefActionSpace: FC<{
             color="danger"
           >
             <ListItemDecorator sx={{ color: "inherit" }}>
-              <DeleteForever />
+              <Delete />
             </ListItemDecorator>{" "}
             Delete
           </MenuItem>
         </Menu>
-      </Dropdown> */}
+      </Dropdown>
     </>
   );
 };

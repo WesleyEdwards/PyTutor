@@ -12,8 +12,9 @@ import { GptFunction } from "../types";
 import { DeletingModal } from "./DeletingModal";
 import { DragDropContext } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "./StrictModeDroppable";
+import { RenameModal } from "./RenameModal";
 
-export type ModalType = "implement" | "delete";
+export type ModalType = "test" | "delete" | "rename";
 
 export const GptFunctions: FC = () => {
   const { gptFunctions, updateFuns } = usePyIOContext();
@@ -52,7 +53,7 @@ export const GptFunctions: FC = () => {
               destination?.index !== null
             ) {
               updateFuns("reorder", {
-                fun: draggableId,
+                id: draggableId,
                 destination: destination.index,
               });
             }
@@ -75,11 +76,15 @@ export const GptFunctions: FC = () => {
         </DragDropContext>
       </AccordionGroup>
       <TestModal
-        fun={actionFun?.action === "implement" ? actionFun.fun : null}
+        fun={actionFun?.action === "test" ? actionFun.fun : null}
         closeModal={closeModal}
       />
       <DeletingModal
         fun={actionFun?.action === "delete" ? actionFun.fun : null}
+        closeModal={closeModal}
+      />
+      <RenameModal
+        fun={actionFun?.action === "rename" ? actionFun.fun : null}
         closeModal={closeModal}
       />
     </>

@@ -31,7 +31,7 @@ export function highlightedText(
   );
 }
 
-function highlightVariables(def: string): React.ReactNode {
+export function highlightVariables(def: string): React.ReactNode {
   const after = def.split("(")[1];
   const before = after.split(")")[0];
   const args = before.split(",").map((arg) => arg.trim());

@@ -10,7 +10,7 @@ import {
 } from "@mui/joy";
 import { GptFunction } from "../types";
 import { usePyIOContext } from "../hooks/usePyIOContext";
-import { DeleteForever } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 
 export const DeletingModal: FC<{
   fun: GptFunction | null;
@@ -34,7 +34,7 @@ export const DeletingModal: FC<{
         </DialogContent>
         <DialogActions>
           <Button
-            startDecorator={<DeleteForever />}
+            startDecorator={<Delete />}
             variant="soft"
             color="danger"
             onClick={onDelete}

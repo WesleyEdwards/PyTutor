@@ -3,7 +3,7 @@ import { GptApi } from "../api/GptApi";
 import { CodeOutput, GptFunction } from "../types";
 import { AiApi } from "../api/AiApi";
 import { MockApi } from "../api/mocks/mockApi";
-import { starterCode } from "../utils";
+import { extractFunctionName, starterCode } from "../utils";
 
 type PythonIOContextType = {
   code: string;
@@ -25,7 +25,8 @@ type FunChange = {
   add: GptFunction;
   remove: GptFunction;
   modify: { id: string; mod: Partial<GptFunction> };
-  reorder: { fun: string; destination: number };
+  reorder: { id: string; destination: number };
+  rename: { id: string; newName: string };
 };
 
 type UpdateFunsType = <T extends keyof FunChange>(
@@ -69,12 +70,35 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const reorderFunctions = (props: FunChange["reorder"]) => {
-    const { fun, destination } = props;
+    const { id, destination } = props;
     const functions = [...gptFunctions];
-    const funToMove = functions.find((f) => f._id === fun) ?? functions[0];
+    const funToMove = functions.find((f) => f._id === id) ?? functions[0];
     functions.splice(functions.indexOf(funToMove), 1);
     functions.splice(destination, 0, funToMove);
     setGptFunctions(functions);
+  };
+
+  const renameFunction = (props: FunChange["rename"]) => {
+    const { id, newName } = props;
+    const functions = [...gptFunctions];
+    const funToRename = functions.find((f) => f._id === id);
+    const oldName = extractFunctionName(funToRename?.def ?? "");
+    if (!oldName || !funToRename) return;
+
+    const replaceName = (str: string) => str.replace(oldName, newName);
+
+    const replacement: GptFunction = {
+      ...funToRename,
+      def: replaceName(funToRename.def),
+      code: replaceName(funToRename.code),
+      implementation: replaceName(funToRename.implementation),
+      test: replaceName(funToRename.test),
+    };
+    console.log(replacement);
+
+    setGptFunctions(
+      functions.map((func) => (func._id === id ? replacement : func))
+    );
   };
 
   const updateFuns: UpdateFunsType = (type, params) => {
@@ -82,6 +106,7 @@ export const PythonIOProvider: FC<{ children: ReactNode }> = ({ children }) => {
     if (type === "remove") removeGptFunction(params as FunChange["remove"]);
     if (type === "modify") modifyFunction(params as FunChange["modify"]);
     if (type === "reorder") reorderFunctions(params as FunChange["reorder"]);
+    if (type === "rename") renameFunction(params as FunChange["rename"]);
   };
 
   return (

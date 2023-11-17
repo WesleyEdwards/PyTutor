@@ -68,9 +68,10 @@ export const processTestError = (
     return acc + fun.length;
   }, 0 as TestFunction | number);
 
-
   if (typeof funWithError === "number") {
-    return errorString.replace(regex, `line ${line - funWithError}`).concat(" (in Test)");
+    return errorString
+      .replace(regex, `line ${line - funWithError}`)
+      .concat(" (in Test)");
   }
 
   const updatedMessage = errorString
@@ -91,7 +92,10 @@ export function getOutputChopOffBool(output: string): string {
   return res;
 }
 
-export function extractFunctionName(functionDefinition: string): string | null {
+export function extractFunctionName(
+  functionDefinition?: string
+): string | null {
+  if (!functionDefinition) return null;
   const match = functionDefinition.match(/def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
   return match ? match[1] : null;
 }
