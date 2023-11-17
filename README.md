@@ -22,7 +22,7 @@ This development tool helps students get used to reduce the amount of context-sw
 - ReactJs: https://react.dev/
 - ExpressJs: https://expressjs.com/
 - Code Mirror editor: https://www.npmjs.com/package/codemirror
-- Python interpreter/transpiler?: https://www.npmjs.com/package/client-side-python-runner
+- Python interpreter: https://www.npmjs.com/package/client-side-python-runner
 - OpenAI: https://platform.openai.com/docs/libraries/node-js-library
 
 
