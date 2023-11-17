@@ -49,6 +49,7 @@ export const RenameModal: FC<{
           >
             <Typography>{highlightedText("def", "keyword")}</Typography>
             <Textarea
+              autoFocus
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
             />

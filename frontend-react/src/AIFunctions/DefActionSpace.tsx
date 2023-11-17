@@ -31,6 +31,7 @@ export const DefActionSpace: FC<{
       </Tooltip>
       <Dropdown>
         <MenuButton
+          sx={{ visibility: hovering ? "visible" : "hidden" }}
           onClick={(e) => e.stopPropagation()}
           size="sm"
           slots={{ root: IconButton }}

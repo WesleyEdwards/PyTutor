@@ -56,8 +56,11 @@ export const FunctionDef: FC<{
               minHeight="2.5rem"
             >
               <Stack direction="row" alignItems="center" gap="10px">
-                <div {...provided.dragHandleProps}>
-                  <DragIndicator sx={{ cursor: "grab" }} />
+                <div
+                  style={{ display: "flex", flexDirection: "column" }}
+                  {...provided.dragHandleProps}
+                >
+                  <DragIndicator sx={{ cursor: "grab", alignSelf: "center" }} />
                 </div>
                 <Typography level="body-sm">
                   {highlightFunSignature(fun, false)}
