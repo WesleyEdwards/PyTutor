@@ -6,7 +6,7 @@ import {
   ThemeProvider,
 } from "@mui/joy";
 import PythonIO from "./PythonIO";
-import { TopBar } from "./TopBar";
+import { TopBar } from "./TopBar/TopBar";
 import { ToastProvider } from "./contexts/Toaster";
 import { PythonIOProvider } from "./contexts/PythonIOProvider";
 

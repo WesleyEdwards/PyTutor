@@ -6,9 +6,6 @@ export const testCode = ["for i in range(40):", '\tprint("Time:", i)'].join(
   "\n"
 );
 
-export const starterCode = `\n\ndef main():\n    initialSpeech = "This umm I guess is umm my thrilling umm speech I guess I will give"\n\n    print("TODO: read assignment description")\n\nmain()`;
-// export const starterCode = `\n\ndef main():\n    print("Your code goes here")\n\n\n\nmain()`;
-
 function offsetErrorLineNumber(
   errorMessage: string,
   newLineNumber: number

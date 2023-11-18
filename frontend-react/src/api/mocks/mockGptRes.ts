@@ -98,6 +98,13 @@ const mockFunctions: GptFunctionRes[] = [
     explanation:
       "removes all punctuation\n\nInput Specifications:\ntakes a string\n\nOutput Specifications:\nreturns the same string but it takes out all periods, commas, question marks, and colons",
   },
+  {
+    def: "def get_strings_after_ATG(string):",
+    code: "\ndef get_strings_after_ATG(string):\n    start_index = 0\n    result = []\n    while True:\n        atg_index = string.find('ATG', start_index)\n        if atg_index == -1:\n            break\n        next_index = atg_index + 3\n        end_index = string.find('ATG', next_index)\n        if end_index == -1:\n            result.append(string[next_index:])\n            break\n        else:\n            result.append(string[next_index:end_index])\n            start_index = end_index\n    return result\n",
+    raw: null,
+    explanation:
+      'gets a list of string of characters that come after the char sequence "ATG." \n\nFor example, "ABTATGCAT" would return ["CAT"], and "ABTATGCATATGTHE" will return ["CAT", "THE"], and "THISATGDOGISATGINATGTHE" will return ["DOGIS", "IN", "THE"]\n\nInput Specifications:\nThe function will be provided with a single string, that may have multiple occurences of the sequence "ATG". The string can have any number of "ATG"s in it.\n\nOutput Specifications:\nIf there are multiple occurences of "ATG" in the provided string, there will be multiple strings returned from the function, in the form of a list.\n',
+  },
 ];
 
 export const getRandomMockFunction = (

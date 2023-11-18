@@ -39,7 +39,9 @@ export const GenerateFunModal = () => {
     setOpen(false);
     setError(undefined);
     setRetryGenerate(false);
-    setExplanation({ general: "", input: "", output: "" });
+    if (createdFun) {
+      setExplanation({ general: "", input: "", output: "" });
+    }
   };
 
   return (

@@ -57,7 +57,7 @@ export const TestModal: FC<{
                   setTestRes={setTestRes}
                   testInstructions={
                     <Typography>
-                      This should test your implementation of the function{" "}
+                      This will test your implementation of the function{" "}
                       {highlightedText(
                         extractFunctionName(fun.def) ?? "",
                         "function"
