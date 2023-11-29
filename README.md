@@ -4,7 +4,7 @@ https://py-tutor.web.app/
 
 ## Overview
 
-PyTutor is a learning tool designed to helps novice CS students make the transition from writing small to large programs.
+PyTutor is a learning tool designed to help novice CS students make the transition from writing small to large programs.
 
 Programs are complex. Successful software engineers are able to reduce cognitive load and focus on the task at hand rather than trying to keep track of the implementation of every part of the program at once.
 PyTutor helps students develop the skill of reducing context-switching and cognitive load. Instead of creating a program bottom-up (implementing every little function when it is needed), PyTutor encourages students to create programs top-down (focussing on general structure first, then going back and implementing everything later).
