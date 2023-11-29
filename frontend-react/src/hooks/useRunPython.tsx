@@ -20,6 +20,7 @@ export const useRunPython = (params: {
         appendOutput(data);
       },
       error: (e) => {
+        console.log(e)
         onError(e);
       },
     });

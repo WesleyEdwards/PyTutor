@@ -11,19 +11,19 @@ export const assignmentList: AssignmentInfo[] = [
   {
     key: "speech",
     name: "Revise Speech",
-    starterCode: `\n\ndef main():\n    initialSpeech = "This umm I guess is umm my thrilling umm speech I guess I will give"\n\n    # TODO: read assignment description\n\nmain()`,
+    starterCode: `\n\ndef main():\n    initialSpeech = "This umm kindof is umm my thrilling umm speech kindof"\n\n    # TODO: read assignment description\n\nmain()`,
     description: (
       <>
         Write a program that revises speeches. In order to make the speech
         better, do the following:
         <ul>
-          <li>Remove all usages of 'umm' and 'I guess'</li>
+          <li>Remove all usages of 'umm' and 'kindof'</li>
           <li>Add an exclamation point at the end of the speech!</li>
         </ul>
         Print the following:
         <ul>
           <li>How many times I was going to use the word 'umm'</li>
-          <li>How many times I was going to use the phrase 'I guess'</li>
+          <li>How many times I was going to use the phrase 'kindof'</li>
           <li>The speech with the modifications specified above.</li>
         </ul>
         <Divider />
@@ -32,7 +32,7 @@ export const assignmentList: AssignmentInfo[] = [
         Initial Speech:
         <br />
         <code>
-          This umm I guess is umm my thrilling umm speech I guess I will give
+          This umm kindof is umm my thrilling umm speech kindof
         </code>
         <br />
         Output:
@@ -41,7 +41,7 @@ export const assignmentList: AssignmentInfo[] = [
         <br />
         <code>
           umm: 3<br />
-          I guess: 2<br />
+          kindof: 2<br />
           This is my thrilling speech!
         </code>
         -------------
@@ -102,7 +102,7 @@ export const assignmentList: AssignmentInfo[] = [
   {
     key: "numbers",
     name: "Analyze Numbers",
-    starterCode: `\n\ndef main():\n    myNumbers = [34, 52, 6, 3, 89, 436, 23, 5, 60]\n\n    # TODO: read assignment description\n\nmain()`,
+    starterCode: `\n\ndef main():\n    myNumbers = [34, 52, 6, 3, 89, 436, 23, 5, 63]\n\n    # TODO: read assignment description\n\nmain()`,
     description: (
       <>
         Write a program that processes a list of numbers. The program should do

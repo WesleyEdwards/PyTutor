@@ -1,5 +1,5 @@
 import { Stack, Button, Alert } from "@mui/joy";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CodeMirrorEditor } from "../textEditor/CodeMirrorEditor";
 import { useDebounce } from "../hooks/useDebounce";
 import { usePyIOContext } from "../hooks/usePyIOContext";
@@ -28,27 +28,23 @@ export const WriteTest: FC<{
 
   const debouncedTestCode = useDebounce(testCode, 500);
 
-  const functions: TestFunction[] = useMemo(
-    () =>
-      gptFunctions.map((f) => {
-        if (f._id === fun._id) {
-          return {
-            _id: f._id,
-            def: f.def,
-            defCode: f[codeToTest],
-            length: f[codeToTest].split("\n").length,
-          };
-        }
-        const code = f.implemented ? f.implementation : f.code;
-        return {
-          _id: f._id,
-          def: f.def,
-          defCode: code,
-          length: code.split("\n").length,
-        };
-      }),
-    [fun._id, codeToTest]
-  );
+  const functions: TestFunction[] = gptFunctions.map((f) => {
+    if (f._id === fun._id) {
+      return {
+        _id: f._id,
+        def: f.def,
+        defCode: f[codeToTest],
+        length: f[codeToTest].split("\n").length,
+      };
+    }
+    const code = f.implemented ? f.implementation : f.code;
+    return {
+      _id: f._id,
+      def: f.def,
+      defCode: code,
+      length: code.split("\n").length,
+    };
+  });
 
   const createRunnableTestCode = () => {
     const callTest = extractFunctionName(testCode);
